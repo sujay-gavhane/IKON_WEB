@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="utf-8">
+
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/assets/responsive.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <title>Ikon Weapons Repair</title>
+
+</head>
+
+<body class="">
+  <nav class="">
+    <a href="#">
+      <img class="nav-logo" src="/assets/logo.png" alt="logo">
+    </a>
+  </nav>
+
+  <main class="form-wrapper">
+    <div class="">
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <div class="field">
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: 'Email', class: 'form-control' %>
+        </div>
+        <div class="field">
+          <%= f.password_field :password, autocomplete: "current-password", placeholder: 'Password', class: 'form-control' %>
+        </div>
+        <button type="submit" class="form-button btn btn-primary">Login</button>
+
+      <% end %>
+    </div>
+  </main>
+  <footer>
+    <p>© 2020, Ikon Weapons | All rights reserved</p>
+  </footer>
+</body>
+
+</html>
