@@ -30,13 +30,13 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
-    if user.has_role?(:super_admin)
-      can :manage, :all 
-    end
 
-    if user.has_role?(:admin)
+    if user.has_role? :super_admin
+      can :manage, :all             # allow superadmins to do anything
+    elsif user.has_role? :admin
+      can :manage, [User, StaticPage]  # allow managers to do anything to products and users
       can :access, :rails_admin   # grant access to rails_admin
-      can :read, :dashboard       # grant access to the dashboard
+      can :read, :dashboard      # grant access to the dashboard
     end
   end
 end
