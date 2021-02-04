@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   get '/privacy_policy', to: 'home#privacy_policy'
   get '/terms_and_conditions', to: 'home#terms_and_conditions'
   get '/faq', to: 'home#faq'
+  get '/contact_us', to: 'home#contact_us'
 end

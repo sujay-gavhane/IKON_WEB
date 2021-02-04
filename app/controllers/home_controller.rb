@@ -17,4 +17,7 @@ class HomeController < ApplicationController
   def faq
     @faq = StaticPage.find_by(name: 'faq').content.html_safe
   end
+
+  def contact_us
+  end
 end
