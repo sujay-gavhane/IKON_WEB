@@ -246,6 +246,18 @@ footer p{
     text-align: center;
     margin: 0;
 }
+footer a {
+  color: white;
+}
+footer a:hover {
+  text-decoration: underline;
+  color: #ff0000;
+}
+footer .static-content{
+  text-align: center;
+  padding-bottom: 10px;
+  padding-top: 8px;
+}
 
 
 .form-wrapper{
