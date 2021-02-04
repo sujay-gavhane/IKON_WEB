@@ -1,6 +1,6 @@
 <main class="form-wrapper register-form">
   <span class="">
-    <h1>Edit <%= resource_name.to_s.humanize %></h1>
+    <p style="color: white">Note: Current Password is mandatory to update details.</p>
     <hr>
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
       <%#= render "users/shared/error_messages", resource: resource %>
@@ -29,7 +29,7 @@
         <button type="submit" class="form-button btn btn-primary">Update</button>
     <% end %>
 
-    <h3>Cancel my account</h3>
+    <h3 style="color: white">Cancel my account</h3>
 
     <p style="color: white">Unhappy? 
       <%= link_to registration_path(resource_name), method: :delete do %>
