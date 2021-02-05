@@ -15,16 +15,16 @@
       <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
         <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
       <% end %>
-
-        <%= f.password_field :password, autocomplete: "new-password", placeholder: 'Password' %>
+        <%= f.password_field :current_password, autocomplete: "current-password", placeholder: 'Current Password' %>
         <% if @minimum_password_length %>
           <br />
           <em style="color: white"><%= @minimum_password_length %> characters minimum</em>
         <% end %>
 
+        <%= f.password_field :password, autocomplete: "new-password", placeholder: 'Password' %>
+
         <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: 'Confirm Password' %>
 
-        <%= f.password_field :current_password, autocomplete: "current-password", placeholder: 'Current Password' %>
 
         <button type="submit" class="form-button btn btn-primary">Update</button>
     <% end %>
