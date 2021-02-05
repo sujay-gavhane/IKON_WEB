@@ -34,7 +34,7 @@ class Ability
     if user.has_role? :super_admin
       can :manage, :all             # allow superadmins to do anything
     elsif user.has_role? :admin
-      can :manage, [User, StaticPage]  # allow managers to do anything to products and users
+      can :manage, [User, StaticPage, Product, Category]  # allow managers to do anything to products and users
       can :access, :rails_admin   # grant access to rails_admin
       can :read, :dashboard      # grant access to the dashboard
     end
