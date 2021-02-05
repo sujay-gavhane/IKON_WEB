@@ -12,7 +12,10 @@
 
 ActiveRecord::Schema.define(version: 2021_02_05_083250) do
 
-  create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -27,7 +30,7 @@ ActiveRecord::Schema.define(version: 2021_02_05_083250) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
-  create_table "admins_roles", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "admins_roles", id: false, force: :cascade do |t|
     t.bigint "admin_id"
     t.bigint "role_id"
     t.index ["admin_id", "role_id"], name: "index_admins_roles_on_admin_id_and_role_id"
@@ -35,14 +38,14 @@ ActiveRecord::Schema.define(version: 2021_02_05_083250) do
     t.index ["role_id"], name: "index_admins_roles_on_role_id"
   end
 
-  create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "categories", force: :cascade do |t|
     t.string "name", null: false
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "products", force: :cascade do |t|
     t.string "name", null: false
     t.text "description"
     t.float "price"
@@ -52,7 +55,7 @@ ActiveRecord::Schema.define(version: 2021_02_05_083250) do
     t.index ["category_id"], name: "index_products_on_category_id"
   end
 
-  create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "roles", force: :cascade do |t|
     t.string "name"
     t.string "resource_type"
     t.bigint "resource_id"
@@ -63,14 +66,14 @@ ActiveRecord::Schema.define(version: 2021_02_05_083250) do
     t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
   end
 
-  create_table "static_pages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "static_pages", force: :cascade do |t|
     t.string "name", null: false
     t.text "content"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "first_name"
