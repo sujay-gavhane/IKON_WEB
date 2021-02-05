@@ -18,9 +18,9 @@
 
   <body onscroll="navChange()">
     <% if notice %>
-      <p class="alert alert-success"><%= notice %></p>
+      <div class="alert alert-success"><%= notice %></div>
     <% elsif alert %>
-      <p class="alert alert-danger"><%= alert %></p>
+      <div class="alert alert-danger"><%= alert %></div>
     <% end %>
     <nav class="">
       <button class="nav-btn" id="menu-open-btn" type="button" name="button">
