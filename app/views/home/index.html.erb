@@ -9,12 +9,12 @@
       </a>
     </div>
     <div class="img-container">
-      <a href="shop.html">
+      <%= link_to products_path do %>
         <div class="photo-div">
           <img src="<%= image_path('img2.jpg')%>" alt="">
           <h1>Shop</h1>
         </div>
-      </a>
+      <% end %>
     </div>
   </main>
   <main class="brand-text">

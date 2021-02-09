@@ -9,4 +9,6 @@ Rails.application.routes.draw do
   get '/terms_and_conditions', to: 'home#terms_and_conditions'
   get '/faq', to: 'home#faq'
   get '/contact_us', to: 'home#contact_us'
+
+  resources :products
 end
