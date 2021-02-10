@@ -38,4 +38,46 @@ RailsAdmin.config do |config|
     # history_index
     # history_show
   end
+
+  config.model 'Role' do 
+    edit do
+      field :name
+    end
+    export do; end
+    create do; end
+    update do; end
+  end
+
+  config.model 'User' do 
+    edit do
+      field :email
+      field :password
+      field :password_confirmation
+      field :first_name
+      field :last_name
+      field :mobile_number
+    end
+    export do; end
+    create do; end
+    update do; end
+  end
+
+  config.model 'Category' do 
+    edit do
+      field :name
+      field :description
+    end
+    export do; end
+    create do; end
+    update do; end
+  end
+
+  config.model 'CollectionType' do 
+    edit do
+      field :name
+    end
+    export do; end
+    create do; end
+    update do; end
+  end
 end
