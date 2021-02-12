@@ -997,7 +997,7 @@ border: none;
 outline: none;
 color: #fff;
 border-radius: 4px;
-box-shadow: 0 4px 2px -2px rgb(0 0 0 / 20%);
+box-shadow: 0 4px 2px -2px rgb(0, 0, 0 / 20%);
 transition: .3s ease;
 background-color: rgb(230, 35, 70);
 line-height: 24px;
