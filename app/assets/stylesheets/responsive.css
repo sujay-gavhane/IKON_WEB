@@ -2,6 +2,9 @@
   .shop-m .shop-d{
     width: 90%;
   }
+  .product-d{
+    width: 90%;
+  }
 }
 @media (max-width:991px) {
   .form-wrapper >div{
@@ -43,6 +46,31 @@
     width: calc(100% - 20px);
     margin: auto;
     display: block;
+  }
+  .product-d{
+    display: block;
+    width: calc(100% - 20px);
+  }
+  .product-d .img-side .imgss{
+    padding: 10px 0;
+  }
+  .product-d .img-side{
+    width: 100%;
+  }
+  .product-d .img-side .imgss .one-img{
+    /* margin-right: 0; */
+    margin: 5px 0px 5px 10px;
+    width: calc(80% - 20px);
+  }
+  .product-d .info-side{
+    width: 100%;
+  }
+  .product-d .img-side .imgss .all-imgs .img {
+    width: calc(100% - 0px);
+    /* background: orange; */
+    height: calc(33.3% - 10px);
+    cursor: pointer;
+    padding: 5px 0;
   }
   .nav-btn{
     transform: translate(-16px,-50%);

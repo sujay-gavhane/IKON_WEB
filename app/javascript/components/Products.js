@@ -60,36 +60,40 @@ class Products extends React.Component {
   render () {
     const collections = this.state.collections.map((product) =>
       <article key={product.name}>
-        <div>
-          <div className="img">
-            <img src={Product2} alt="product"></img>
-          </div>
-          <div className="info">
-            <div className="">
-              <h1>{product.name}</h1>
-              <h1>{product.category_name}</h1>
-              <p>${product.price}</p>
+        <a href={"/products/" + product.id}>
+          <div>
+            <div className="img">
+              <img src={Product2} alt="product"></img>
+            </div>
+            <div className="info">
+              <div className="">
+                <h1>{product.name}</h1>
+                <h1>{product.category_name}</h1>
+                <p>${product.price}</p>
+              </div>
             </div>
           </div>
-        </div>
+        </a>
       </article>
     );
 
     const parts = this.state.parts.map((part) =>
       <article key={part.name}>
-        <div>
-          <div className="img">
-            <img src={Product3} alt="product"></img>
-          </div>
-          <div className="info">
-            <div className="">
-              <h1>{part.name}</h1>
-              <h1>{part.category_name}</h1>
-              <p>${part.price}</p>
+        <a href={"/products/" + part.id}>
+          <div>
+            <div className="img">
+              <img src={Product3} alt="product"></img>
+            </div>
+            <div className="info">
+              <div className="">
+                <h1>{part.name}</h1>
+                <h1>{part.category_name}</h1>
+                <p>${part.price}</p>
 
+              </div>
             </div>
           </div>
-        </div>
+        </a>
       </article>
     );
 
