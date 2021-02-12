@@ -43,7 +43,7 @@ class Products extends React.Component {
     var coll = collections
     var par = parts
     axios
-      .get("http://localhost:3000/products.json?" + data)
+      .get("/products.json?" + data)
         .then(res => {
             res.data.collections.map((p) =>{coll.push(p)})
             res.data.parts.map((p) =>{par.push(p)})
