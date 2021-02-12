@@ -11,4 +11,6 @@ Rails.application.routes.draw do
   get '/contact_us', to: 'home#contact_us'
 
   resources :products
+  resources :addresses
+
 end
