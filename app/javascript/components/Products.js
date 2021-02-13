@@ -96,7 +96,7 @@ class Products extends React.Component {
             <div className="info">
               <div className="">
                 <h1>{product.name}</h1>
-                <h1>{product.category_name}</h1>
+                <h2>{product.category_name}</h2>
                 <p>${product.price}</p>
               </div>
             </div>
@@ -115,7 +115,7 @@ class Products extends React.Component {
             <div className="info">
               <div className="">
                 <h1>{part.name}</h1>
-                <h1>{part.category_name}</h1>
+                <h2>{part.category_name}</h2>
                 <p>${part.price}</p>
 
               </div>

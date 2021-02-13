@@ -547,7 +547,7 @@ background: white;
   align-items: center; */
   /* position: relative; */
 }
-.shop-m article > a > .info>div{
+.shop-m article .info>div{
   /* margin: auto; */
   padding-left: 15px;
   width: calc(100% - 15px);
