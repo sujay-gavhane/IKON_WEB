@@ -42,38 +42,13 @@ class Products extends React.Component {
     var data = "page=" + page
     var coll = collections
     var par = parts
-    var isPresent = false
     axios
       .get("/products.json?" + data)
         .then(res => {
-            var c = res.data.collections.filter((p) => {
-              coll.map((c) => { 
-                if (c.id == p.id) {
-                  isPresent = true
-                } 
-              })
-              if (isPresent) {
-                isPresent = false
-                return false
-              } else {
-                return true
-              }
-            })
-            var p = res.data.parts.filter((p) => {
-              coll.map((c) => { 
-                if (c.id == p.id) {
-                  isPresent = ture
-                } 
-              })
-              if (isPresent) {
-                isPresent = false
-                return false
-              } else {
-                return true
-              }
-            })
-            c.map((c) =>{coll.push(c)})
-            p.map((p) =>{par.push(p)})
+            var c = this.uniqueObjects(res.data.collections, coll)
+            var p = this.uniqueObjects(res.data.parts, par)
+            this.pushToCollectio(c, coll)
+            this.pushToCollectio(p, par)
 
             this.setState({ collections: coll, parts: par })
             this.setState({ page: page + 1 })
@@ -85,9 +60,30 @@ class Products extends React.Component {
        });
   };
 
+  uniqueObjects(products, coll){
+    var isPresent = false
+    return products.filter((p) => {
+      coll.map((c) => { 
+        if (c.id == p.id) {
+          isPresent = true
+        } 
+      })
+      if (isPresent) {
+        isPresent = false
+        return false
+      } else {
+        return true
+      }
+    })
+  }
+
+  pushToCollectio(collection, original_collection){
+    collection.map((c) =>{original_collection.push(c)})
+  }
+
   render () {
     const collections = this.state.collections.map((product) =>
-      <article key={product.name}>
+      <article key={product.id}>
         <a href={"/products/" + product.id}>
           <div>
             <div className="img">
@@ -106,7 +102,7 @@ class Products extends React.Component {
     );
 
     const parts = this.state.parts.map((part) =>
-      <article key={part.name}>
+      <article key={part.id}>
         <a href={"/products/" + part.id}>
           <div>
             <div className="img">
