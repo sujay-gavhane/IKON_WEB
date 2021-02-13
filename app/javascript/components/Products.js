@@ -22,7 +22,7 @@ class Products extends React.Component {
   }
 
   componentDidMount() {
-    this.getCollections(this.state.collections, this.state.parts);
+    this.getCollections(this.state.collections, this.state.parts, this.state.page);
     window.addEventListener('scroll', this.trackScrolling);
   }
 
@@ -34,21 +34,49 @@ class Products extends React.Component {
     const wrappedElement = document.getElementsByTagName('body')[0];
     if (this.isBottom(wrappedElement)) {
       console.log('header bottom reached');
-      this.getCollections(this.state.collections, this.state.parts);
+      this.getCollections(this.state.collections, this.state.parts, this.state.page);
     }
   };
 
-  getCollections = (collections, parts) => {
-    var data = "page=" + this.state.page
+  getCollections = (collections, parts, page) => {
+    var data = "page=" + page
     var coll = collections
     var par = parts
+    var isPresent = false
     axios
       .get("/products.json?" + data)
         .then(res => {
-            res.data.collections.map((p) =>{coll.push(p)})
-            res.data.parts.map((p) =>{par.push(p)})
+            var c = res.data.collections.filter((p) => {
+              coll.map((c) => { 
+                if (c.id == p.id) {
+                  isPresent = true
+                } 
+              })
+              if (isPresent) {
+                isPresent = false
+                return false
+              } else {
+                return true
+              }
+            })
+            var p = res.data.parts.filter((p) => {
+              coll.map((c) => { 
+                if (c.id == p.id) {
+                  isPresent = ture
+                } 
+              })
+              if (isPresent) {
+                isPresent = false
+                return false
+              } else {
+                return true
+              }
+            })
+            c.map((c) =>{coll.push(c)})
+            p.map((p) =>{par.push(p)})
+
             this.setState({ collections: coll, parts: par })
-            this.setState({ page: this.state.page + 1 })
+            this.setState({ page: page + 1 })
           }
         )
        .catch(err => {
