@@ -27,7 +27,7 @@ class Products extends React.Component {
   }
 
   isBottom(el) {
-    return el.getBoundingClientRect().bottom <= window.innerHeight;
+    return (window.innerHeight + window.scrollY) >= document.body.offsetHeight
   }
 
   trackScrolling = () => {
