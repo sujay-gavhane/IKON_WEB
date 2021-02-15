@@ -1,5 +1,3 @@
-<% collections_json = @collections.map { |product| product.as_json.merge({category_name: product.category.name}) } %>
-<% parts_json = @parts.map { |product| product.as_json.merge({category_name: product.category.name}) } %>
 <%= react_component("Products") %>
 <%= javascript_pack_tag 'products' %>
 

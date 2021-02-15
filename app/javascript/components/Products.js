@@ -11,14 +11,14 @@ class Products extends React.Component {
      parts: []
   };
   
-  test = "asdfsd"
-
-
   constructor(props) {
     super(props);
 
     this.collections = []
     this.parts = []
+    this.isBottom = this.isBottom.bind(this);
+    this.trackScrolling = this.trackScrolling.bind(this);
+    this.getCollections = this.getCollections.bind(this);
   }
 
   componentDidMount() {
