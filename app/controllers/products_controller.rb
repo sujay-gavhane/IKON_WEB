@@ -14,6 +14,10 @@ class ProductsController < ApplicationController
   end
 
   def show
+    respond_to do |format|
+      format.json  { render json: { product: @product.as_json.merge({colors: @product.colors.pluck(:name)}) } }
+      format.html
+    end
   end
 
   def format_json(collection)
