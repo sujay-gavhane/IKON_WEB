@@ -1,5 +1,4 @@
 class ProductsController < ApplicationController
-  before_action :authenticate_user!
   before_action :get_product, only: [:show]
 
   def index
@@ -17,6 +16,20 @@ class ProductsController < ApplicationController
     respond_to do |format|
       format.json  { render json: { product: @product.as_json.merge({colors: @product.colors.pluck(:name)}) } }
       format.html
+    end
+  end
+
+  def add_to_cart
+    begin
+      @product = Product.find_by(id: params[:product][:id].to_i)
+      @color = Color.find_by(name: params[:color])
+      UserCart.create color: @color, product: @product, cart: @cart
+      message = 'Added to Cart Successfully'
+    rescue
+      message = 'Error while adding to cart'
+    end
+    respond_to do |format|
+      format.json { render json: { msg: message } }
     end
   end
 

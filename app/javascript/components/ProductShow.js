@@ -9,7 +9,8 @@ class ProductShow extends React.Component {
   state = {
     product: {},
     color: '',
-    colors: []
+    colors: [],
+    msg: ''
   };
 
   constructor(props) {
@@ -18,10 +19,17 @@ class ProductShow extends React.Component {
     this.getProductDetails = this.getProductDetails.bind(this);
     this.showThisImg = this.showThisImg.bind(this);
     this.handleColorChange = this.handleColorChange.bind(this);
+    this.addToCart = this.addToCart.bind(this);
   }
 
   componentDidMount() {
     this.getProductDetails();
+    this.setCsrfToken();
+  }
+
+  setCsrfToken() {
+    const csrfToken = document.querySelector("meta[name=csrf-token]").content
+    axios.defaults.headers.common['X-CSRF-Token'] = csrfToken
   }
 
   getProductDetails = () => {
@@ -31,6 +39,20 @@ class ProductShow extends React.Component {
         .then(res => {
             this.setState({ product: res.data.product })
             this.setState({ colors: res.data.product.colors })
+            this.setState({ color: res.data.product.colors[0] })
+          }
+        )
+       .catch(err => {
+           console.log(err);
+           return null;
+       });
+  };
+
+  addToCart = () => {
+    axios
+      .post("/add_to_cart.json", { product: this.state.product, color: this.state.color })
+        .then(res => {
+            this.setState({ msg: res.data.msg })
           }
         )
        .catch(err => {
@@ -50,10 +72,12 @@ class ProductShow extends React.Component {
 
   render () {
     const colorOptions = this.state.colors.map((color) => 
-      <option value={color}>{color}</option>
+      <option key={color} value={color}>{color}</option>
     )
+
     return (
       <React.Fragment>
+        {this.state.msg != '' && <div className="alert alert-success">{this.state.msg}</div>}
         <section className="bottom-nav">
           <ul>
             <li><a href="#">Home</a></li>
@@ -96,7 +120,7 @@ class ProductShow extends React.Component {
                 </select>
             </div>
           </div>
-          <button type="button" name="button">Add to Cart</button>
+          <button type="button" name="button" onClick={this.addToCart}>Add to Cart</button>
         </main>
       </React.Fragment>
     );
