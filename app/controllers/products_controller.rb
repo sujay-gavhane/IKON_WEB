@@ -22,20 +22,6 @@ class ProductsController < ApplicationController
     end
   end
 
-  def add_to_cart
-    begin
-      @product = Product.find_by(id: params[:product][:id].to_i)
-      @color = Color.find_by(name: params[:color])
-      UserCart.create color: @color, product: @product, cart: @cart
-      message = 'Added to Cart Successfully'
-    rescue
-      message = 'Error while adding to cart'
-    end
-    respond_to do |format|
-      format.json { render json: { msg: message } }
-    end
-  end
-
   def format_json(collection)
     collection.map { |product| product.as_json.merge({category_name: product.category.name}) }
   end

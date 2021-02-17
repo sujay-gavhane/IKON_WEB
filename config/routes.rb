@@ -12,7 +12,5 @@ Rails.application.routes.draw do
 
   resources :products
   resources :addresses
-
-  post '/add_to_cart', to: 'products#add_to_cart'
-
+  resources :carts, only: [:update, :show]
 end

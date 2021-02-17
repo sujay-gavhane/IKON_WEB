@@ -51,7 +51,7 @@ class ProductShow extends React.Component {
 
   addToCart = () => {
     axios
-      .post("/add_to_cart.json", { product: this.state.product, color: this.state.color })
+      .put("/carts/" + this.state.product.id + ".json", { color: this.state.color })
         .then(res => {
             this.setState({ msg: res.data.msg })
           }
