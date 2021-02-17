@@ -1,4 +1,4 @@
-<%= react_component("ProductShow") %>
+<%= react_component("ProductShow", breadcrumb: render_breadcrumbs) %>
 <span id="product-id" style="display: none;"><%= @product.id %></span>
 <script type="text/javascript">
   $(document).ready(function(){

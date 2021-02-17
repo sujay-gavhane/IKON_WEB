@@ -1,5 +1,7 @@
 class ProductsController < ApplicationController
   before_action :get_product, only: [:show]
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Our Collection", :products_path
 
   def index
     products = Product.includes(:category).joins(:collection_type).page(params[:page]).per(4)
@@ -13,6 +15,7 @@ class ProductsController < ApplicationController
   end
 
   def show
+    add_breadcrumb "Product", product_path(@product)
     respond_to do |format|
       format.json  { render json: { product: @product.as_json.merge({colors: @product.colors.pluck(:name)}) } }
       format.html
