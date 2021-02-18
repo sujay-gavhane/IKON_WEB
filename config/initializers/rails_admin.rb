@@ -82,4 +82,23 @@ RailsAdmin.config do |config|
     update do; end
   end
 
+  config.model 'Address' do 
+    edit do
+      field :address_line_one
+      field :address_line_two
+      field :city
+      field :state
+      field :country
+      field :pincode
+      field :user_id, :enum do
+        enum do
+          User.all.collect {|u| [u.full_name, u.id]}
+        end
+      end
+    end
+    export do; end
+    create do; end
+    update do; end
+  end
+
 end
