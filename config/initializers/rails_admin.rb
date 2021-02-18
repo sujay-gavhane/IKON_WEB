@@ -38,6 +38,7 @@ RailsAdmin.config do |config|
     # history_index
     # history_show
   end
+  config.excluded_models = [Cart, UserCart]
 
   config.model 'Role' do 
     edit do
@@ -80,4 +81,5 @@ RailsAdmin.config do |config|
     create do; end
     update do; end
   end
+
 end
