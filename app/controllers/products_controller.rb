@@ -17,7 +17,7 @@ class ProductsController < ApplicationController
   def show
     add_breadcrumb "Product", product_path(@product)
     respond_to do |format|
-      format.json  { render json: { product: @product.as_json.merge({colors: @product.colors.pluck(:name)}) } }
+      format.json  { render json: { product: @product.as_json.merge({colors: @product.colors.pluck(:name), cart: @cart.id}) } }
       format.html
     end
   end

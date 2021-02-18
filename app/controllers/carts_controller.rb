@@ -14,6 +14,13 @@ class CartsController < ApplicationController
   end
 
   def show
-    
+    respond_to do |format|
+      format.json do
+        @users_cart_products = @cart.user_carts.includes(:product, :color)
+        @users_cart_products = @users_cart_products.map { |item| item.as_json.merge({ product: item.product, color: item.color }) }
+        render json: { cart_items: @users_cart_products }
+      end
+      format.html
+    end
   end
 end
