@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
 
   def current_cart
     if current_user
-      @cart = current_user.cart
+      @cart = current_user.cart ? current_user.cart : Cart.create(is_guest: false, user_id: current_user.id)
     else
       if session[:cart]
         @cart = Cart.find_by(id: session[:cart])
