@@ -1267,6 +1267,7 @@ margin: 0 0 5px 0;
   vertical-align: middle;
   align-items: center;
   position: relative;
+  margin: 0 3px;
 }
 .cart-item .quantity i{
   position: absolute;

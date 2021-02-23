@@ -12,5 +12,9 @@ Rails.application.routes.draw do
 
   resources :products
   resources :addresses
-  resources :carts, only: [:update, :show]
+  resources :carts, only: [:update, :show, :destroy] do
+    member do
+      put 'update_quantity'
+    end
+  end
 end

@@ -3,7 +3,12 @@ class CartsController < ApplicationController
     begin
       @product = Product.find_by(id: params[:id])
       @color = Color.find_by(name: params[:color])
-      UserCart.create color: @color, product: @product, cart: @cart
+      @user_cart = UserCart.find_by(color: @color, product: @product, cart: @cart)
+      if @user_cart
+        @user_cart.update(quantity: @user_cart.quantity + 1)
+      else
+        UserCart.create color: @color, product: @product, cart: @cart, quantity: 1
+      end  
       message = 'Added to Cart Successfully'
     rescue
       message = 'Error while adding to cart'
@@ -16,11 +21,31 @@ class CartsController < ApplicationController
   def show
     respond_to do |format|
       format.json do
-        @users_cart_products = @cart.user_carts.includes(:product, :color)
-        @users_cart_products = @users_cart_products.map { |item| item.as_json.merge({ product: item.product, color: item.color }) }
+        @users_cart_products = @cart.user_carts.includes(:color, product: [:category])
+        @users_cart_products = @users_cart_products.map { |item| item.as_json.merge({ product: item.product, color: item.color, category_name: item.product.category.name }) }
         render json: { cart_items: @users_cart_products }
       end
       format.html
+    end
+  end
+
+  def destroy
+    respond_to do |format|
+      format.json do
+        @cart.user_carts.where(id: params[:id]).first.destroy
+        render json: { msg: 'Product removed from cart.' }
+      end
+    end
+  end
+
+  def update_quantity
+    @product = Product.find_by(id: params[:product_id])
+    @color = Color.find_by(id: params[:color_id])
+    @user_cart = UserCart.find_by(color: @color, product: @product, cart: @cart)
+    if @user_cart && @user_cart.quantity == 1 && params[:quantity].to_i == -1
+      @user_cart.destroy
+    else
+      @user_cart.update(quantity: @user_cart.quantity + params[:quantity].to_i)
     end
   end
 end

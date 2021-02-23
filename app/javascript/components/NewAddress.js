@@ -1,7 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
 import axios from 'axios';
-import { Modal } from 'react-bootstrap';
 
 class NewAddress extends React.Component {
   state = {

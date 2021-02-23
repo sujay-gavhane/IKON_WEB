@@ -46,9 +46,10 @@ class AddressesList extends React.Component {
 
   destroy(){
     var confirmDelete = confirm("Are you sure you want to delete?");
+    var addrId = event.target.closest("a").className;
     if (confirmDelete) {
       axios
-        .delete("/addresses/" + event.target.parentElement.parentElement.className + ".json")
+        .delete("/addresses/" + addrId + ".json")
           .then(res => {
             this.setState({ msg: res.data.msg })
             this.getAddresses();
