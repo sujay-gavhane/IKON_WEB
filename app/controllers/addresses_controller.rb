@@ -17,6 +17,23 @@ class AddressesController < ApplicationController
     end
   end
 
+  def update
+    @address = Address.find_by(id: params[:id])
+    @address.update(addr_params)
+    respond_to do |format|
+      format.json  { render json: { msg: 'Address Updated Successfully' } }
+      format.html
+    end
+  end
+
+  def destroy
+    @address = Address.find_by(id: params[:id]).destroy
+    respond_to do |format|
+      format.json  { render json: { msg: 'Address Deleted Successfully' } }
+      format.html
+    end
+  end
+
   private
   def addr_params
     params.require(:address).permit(:user_id, :city, :state, :pincode, :country, :address_line_one, :address_line_two)
