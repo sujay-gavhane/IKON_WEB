@@ -10,7 +10,8 @@ class CartsController < ApplicationController
         UserCart.create color: @color, product: @product, cart: @cart, quantity: 1
       end  
       message = 'Added to Cart Successfully'
-    rescue
+    rescue  => error
+      puts error.inspect
       message = 'Error while adding to cart'
     end
     respond_to do |format|
