@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resources :carts, only: [:update, :show, :destroy] do
     member do
       put 'update_quantity'
+      put 'apply_coupon'
     end
   end
 end

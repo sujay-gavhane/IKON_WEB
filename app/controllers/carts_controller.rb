@@ -21,7 +21,7 @@ class CartsController < ApplicationController
   def show
     respond_to do |format|
       format.json do
-        @users_cart_products = @cart.user_carts.includes(:color, product: [:category])
+        @users_cart_products = @cart.user_carts.includes(:color, product: [:category]).order('id desc')
         @users_cart_products = @users_cart_products.map { |item| item.as_json.merge({ product: item.product, color: item.color, category_name: item.product.category.name }) }
         render json: { cart_items: @users_cart_products }
       end
@@ -46,6 +46,20 @@ class CartsController < ApplicationController
       @user_cart.destroy
     else
       @user_cart.update(quantity: @user_cart.quantity + params[:quantity].to_i)
+    end
+  end
+
+  def apply_coupon
+    @coupon = Coupon.find_by(code: params[:code])
+    if @coupon.start_at < Time.now && @coupon.end_at > Time.now
+      msg = "Discount $#{@coupon.discount} applied on total amount"
+    else
+      msg = 'Invalid Coupon'
+    end
+    respond_to do |format|
+      format.json do
+        render json: { msg: msg, discount: @coupon.discount }
+      end
     end
   end
 end

@@ -34,6 +34,12 @@ class AddressesController < ApplicationController
     end
   end
 
+  def show
+    respond_to do |format|
+      format.json  { render json: { address: Address.find(params[:id]) } }
+    end
+  end
+
   private
   def addr_params
     params.require(:address).permit(:user_id, :city, :state, :pincode, :country, :address_line_one, :address_line_two)

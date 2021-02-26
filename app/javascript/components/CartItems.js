@@ -25,10 +25,16 @@ class CartItems extends React.Component {
 
   getCartItems = () => {
     var cartID = document.getElementById('cart-id').textContent
+    var totalAmount = 0
     axios
       .get("/carts/" + cartID + ".json")
         .then(res => {
           this.setState({ cart_items: res.data.cart_items })
+          this.state.cart_items.map((item) => 
+            totalAmount = totalAmount + (item.product.price * item.quantity)
+          );
+          this.props.updateTotalAmmount(totalAmount, 'totalAmount', 0)
+          this.props.updateTotalAmmount(totalAmount, 'netPayable', 0)
         }
       )
       .catch(err => {
@@ -76,10 +82,12 @@ class CartItems extends React.Component {
   render () {
     const cartItems = this.state.cart_items.map((item) =>
       <div key={item.id} className="cart-item">
-        <div className="remove">
-          <a className={item.id} onClick={this.destroy}><FontAwesomeIcon icon={faTimes} /></a>
-
-        </div>
+        { !this.props.checkout &&
+          <div className="remove">
+            <a className={item.id} onClick={this.destroy}><FontAwesomeIcon icon={faTimes} /></a>
+          </div>
+        }
+            
         <div className="img">
           <img src={Product2} alt="product"></img>
         </div>
@@ -88,17 +96,25 @@ class CartItems extends React.Component {
           <h3>{item.category_name}</h3>
           <span>{item.color.name}</span>
         </div>
-        <div className="quantity" data-product-id={item.product.id} data-color-id={item.color.id}>
-          <a data-quantity={-1} onClick={this.updateQuantity}><FontAwesomeIcon icon={faMinus} /></a>
-          <input type="number" value={item.quantity} readOnly></input>
-          <a data-quantity={1} onClick={this.updateQuantity}><FontAwesomeIcon icon={faPlus} /></a>
-        </div>
-        <div className="unit-price">
-          <h4>${item.product.price}</h4>
-        </div>
-        <div className="total-price">
-          <h4>${item.product.price * item.quantity}</h4>
-        </div>
+        { this.props.checkout
+          ? <React.Fragment><div className="quantity">
+              <h5>Quantity: {item.quantity}</h5>
+            </div>
+            <div className="total-price">
+              <h4>${item.product.price * item.quantity}</h4>
+            </div></React.Fragment>
+          : <React.Fragment><div className="quantity" data-product-id={item.product.id} data-color-id={item.color.id}>
+              <a data-quantity={-1} onClick={this.updateQuantity}><FontAwesomeIcon icon={faMinus} /></a>
+              <input type="number" value={item.quantity} readOnly></input>
+              <a data-quantity={1} onClick={this.updateQuantity}><FontAwesomeIcon icon={faPlus} /></a>
+            </div>
+            <div className="unit-price">
+              <h4>${item.product.price}</h4>
+            </div>
+            <div className="total-price">
+              <h4>${item.product.price * item.quantity}</h4>
+            </div></React.Fragment>
+        }
       </div>
     );
     return (
