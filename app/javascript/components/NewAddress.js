@@ -65,7 +65,10 @@ class NewAddress extends React.Component {
       axios
         .put("/addresses/" + this.props.properties.id + ".json", userInputs)
           .then(res => {
-            this.setState({ msg: res.data.msg })
+            this.setState({ msg: res.data.msg, errors: res.data.errors })
+            if(res.data.msg != ''){
+              this.popupClose()
+            }
           })
          .catch(err => {
              console.log(err);
@@ -75,7 +78,10 @@ class NewAddress extends React.Component {
       axios
         .post("/addresses.json", userInputs)
           .then(res => {
-            this.setState({ msg: res.data.msg })
+            this.setState({ msg: res.data.msg, errors: res.data.errors })
+            if(res.data.msg != ''){
+              this.popupClose()
+            }
           })
          .catch(err => {
              console.log(err);
@@ -95,7 +101,7 @@ class NewAddress extends React.Component {
           <div className="popup-div">
             <a onClick={this.popupClose} className="close-btn"> <span></span> </a>
             <div className="repair-form">
-              <form onSubmit={this.handleSubmit} className="">
+              <form>
                 <div className="form-group">
                   <label className="form-label">Address Line 1</label>
                   <input onChange={this.handleChange} name="address_line_one" placeholder="Address" required="" type="text" className="form-control" value={this.state.address_line_one || this.props.properties.address_line_one}></input>
@@ -120,7 +126,7 @@ class NewAddress extends React.Component {
                   <label className="form-label">Country</label>
                   <input onChange={this.handleChange} name="country" placeholder="Country" required="" type="text" className="form-control" value={this.state.country || this.props.properties.country}></input>
                 </div>
-                <button type="submit" className="" style={{backgroundColor: "rgb(230, 35, 70)"}}>Add</button>
+                <button onClick={this.handleSubmit} type="button" className="" style={{backgroundColor: "rgb(230, 35, 70)"}}>Add</button>
               </form>
             </div>
           </div>

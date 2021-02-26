@@ -12,7 +12,11 @@ class AddressesController < ApplicationController
     address_params = addr_params.merge(user_id: current_user.id)
     @address = Address.create(address_params)
     respond_to do |format|
-      format.json  { render json: { msg: 'Address Added Successfully' } }
+      if @address.errors.blank?
+        format.json { render json: { msg: 'Address Added Successfully' }}
+      else
+        format.json { render json: { msg: '', errors: @address.errors.full_messages.join('<br>')}}
+      end
       format.html
     end
   end
@@ -21,7 +25,12 @@ class AddressesController < ApplicationController
     @address = Address.find_by(id: params[:id])
     @address.update(addr_params)
     respond_to do |format|
-      format.json  { render json: { msg: 'Address Updated Successfully' } }
+      if @address.errors.blank?
+        format.json { render json: { msg: 'Address Updated Successfully' }}
+      else
+        debugger
+        format.json { render json: { msg: '', errors: @address.errors.full_messages.join('<br>')}}
+      end
       format.html
     end
   end
