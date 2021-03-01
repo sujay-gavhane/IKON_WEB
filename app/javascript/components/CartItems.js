@@ -60,6 +60,13 @@ class CartItems extends React.Component {
   }
 
   updateQuantity() {
+    var cart_items = this.state.cart_items
+    cart_items.map((item) => {
+      if (item.id = parseInt(event.target.closest("a").dataset.id)){
+        return item.quantity = item.quantity + parseInt(event.target.closest("a").dataset.quantity)
+      }
+    })
+    this.setState({cart_items: cart_items})
     var cartID = document.getElementById('cart-id').textContent
     var params = { 
       product_id: event.target.closest("div").dataset.productId,
@@ -104,9 +111,9 @@ class CartItems extends React.Component {
               <h4>${item.product.price * item.quantity}</h4>
             </div></React.Fragment>
           : <React.Fragment><div className="quantity" data-product-id={item.product.id} data-color-id={item.color.id}>
-              <a data-quantity={-1} onClick={this.updateQuantity}><FontAwesomeIcon icon={faMinus} /></a>
-              <input type="number" value={item.quantity} readOnly></input>
-              <a data-quantity={1} onClick={this.updateQuantity}><FontAwesomeIcon icon={faPlus} /></a>
+              <a data-quantity={-1} data-id={item.id} onClick={this.updateQuantity}><FontAwesomeIcon icon={faMinus} /></a>
+              <input className="quantity-input" type="number" value={item.quantity} readOnly></input>
+              <a data-quantity={1} data-id={item.id} onClick={this.updateQuantity}><FontAwesomeIcon icon={faPlus} /></a>
             </div>
             <div className="unit-price">
               <h4>${item.product.price}</h4>
