@@ -12,7 +12,7 @@ class CartAmount extends React.Component {
     super(props);
 
     this.appplyCoupon = this.appplyCoupon.bind(this);
-    this.updateCheckoutState = this.updateCheckoutState.bind(this);
+    this.redirectToCheckout = this.redirectToCheckout.bind(this);
     this.handleCouponChnage = this.handleCouponChnage.bind(this);
   }
 
@@ -33,9 +33,9 @@ class CartAmount extends React.Component {
        });
   }
 
-  updateCheckoutState() {
-    var checkout = event.target.dataset.checkout == 'true' ? true : false
-    this.props.updateTotalAmmount(checkout, 'checkout')
+  redirectToCheckout() {
+    var cartID = document.getElementById('cart-id').textContent
+    location.href = "/carts/" + cartID + "/checkout"
   }
 
   handleCouponChnage() {
@@ -66,7 +66,7 @@ class CartAmount extends React.Component {
 
           <h1>Net Payment:</h1>
           <h2>${this.props.netPayable}</h2>
-          <button data-checkout='true' onClick={this.updateCheckoutState} className="checkout-btn" type="button" name="button">Checkout</button>
+          <button data-checkout='true' onClick={this.redirectToCheckout} className="checkout-btn" type="button" name="button">Checkout</button>
         </div>
         :
           <div className="">
@@ -91,8 +91,6 @@ class CartAmount extends React.Component {
                 <option value="">Paypal</option>
               </select>
             </div>
-            <button data-checkout='false' onClick={this.updateCheckoutState} className="checkout-btn" type="button" name="button">Back to Cart</button>
-
           </div>
         }
       </React.Fragment>

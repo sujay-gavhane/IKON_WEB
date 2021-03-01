@@ -22,9 +22,6 @@ class Cart extends React.Component {
     super(props);
 
     this.setCsrfToken = this.setCsrfToken.bind(this);
-    this.openAddressPopup = this.openAddressPopup.bind(this);
-    this.closeAddressPopup = this.closeAddressPopup.bind(this);
-    this.selectedAddress = this.selectedAddress.bind(this);
     this.updateState = this.updateState.bind(this);
   }
 
@@ -48,27 +45,6 @@ class Cart extends React.Component {
     this.setState({[name]: value})
   }
 
-  openAddressPopup(){
-    this.setState({toggleAddressPopup: 'open'})
-  }
-
-  closeAddressPopup() {
-    this.setState({toggleAddressPopup: ''})
-  }
-
-  selectedAddress(addressId){
-    axios
-      .get("/addresses/ " + addressId + ".json?")
-        .then(res => {
-          this.setState({ selectedAddress: res.data.address })
-          this.closeAddressPopup()
-        })
-       .catch(err => {
-           console.log(err);
-           return null;
-       });
-  }
-
   render () {
     return (
       <React.Fragment>
@@ -87,54 +63,8 @@ class Cart extends React.Component {
                 <CartAmount updateTotalAmmount={this.updateState} totalAmount={this.state.totalAmount} netPayable={this.state.netPayable} checkout={this.state.checkout}/>
               </div>
             </div>
-            <hr></hr>
-            {this.state.checkout
-              &&
-              <div className="main-cart">
-                <div className="item-side">
-                  <div className="card-details">
-                    <form className="" action="index.html" method="post">
-                      <h1>Credit Card</h1>
-                      <input type="text" name="" value="" placeholder="1234 5678 9123 4567"></input>
-                      <input type="text" name="" value="" placeholder="Name"></input>
-                      <input type="text" name="" value="" placeholder="Expiry"></input>
-                      <input type="text" name="" value="" placeholder="CCV"></input>
-                      <input type="text" name="" value="" placeholder="Contact #"></input>
-                    </form>
-                  </div>
-                </div>
-                <hr></hr>
-                <div className="checkout-side">
-                  <div className="">
-                    { this.state.selectedAddress.id != undefined
-                    ?
-                    <div className="my-address">
-                      <div className="address-item">
-                        <a onClick={this.openAddressPopup}><FontAwesomeIcon icon={faPencilAlt} /></a>
-                        <h6>Address </h6>
-                        <h1>{this.state.selectedAddress.address_line_one}, {this.state.selectedAddress.address_line_two}</h1>
-                        <h3> <span>{this.state.selectedAddress.pincode}</span> {this.state.selectedAddress.city}, {this.state.selectedAddress.state}</h3>
-                        <h4>{this.state.selectedAddress.country}</h4>
-                      </div>
-                    </div>
-                    :
-                    <div className="my-address">
-                      <div className="address-item">
-                        <a onClick={this.openAddressPopup}><FontAwesomeIcon icon={faPlus} /></a>
-                        <h6>Address </h6>
-                        <p style={{textAlign: 'center'}}>Select Address</p>
-                      </div>
-                    </div>
-                    }
-                    <hr></hr>
-                    <button className="checkout-btn" type="button" name="button">Pay</button>
-                  </div>
-                </div>
-              </div>
-            }
           </div>
         </main>
-        <SelectAddress selectedAddress={this.selectedAddress} closePopup={this.closeAddressPopup} toggleAddressPopup={this.state.toggleAddressPopup}/>
       </React.Fragment>
     );
   }

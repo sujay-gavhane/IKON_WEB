@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     member do
       put 'update_quantity'
       put 'apply_coupon'
+      get 'checkout'
     end
   end
 end
