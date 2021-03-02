@@ -11,13 +11,26 @@ class CartAmount extends React.Component {
   constructor(props) {
     super(props);
 
+    this.setCsrfToken = this.setCsrfToken.bind(this);
     this.appplyCoupon = this.appplyCoupon.bind(this);
     this.redirectToCheckout = this.redirectToCheckout.bind(this);
     this.handleCouponChnage = this.handleCouponChnage.bind(this);
   }
 
+  componentDidMount() {
+    this.setCsrfToken();
+    if(this.props.checkout) {
+      this.appplyCoupon()
+    }
+  }
+
+  setCsrfToken() {
+    const csrfToken = document.querySelector("meta[name=csrf-token]").content
+    axios.defaults.headers.common['X-CSRF-Token'] = csrfToken
+  }
+
   appplyCoupon(){
-    var coupon = document.querySelector(".coupon-input").value
+    var coupon = this.props.checkout ? document.querySelector("#coupon").textContent : document.querySelector(".coupon-input").value  
     var cartID = document.getElementById('cart-id').textContent
     axios
       .put("/carts/" + cartID + "/apply_coupon.json", {code: coupon})
@@ -35,7 +48,8 @@ class CartAmount extends React.Component {
 
   redirectToCheckout() {
     var cartID = document.getElementById('cart-id').textContent
-    location.href = "/carts/" + cartID + "/checkout"
+    var coupon = document.querySelector(".coupon-input").value
+    location.href = "/carts/" + cartID + "/checkout?code=" + coupon
   }
 
   handleCouponChnage() {

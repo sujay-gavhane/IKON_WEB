@@ -1,6 +1,6 @@
 class CartsController < ApplicationController
   before_action :authenticate_user!, only: [:checkout]
-   
+
   def update
     begin
       @product = Product.find_by(id: params[:id])
@@ -53,26 +53,23 @@ class CartsController < ApplicationController
   end
 
   def apply_coupon
-    @coupon = Coupon.find_by(code: params[:code])
-    if @coupon.start_at < Time.now && @coupon.end_at > Time.now
+    @coupon = if params[:code].present?
+      Coupon.find_by(code: params[:code])
+    end 
+    if @coupon && @coupon.start_at < Time.now && @coupon.end_at > Time.now
       msg = "Discount $#{@coupon.discount} applied on total amount"
     else
       msg = 'Invalid Coupon'
     end
     respond_to do |format|
       format.json do
-        render json: { msg: msg, discount: @coupon.discount }
+        render json: { msg: msg, discount: @coupon.present? ? @coupon.discount : 0 }
       end
     end
   end
 
   def checkout
     respond_to do |format|
-      format.json do
-        @users_cart_products = @cart.user_carts.includes(:color, product: [:category]).order('id desc')
-        @users_cart_products = @users_cart_products.map { |item| item.as_json.merge({ product: item.product, color: item.color, category_name: item.product.category.name }) }
-        render json: { cart_items: @users_cart_products }
-      end
       format.html
     end
   end
