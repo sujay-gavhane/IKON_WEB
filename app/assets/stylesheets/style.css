@@ -894,7 +894,7 @@ color: #007bff;
 
 /* product page */
 .product-m{
-
+  min-height: 70vh;
 }
 .product-d{
   display: flex;
@@ -1151,6 +1151,7 @@ content: "";
 /* cart page */
 .cart-m{
   padding: 20px;
+  min-height: 70vh;
 }
 .cart-d{
   border: 1px solid black;
@@ -1158,6 +1159,7 @@ content: "";
   overflow: hidden;
   max-width: 1280px;
   margin: auto;
+
 }
 .cart-top{
   background: black;
