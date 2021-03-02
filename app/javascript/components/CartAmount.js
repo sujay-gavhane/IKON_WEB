@@ -80,7 +80,7 @@ class CartAmount extends React.Component {
 
           <h1>Net Payment:</h1>
           <h2>${this.props.netPayable}</h2>
-          <button data-checkout='true' onClick={this.redirectToCheckout} className="checkout-btn" type="button" name="button">Checkout</button>
+          { this.props.cartItemsCount && <button data-checkout='true' onClick={this.redirectToCheckout} className="checkout-btn" type="button" name="button">Checkout</button>}
         </div>
         :
           <div className="">

@@ -60,7 +60,7 @@ class Cart extends React.Component {
               </div>
               <hr></hr>
               <div className="checkout-side">
-                <CartAmount updateTotalAmmount={this.updateState} totalAmount={this.state.totalAmount} netPayable={this.state.netPayable} checkout={this.state.checkout}/>
+                <CartAmount cartItemsCount={this.state.cartItemsCount} updateTotalAmmount={this.updateState} totalAmount={this.state.totalAmount} netPayable={this.state.netPayable} checkout={this.state.checkout}/>
               </div>
             </div>
           </div>

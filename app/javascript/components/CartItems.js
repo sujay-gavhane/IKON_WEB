@@ -34,6 +34,7 @@ class CartItems extends React.Component {
             totalAmount = totalAmount + (item.product.price * item.quantity)
           );
           this.props.updateTotalAmmount(totalAmount, 'totalAmount', 0)
+          this.props.updateTotalAmmount(res.data.cart_items.length, 'cartItemsCount', 0)
           this.props.updateTotalAmmount(totalAmount, 'netPayable', 0)
         }
       )
