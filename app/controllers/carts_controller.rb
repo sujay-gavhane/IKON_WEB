@@ -69,6 +69,9 @@ class CartsController < ApplicationController
   end
 
   def checkout
+    if session[:cart].present?
+      @cart.update(is_guest: false, user_id: current_user.id)
+    end
     respond_to do |format|
       format.html
     end

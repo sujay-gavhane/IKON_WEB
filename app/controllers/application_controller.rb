@@ -9,7 +9,9 @@ class ApplicationController < ActionController::Base
   end
 
   def current_cart
-    if current_user
+    if current_user && session[:cart]
+      @cart = Cart.find_by(id: session[:cart])
+    elsif current_user
       @cart = current_user.cart ? current_user.cart : Cart.create(is_guest: false, user_id: current_user.id)
     else
       if session[:cart]
