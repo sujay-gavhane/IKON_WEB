@@ -7,39 +7,20 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 
 class AddressesList extends React.Component {
-  state = {
-    addresses: []
-  };
-
   constructor(props) {
     super(props);
 
-    this.getAddresses = this.getAddresses.bind(this);
     this.destroy = this.destroy.bind(this);
     this.open = this.open.bind(this);
   }
 
-  componentDidMount() {
-    this.getAddresses();
-  }
-
-  getAddresses = () => {
-    axios
-      .get("/addresses.json?")
-        .then(res => {
-          this.setState({ addresses: res.data.addresses })
-        })
-       .catch(err => {
-           console.log(err);
-           return null;
-       });
-  };
-
   open(){
-    for (var index = 0; index < this.state.addresses.length; index++) { 
-      if (this.state.addresses[index].id == parseInt(event.target.parentElement.className)){
-        const currentAddress = this.state.addresses[index]
-        this.props.setPopupProps('open', currentAddress)
+    var addresses = this.props.addresses
+    for (var index = 0; index < addresses.length; index++) { 
+      if (addresses[index].id == parseInt(event.target.parentElement.className)){
+        const currentAddress = addresses[index]
+        this.props.setPopupProps('showEditForm', 'open')
+        this.props.setPopupProps('properties', currentAddress)
       }
     }
   }
@@ -52,7 +33,7 @@ class AddressesList extends React.Component {
         .delete("/addresses/" + addrId + ".json")
           .then(res => {
             this.setState({ msg: res.data.msg })
-            this.getAddresses();
+            this.props.updateAddressList()
           })
          .catch(err => {
              console.log(err);
@@ -62,7 +43,7 @@ class AddressesList extends React.Component {
   }
 
   render () {
-    const addresses = this.state.addresses.map((address, i) =>
+    const addresses = this.props.addresses.map((address, i) =>
       <div key={address.id + 1} className="address-item">
         <h6>Address {i + 1}</h6>
         <a onClick={this.destroy} className={address.id}><FontAwesomeIcon icon={faTrashAlt} /></a>
