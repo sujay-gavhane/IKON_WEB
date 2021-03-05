@@ -63,7 +63,7 @@ class CartItems extends React.Component {
   updateQuantity() {
     var cart_items = this.state.cart_items
     cart_items.map((item) => {
-      if (item.id = parseInt(event.target.closest("a").dataset.id)){
+      if (item.id == parseInt(event.target.closest("a").dataset.id)){
         return item.quantity = item.quantity + parseInt(event.target.closest("a").dataset.quantity)
       }
     })
