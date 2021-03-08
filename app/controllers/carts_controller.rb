@@ -5,7 +5,7 @@ class CartsController < ApplicationController
     begin
       @product = Product.find_by(id: params[:id])
       @color = Color.find_by(name: params[:color])
-      @user_cart = UserCart.find_by(color: @color, product: @product, cart: @cart)
+      @user_cart = UserCart.find_by(color: @color, product: @product, cart: @cart, order_id: nil)
       if @user_cart
         @user_cart.update(quantity: @user_cart.quantity + 1)
       else
@@ -24,7 +24,7 @@ class CartsController < ApplicationController
   def show
     respond_to do |format|
       format.json do
-        @users_cart_products = @cart.user_carts.includes(:color, product: [:category]).order('id desc')
+        @users_cart_products = @cart.user_carts.includes(:color, product: [:category]).where('order_id IS NULL').order('id desc')
         @users_cart_products = @users_cart_products.map { |item| item.as_json.merge({ product: item.product, color: item.color, category_name: item.product.category.name }) }
         render json: { cart_items: @users_cart_products }
       end
@@ -44,7 +44,7 @@ class CartsController < ApplicationController
   def update_quantity
     @product = Product.find_by(id: params[:product_id])
     @color = Color.find_by(id: params[:color_id])
-    @user_cart = UserCart.find_by(color: @color, product: @product, cart: @cart)
+    @user_cart = UserCart.find_by(color: @color, product: @product, cart: @cart, order_id: nil)
     if @user_cart && @user_cart.quantity == 1 && params[:quantity].to_i == -1
       @user_cart.destroy
     else
@@ -63,7 +63,7 @@ class CartsController < ApplicationController
     end
     respond_to do |format|
       format.json do
-        render json: { msg: msg, discount: @coupon.present? ? @coupon.discount : 0 }
+        render json: { msg: msg, discount: @coupon.present? ? @coupon.discount : 0, coupon_id: @coupon.id }
       end
     end
   end

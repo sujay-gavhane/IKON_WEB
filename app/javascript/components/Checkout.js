@@ -16,7 +16,13 @@ class Checkout extends React.Component {
     discount: 0,
     checkout: true,
     toggleAddressPopup: '',
-    selectedAddress: {}
+    selectedAddress: {},
+    couponId: 0,
+    cardNumber: '',
+    firstName: '',
+    lastName: '',
+    expiry: '',
+    cvv: ''
   }
 
   constructor(props) {
@@ -27,6 +33,8 @@ class Checkout extends React.Component {
     this.closeAddressPopup = this.closeAddressPopup.bind(this);
     this.selectedAddress = this.selectedAddress.bind(this);
     this.updateState = this.updateState.bind(this);
+    this.placeOrder = this.placeOrder.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   setCsrfToken() {
@@ -71,6 +79,39 @@ class Checkout extends React.Component {
        });
   }
 
+  placeOrder(){
+    var order_params = { order: {
+      coupon_id: this.state.couponId,
+      address_id: this.state.selectedAddress.id,
+      total_amount: this.state.totalAmount,
+      net_amount: this.state.netPayable,
+      taxes: 20
+      },
+      card_number: this.state.cardNumber,
+      first_name: this.state.firstName,
+      last_name: this.state.lastName,
+      expiry: this.state.expiry,
+      cvv: this.state.cvv
+    }
+    if (this.state.selectedAddress.id) {
+      axios
+        .post("/orders.json", order_params)
+          .then(res => {
+            location.href = "/orders/" + res.data.order.id
+          })
+         .catch(err => {
+             console.log(err);
+             return null;
+         });
+     } else {
+      alert('Please Select Delivery Address')
+     }
+  }
+
+  handleChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value })
+  }
+
   render () {
     return (
       <React.Fragment>
@@ -95,11 +136,11 @@ class Checkout extends React.Component {
                   <div className="card-details">
                     <form className="" action="index.html" method="post">
                       <h1>Credit Card</h1>
-                      <input type="text" name="" value="" placeholder="1234 5678 9123 4567"></input>
-                      <input type="text" name="" value="" placeholder="Name"></input>
-                      <input type="text" name="" value="" placeholder="Expiry"></input>
-                      <input type="text" name="" value="" placeholder="CCV"></input>
-                      <input type="text" name="" value="" placeholder="Contact #"></input>
+                      <input onChange={this.handleChange} type="text" name="cardNumber" value={this.state.cardNumber} placeholder="1234 5678 9123 4567"></input>
+                      <input onChange={this.handleChange} type="text" name="firstName" value={this.state.firstName} placeholder="First Name"></input>
+                      <input onChange={this.handleChange} type="text" name="lastName" value={this.state.lastName} placeholder="Last Name"></input>
+                      <input onChange={this.handleChange} type="text" name="expiry" value={this.state.expiry} placeholder="Expiry(mm/yyyy)"></input>
+                      <input onChange={this.handleChange} type="text" name="cvv" value={this.state.cvv} placeholder="CCV"></input>
                     </form>
                   </div>
                 </div>
@@ -127,7 +168,7 @@ class Checkout extends React.Component {
                     </div>
                     }
                     <hr></hr>
-                    <button className="checkout-btn" type="button" name="button">Pay</button>
+                    <button onClick={this.placeOrder} className="checkout-btn" type="button" name="button">Pay</button>
                   </div>
                 </div>
               </div>

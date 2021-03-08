@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_24_125108) do
+ActiveRecord::Schema.define(version: 2021_03_05_114735) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(version: 2021_02_24_125108) do
     t.bigint "cart_id"
     t.bigint "color_id"
     t.integer "quantity", default: 0
+    t.integer "order_id"
     t.index ["cart_id"], name: "index_carts_products_on_cart_id"
     t.index ["color_id"], name: "index_carts_products_on_color_id"
     t.index ["product_id"], name: "index_carts_products_on_product_id"
@@ -106,6 +107,20 @@ ActiveRecord::Schema.define(version: 2021_02_24_125108) do
     t.bigint "coupon_id"
     t.index ["coupon_id"], name: "index_coupons_products_on_coupon_id"
     t.index ["product_id"], name: "index_coupons_products_on_product_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "address_id", null: false
+    t.bigint "coupon_id"
+    t.float "total_amount", null: false
+    t.float "net_amount", null: false
+    t.float "taxes", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["address_id"], name: "index_orders_on_address_id"
+    t.index ["coupon_id"], name: "index_orders_on_coupon_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "products", force: :cascade do |t|

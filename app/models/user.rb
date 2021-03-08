@@ -7,6 +7,7 @@ class User < ApplicationRecord
   validates :email, presence: true
 
   has_many :addresses
+  has_many :orders
   has_one :cart
 
   def full_name

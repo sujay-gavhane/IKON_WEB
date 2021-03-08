@@ -32,18 +32,22 @@ class CartAmount extends React.Component {
   appplyCoupon(){
     var coupon = this.props.checkout ? document.querySelector("#coupon").textContent : document.querySelector(".coupon-input").value  
     var cartID = document.getElementById('cart-id').textContent
-    axios
-      .put("/carts/" + cartID + "/apply_coupon.json", {code: coupon})
-        .then(res => {
-          this.setState({ couponMsg: res.data.msg, discount: res.data.discount })
-          this.props.updateTotalAmmount(this.state.discount, 'discount', 0)
-          this.props.updateTotalAmmount(this.props.totalAmount, 'netPayable', this.state.discount)
-        }
-      )
-      .catch(err => {
-         console.log(err);
-         return null;
-       });
+    if (coupon) {
+      axios
+        .put("/carts/" + cartID + "/apply_coupon.json", {code: coupon})
+          .then(res => {
+            this.setState({ couponMsg: res.data.msg, discount: res.data.discount,
+            couponId: res.data.coupon_id })
+            this.props.updateTotalAmmount(this.state.discount, 'discount', 0)
+            this.props.updateTotalAmmount(this.props.totalAmount, 'netPayable', this.state.discount)
+            this.props.updateTotalAmmount(res.data.coupon_id, 'couponId', 0)
+          }
+        )
+        .catch(err => {
+           console.log(err);
+           return null;
+         });
+    }
   }
 
   redirectToCheckout() {

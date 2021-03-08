@@ -4,4 +4,5 @@ class UserCart < ApplicationRecord
   belongs_to :cart
   belongs_to :product
   belongs_to :color
+  belongs_to :order, optional: true
 end
