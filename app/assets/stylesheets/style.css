@@ -1111,7 +1111,9 @@ color: black;
   background: white;
 }
 .close-btn{
-  float: right;
+  position: absolute;
+  top: 5px;
+  right: 5px;
 }
 .close-btn span{
   display: block;
