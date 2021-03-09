@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import CartItems from "./CartItems"
 import SelectAddress from "./SelectAddress"
 import CartAmount from "./CartAmount"
+import CreditCard from "./CreditCard"
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
@@ -19,9 +20,9 @@ class Checkout extends React.Component {
     selectedAddress: {},
     couponId: 0,
     cardNumber: '',
-    firstName: '',
-    lastName: '',
-    expiry: '',
+    cardHolder: '',
+    cardMonth: '',
+    cardYear: '',
     cvv: ''
   }
 
@@ -35,6 +36,7 @@ class Checkout extends React.Component {
     this.updateState = this.updateState.bind(this);
     this.placeOrder = this.placeOrder.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.updateChange = this.updateChange.bind(this);
   }
 
   setCsrfToken() {
@@ -90,7 +92,8 @@ class Checkout extends React.Component {
       card_number: this.state.cardNumber,
       first_name: this.state.firstName,
       last_name: this.state.lastName,
-      expiry: this.state.expiry,
+      card_month: this.state.cardMonth,
+      card_year: this.state.cardYear,
       cvv: this.state.cvv
     }
     if (this.state.selectedAddress.id) {
@@ -110,6 +113,14 @@ class Checkout extends React.Component {
 
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value })
+  }
+
+  updateChange(values) {
+    this.setState({ cardNumber: values.cardNumber })
+    this.setState({ firstName: values.cardHolder.split(' ')[0] })
+    this.setState({ lastName: values.cardHolder.split(' ')[1] })
+    this.setState({ cardMonth: values.cardMonth })
+    this.setState({ cardYear: values.cardYear })
   }
 
   render () {
@@ -134,14 +145,7 @@ class Checkout extends React.Component {
               <div className="main-cart">
                 <div className="item-side">
                   <div className="card-details">
-                    <form className="" action="index.html" method="post">
-                      <h1>Credit Card</h1>
-                      <input onChange={this.handleChange} type="text" name="cardNumber" value={this.state.cardNumber} placeholder="1234 5678 9123 4567"></input>
-                      <input onChange={this.handleChange} type="text" name="firstName" value={this.state.firstName} placeholder="First Name"></input>
-                      <input onChange={this.handleChange} type="text" name="lastName" value={this.state.lastName} placeholder="Last Name"></input>
-                      <input onChange={this.handleChange} type="text" name="expiry" value={this.state.expiry} placeholder="Expiry(mm/yyyy)"></input>
-                      <input onChange={this.handleChange} type="text" name="cvv" value={this.state.cvv} placeholder="CCV"></input>
-                    </form>
+                    <CreditCard updateChange={this.updateChange} placeOrder={this.placeOrder}/>
                   </div>
                 </div>
                 <hr></hr>
@@ -167,8 +171,6 @@ class Checkout extends React.Component {
                       </div>
                     </div>
                     }
-                    <hr></hr>
-                    <button onClick={this.placeOrder} className="checkout-btn" type="button" name="button">Pay</button>
                   </div>
                 </div>
               </div>

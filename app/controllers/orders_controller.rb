@@ -61,6 +61,6 @@ class OrdersController < ApplicationController
   end
 
   def card_params
-    params.permit(:card_number, :first_name, :last_name, :expiry, :cvv)
+    params.permit(:card_number, :first_name, :last_name, :card_month, :card_year, :cvv)
   end
 end
