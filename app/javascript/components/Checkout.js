@@ -97,7 +97,7 @@ class Checkout extends React.Component {
       axios
         .post("/orders.json", order_params)
           .then(res => {
-            location.href = "/orders/" + res.data.order.id
+            location.href = res.data.url
           })
          .catch(err => {
              console.log(err);

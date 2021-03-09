@@ -3,16 +3,22 @@ class OrdersController < ApplicationController
 
   def create
     @order = current_user.orders.build(order_params)
-    if @order.purchase(card_params)
-      @order.save
-      @cart.user_carts.where('order_id IS NULL').update(order_id: @order.id)
-      msg = 'order placed'
+    if @order.save
+      if @order.purchase(card_params)
+        @cart.user_carts.where('order_id IS NULL').update(order_id: @order.id)
+        flash[:notice] = 'Order placed successfully.'
+        url = order_path(@order.id)
+      else
+        flash[:alert] = 'Error while making payment.'
+        url = checkout_cart_path(@cart.id)
+      end
     else
-      msg = 'Error while making payment'
+      flash[:alert] = 'Error while making payment.'
+      url = checkout_cart_path(@cart.id)
     end
     respond_to do |format|
       format.json do
-        render json: { msg: msg, order: @order }
+        render json: { url: url }
       end
     end
   end
