@@ -1,7 +1,10 @@
 import PropTypes from "prop-types"
 import React, { useRef, useState } from "react";
-import { Formik } from "formik";
+import { Formik, Form, Field } from "formik";
 import * as yup from "yup";
+function cardNumber(value) {
+   value.cardNumber.replace(/\s/g, "").replace(/(\d{4})/g, "$1 ").trim()
+ }
 const CreditCard = props => {
   const [element, setElement] = useState();
   const [number, setNumber] = useState();
@@ -12,11 +15,16 @@ const CreditCard = props => {
   };
   const getSchema = () =>
     yup.object().shape({
-      cardNumber: yup.string().min(16, "not less than 16"),
-      cardHolder: yup.string().required(),
-      cardMonth: yup.string().required(),
-      cardYear: yup.string().required(),
-      cvv: yup.string().required().min(3, "not less than 3")
+      cardNumber: yup.number('Enter number value').required('Card Number Required')
+        .test('len', 'Card Number needs to be excatly 16 digits', val => val && val.toString().length === 16)
+        .positive('Card Number must be positive number'),
+      cardHolder: yup.string().required('Card Holder Name is Required'),
+      cardMonth: yup.number('Enter number value').required('Card Expiry Month is Required')
+        .positive('Card Expiry month must be positive number'),
+      cardYear: yup.number('Enter number value').required('Card Expiry Year is Required')
+        .positive('Card Expiry year must be positive number'),
+      cvv: yup.number('Enter number value').required('CVV Number is Required')
+        .positive('Card CVV number must be positive number')
     });
     return (
       <React.Fragment>
@@ -30,114 +38,66 @@ const CreditCard = props => {
           }}
           onSubmit={(values, formikBag) => {
             alert(JSON.stringify(values, null, 2));
-            props.updateChange(values)
             props.placeOrder();
             formikBag.resetForm();
           }}
           validationSchema={getSchema()}
         >
-          {props => (
-            <form onSubmit={props.handleSubmit}>
+          {({errors, touched, values}) => (
+            <Form>
               {" "}
 
               <div className="form">
-                <input
-                  type="text"
-                  onChange={props.handleChange}
-                  onBlur={props.handleBlur}
-                  value={props.values.cardNumber
-                    .replace(/\s/g, "")
-                    .replace(/(\d{4})/g, "$1 ")
-                    .trim()}
-                  name="cardNumber"
-                  maxLength="19"
-                  placeholder="Card Number"
-                  onKeyDown={e => {
-                    console.log(e.which);
-                    if (e.which !== "#")
-                      event.target.classList.add("numberTransform");
-                  }}
-                />
-                <input
-                  type="text"
-                  onChange={props.handleChange}
-                  onBlur={props.handleBlur}
-                  value={props.values.cardHolder}
-                  name="cardHolder"
-                  placeholder="Card Holder Name"
-                />
+                <Field name="cardNumber" placeholder="Card Number" value={values.cardNumber.replace(/\s/g, "").replace(/(\d{4})/g, "$1 ").trim()} />
+                {errors.cardNumber && touched.cardNumber ? (
+                   <div className="color-red">{errors.cardNumber}</div>
+                 ) : null}
+                <Field name="cardHolder" placeholder="Card Holder Name"/>
+                {errors.cardHolder && touched.cardHolder ? (
+                   <div className="color-red">{errors.cardHolder}</div>
+                 ) : null}
                 <div className="row card-date">
                   <div className="column">
                     <div>
-                      <select
-                        type="text"
-                        onChange={props.handleChange}
-                        onBlur={props.handleBlur}
-                        value={props.values.cardMonth}
-                        placeholder="Month"
-                        name="cardMonth"
-                      >
+                      <Field name="cardMonth" as="select" >
                         <option value="" disabled>
                           Month
                         </option>
-                        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((m, i) => (
+                        {Array(12 - new Date().getMonth()).fill().map((element, index) => index + new Date().getMonth() + 1).map((m, i) => (
                           <option key={i} value={m}>{m < 10 ? `0${m}` : m}</option>
                         ))}
-                      </select>
-
-                      <select
-                        type="text"
-                        onChange={props.handleChange}
-                        onBlur={props.handleBlur}
-                        value={props.values.cardYear}
-                        name="cardYear"
-                      >
+                      </Field>
+                      <Field name="cardYear" as="select" >
                         <option value="" disabled>
                           Year
                         </option>
-                        {[
-                          2020,
-                          2021,
-                          2023,
-                          2024,
-                          2025,
-                          2026,
-                          2027,
-                          2028,
-                          2029,
-                          2030,
-                          2031,
-                          2032
-                        ].map((y, i) => (
+                        {Array(20).fill().map((element, index) => new Date().getFullYear() + index).map((y, i) => (
                           <option key={i} value={y}>{y}</option>
                         ))}
-                      </select>
+                      </Field>
+                      {errors.cardMonth && touched.cardMonth ? (
+                         <div className="color-red">{errors.cardMonth}</div>
+                       ) : null}
+                      {errors.cardYear && touched.cardYear ? (
+                        <div className="color-red">{errors.cardYear}</div>
+                      ) : null}
                     </div>
                   </div>{" "}
                   <div className="column">
-                    <input
-                      type="text"
-                      ref={cvvInput}
-                      onChange={props.handleChange}
-                      onBlur={props.handleBlur}
-                      value={props.values.cvv}
-                      name="cvv"
-                      placeholder="CVV"
-                    />
+                    <Field name="cvv" placeholder="CVV"/>
+                    {errors.cvv && touched.cvv ? (
+                       <div className="color-red">{errors.cvv}</div>
+                     ) : null}
                   </div>
                 </div>
-                {props.errors.name && (
-                  <div id="feedback">{props.errors.name}</div>
-                )}
-                <button disabled={!props.isValid} className="pay-btn checkout-btn" type="submit" disabled={!props.isValid}>
+                <button className="pay-btn checkout-btn" type="submit">
                   Pay
                 </button>
               </div>
-            </form>
+            </Form>
           )}
         </Formik>
       </React.Fragment>
     );
 }
-
 export default CreditCard

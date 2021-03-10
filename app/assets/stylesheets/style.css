@@ -1486,3 +1486,6 @@ background: #d6d6d6;
 .card-date > div > div > select[name="cardYear"] {
   margin-left: 10px;
 }
+.color-red{
+  color: red;
+}
