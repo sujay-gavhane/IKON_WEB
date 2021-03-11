@@ -2,6 +2,7 @@ class Order < ApplicationRecord
   belongs_to :user
   belongs_to :address
   belongs_to :coupon, optional: true
+  belongs_to :status, optional: true
 
   has_many :user_carts
 
