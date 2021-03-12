@@ -12,6 +12,8 @@ class Order < ApplicationRecord
   validates :net_amount, presence: true
   validates :taxes, presence: true
 
+  before_update :send_status_email
+
   def purchase(card_params)
     response = GATEWAY.purchase(price_in_cents, credit_card(card_params))
     response.success?
@@ -19,6 +21,12 @@ class Order < ApplicationRecord
 
   def price_in_cents
     (net_amount*100).round
+  end
+
+  def send_status_email
+    if self.changes.include?(:status_id) && self.valid?
+      OrderMailer.with(user: self.user.email, order: self.id).order_status_update.deliver_now
+    end
   end
 
   private
