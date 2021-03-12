@@ -121,4 +121,12 @@ Rails.application.configure do
   }
 
   config.action_mailer.default_url_options = { :host => 'staging-ikon.herokuapp.com' }
+
+  config.after_initialize do
+    ActiveMerchant::Billing::Base.mode = :test
+    ::GATEWAY = ActiveMerchant::Billing::AuthorizeNetGateway.new(
+      login: ENV['API_LOGIN_KEY'],
+      password: ENV['TRANSACTION_KEY']
+    )
+  end
 end
