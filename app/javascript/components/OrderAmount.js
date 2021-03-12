@@ -54,8 +54,14 @@ class OrderAmount extends React.Component {
       <React.Fragment>
         <div className="checkout-side">
           <div className="">
-            <h1>Payable Amount:</h1>
-            <h2>${this.props.netPayable}</h2>
+            <h1>Total:</h1>
+            <h2>${this.props.order.total_amount}</h2>
+            <h1>Discount:</h1>
+            <h2>${this.props.discount || 0}</h2>
+            <h1>Grand Total:</h1>
+            <h2>${this.props.order.net_amount}</h2>
+            <h1>Status:</h1>
+            <h2>{this.props.status}</h2>
             <hr></hr>
             <div className="my-address">
               <div className="address-item">

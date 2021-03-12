@@ -1489,3 +1489,128 @@ background: #d6d6d6;
 .color-red{
   color: red;
 }
+
+
+/* my orders page */
+.my-orders .main-cart a{
+  margin-bottom: 10px;
+  display: block;
+}
+.my-orders .main-cart a:nth-last-of-type(1){
+  margin-bottom: 0;
+}
+.my-orders .main-cart .cart-item:hover{
+  box-shadow: 3px 1px 10px 5px rgb(157 158 157 / 50%);
+  transition-duration: 0.2s;
+}
+.my-orders .main-cart .cart-item .titles h2{
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  color: black;
+}
+.my-orders .main-cart .cart-item .titles h3{
+margin: 10px 0;
+color: black;
+}
+.my-orders .main-cart .cart-item .img{
+  width: 115px;
+}
+.my-orders .main-cart .item-side{
+  width: 100%;
+}
+.my-orders .main-cart .titles{
+  width: calc(100% - 360px);
+}
+.my-orders .main-cart .quantity{
+width: 300px;
+}
+.my-orders .main-cart h4{
+
+  color: black;
+}
+.my-orders .main-cart .quantity h5{
+font-weight: 500;
+  font-size: 14px;
+  color: black;
+}
+.my-orders .main-cart .quantity h5 span{
+  font-weight: 400;
+}
+.my-orders .main-cart .status{
+  width: 150px;
+    text-align: center;
+    padding: 0 10px;
+}
+.my-orders .main-cart .status h5{
+  font-weight: 500;
+  font-size: 14px;
+  color: black;
+}
+.my-orders .main-cart .cancel{
+  width: 200px;
+    text-align: center;
+    padding: 0 10px;
+}
+.my-orders .main-cart .cancel button{
+
+}
+
+/* order summary */
+
+.order-summary .cart-item .titles {
+    width: calc(100% - 270px);
+}
+.order-summary .address h2,
+.order-summary .address h1{
+  width: 100%;
+}
+.order-summary .my-address{
+  margin-bottom: 5px;
+}
+
+/* checkout page */
+.payment-method select{
+  border-width: 1px;
+  border-radius: 4px;
+  width: calc(50% + 5px);
+  padding: 6px 12px;
+}
+.cart-d > hr{
+  width: calc(100% - 20px);
+}
+.card-details form{
+  width: calc(100% - 30px);
+  max-width: 400px;
+  margin: auto;
+  border-radius: 7px;
+  overflow: hidden;
+    filter: drop-shadow(4.974px 3.355px 10.5px rgba(157,158,157,0.5));
+    background: white;
+    padding: 0 15px 15px 15px;
+}
+.card-details h1{
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+  padding: 5px 10px;
+  margin: 0 -15px;
+background: #d6d6d6;
+}
+.card-details input{
+
+  font-size: 14px;
+  border-width: 1px;
+  border-radius: 4px;
+  width: calc(100% - 24px);
+  padding: 12px 12px;
+  display: block;
+  margin-top: 10px;
+}
+
+
+.choose-address .my-address a .address-item{
+  margin-bottom: 15px;
+}
+.choose-address .my-address a:nth-last-of-type(1) .address-item{
+  margin-bottom: 0;
+}

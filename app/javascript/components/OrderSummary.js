@@ -26,7 +26,13 @@ class OrderSummary extends React.Component {
     axios
       .get("/orders/" + orderID + ".json")
         .then(res => {
-          this.setState({ orderItems: res.data.order_items, order: res.data.order, address: res.data.address })
+          this.setState({ 
+            orderItems: res.data.order_items,
+            order: res.data.order,
+            address: res.data.address,
+            discount: res.data.discount,
+            status: res.data.status
+          })
         }
       )
       .catch(err => {
@@ -76,7 +82,7 @@ class OrderSummary extends React.Component {
                 {orderItems}
               </div>
               <hr></hr>
-              <OrderAmount updateAddress={this.updateState} address={this.state.address} netPayable={this.state.order.net_amount} />
+              <OrderAmount updateAddress={this.updateState} status={this.state.status} address={this.state.address} discount={this.state.discount} order={this.state.order} />
             </div>
           </div>
         </main>

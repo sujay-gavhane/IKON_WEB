@@ -91,7 +91,7 @@ class CartAmount extends React.Component {
             <h1>Total Amount:</h1>
             <h2>${this.props.totalAmount}</h2>
 
-            <h1>Coupan Discount:</h1>
+            <h1>Coupon Discount:</h1>
             <h2>${this.state.discount}</h2>
 
             <h1>Sales Tax:</h1>
@@ -104,9 +104,7 @@ class CartAmount extends React.Component {
             <div className="payment-method">
               <h1>Payment Method:</h1>
               <select className="" name="">
-                <option value="">Credit Cart</option>
-                <option value="">Credit Cart</option>
-                <option value="">Paypal</option>
+                <option value="">Credit Card</option>
               </select>
             </div>
           </div>

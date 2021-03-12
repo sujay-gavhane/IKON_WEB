@@ -19,7 +19,7 @@ Rails.application.routes.draw do
       get 'checkout'
     end
   end
-  resources :orders, only: [:create, :show] do
+  resources :orders, only: [:create, :show, :index, :destroy] do
     member do
       put 'update_address'
     end
