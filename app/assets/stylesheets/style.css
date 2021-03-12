@@ -1500,7 +1500,7 @@ background: #d6d6d6;
   margin-bottom: 0;
 }
 .my-orders .main-cart .cart-item:hover{
-  box-shadow: 3px 1px 10px 5px rgb(157 158 157 / 50%);
+  box-shadow: 3px 1px 10px 5px rgb(157, 158, 157 / 50%);
   transition-duration: 0.2s;
 }
 .my-orders .main-cart .cart-item .titles h2{
