@@ -30,13 +30,20 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
-
-    if user.has_role? :super_admin
+    if user.try(:roles) && user.has_role?(:super_admin)
       can :manage, :all             # allow superadmins to do anything
-    elsif user.has_role? :admin
+    elsif user.try(:roles) && user.has_role?(:admin)
       can :manage, [User, StaticPage, Product, Category]  # allow managers to do anything to products and users
       can :access, :rails_admin   # grant access to rails_admin
-      can :read, :dashboard      # grant access to the dashboard
+      can :read, :dashboard     # grant access to the dashboard
+    else
+      can :manage_cart, Cart do |cart, session_id|
+        if user.present? && cart.user.present?
+          user.id == cart.user.id
+        else
+          session_id == cart.id
+        end
+      end
     end
   end
 end

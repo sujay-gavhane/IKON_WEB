@@ -1,5 +1,6 @@
 class CartsController < ApplicationController
   before_action :authenticate_user!, only: [:checkout]
+  before_action :authorize_user
 
   def update
     begin
@@ -75,5 +76,11 @@ class CartsController < ApplicationController
     respond_to do |format|
       format.html
     end
+  end
+
+  private
+
+  def authorize_user
+    authorize! :manage_cart, @cart, session[:cart]
   end
 end

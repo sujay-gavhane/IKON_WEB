@@ -14,7 +14,9 @@ class ApplicationController < ActionController::Base
     elsif current_user
       @cart = current_user.cart ? current_user.cart : Cart.create(is_guest: false, user_id: current_user.id)
     else
-      if session[:cart]
+      if session[:cart] && params[:controller] == 'carts' && ['update', 'destroy'].exclude?(params[:action])
+        @cart = Cart.find_by(id: params[:id])
+      elsif session[:cart]
         @cart = Cart.find_by(id: session[:cart])
       else
         @cart = Cart.create(is_guest: true)
