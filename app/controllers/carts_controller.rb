@@ -23,6 +23,9 @@ class CartsController < ApplicationController
   end
 
   def show
+    if session[:cart].present? && current_user.try(:cart)
+      Cart.find(session[:cart]).user_carts.update(cart_id: current_user.cart.id)
+    end
     respond_to do |format|
       format.json do
         @users_cart_products = @cart.user_carts.includes(:color, product: [:category]).where('order_id IS NULL').order('id desc')
@@ -70,7 +73,9 @@ class CartsController < ApplicationController
   end
 
   def checkout
-    if session[:cart].present?
+    if session[:cart].present? && current_user.try(:cart)
+      Cart.find(session[:cart]).user_carts.update(cart_id: current_user.cart.id)
+    else
       @cart.update(is_guest: false, user_id: current_user.id)
     end
     respond_to do |format|
