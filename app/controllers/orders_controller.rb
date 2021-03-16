@@ -59,7 +59,7 @@ class OrdersController < ApplicationController
   def index
     respond_to do |format|
       format.json do
-        orders = current_user.orders.includes(user_carts: [:color, product: [:category]])
+        orders = current_user.orders.includes(user_carts: [:color, product: [:category]]).order('id desc').page(params[:page]).per(4)
         orders = orders.map{ |order| order.as_json.merge({
           status: order.status.try(:name),
           user_carts: order.user_carts.map { |item| item.as_json.merge({ product: item.product }) }

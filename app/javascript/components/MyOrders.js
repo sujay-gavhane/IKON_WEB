@@ -4,6 +4,7 @@ import Product2 from 'images/product2.jpg'
 import axios from 'axios';
 class MyOrders extends React.Component {
   state = {
+    page: 1,
     orders: []
   }
 
@@ -13,11 +14,14 @@ class MyOrders extends React.Component {
     this.getOrders = this.getOrders.bind(this);
     this.cancelOrder = this.cancelOrder.bind(this);
     this.setCsrfToken = this.setCsrfToken.bind(this);
+    this.trackScrolling = this.trackScrolling.bind(this);
+    this.isBottom = this.isBottom.bind(this);
   }
 
   componentDidMount() {
     this.setCsrfToken();
-    this.getOrders();
+    this.getOrders(this.state.orders, this.state.page);
+    window.addEventListener('scroll', this.trackScrolling);
   }
 
   setCsrfToken() {
@@ -25,11 +29,15 @@ class MyOrders extends React.Component {
     axios.defaults.headers.common['X-CSRF-Token'] = csrfToken
   }
 
-  getOrders(addressId){
+  getOrders(orders, page){
+    var data = "page=" + page
     axios
-      .get("/orders.json")
+      .get("/orders.json?" + data)
         .then(res => {
-          this.setState({orders: res.data.orders})
+          var o = this.uniqueObjects(res.data.orders, orders)
+          this.pushToCollection(o, orders)
+          this.setState({orders: orders})
+          this.setState({ page: page + 1 })
         })
        .catch(err => {
            console.log(err);
@@ -51,6 +59,38 @@ class MyOrders extends React.Component {
            console.log(err);
            return null;
        });
+  }
+
+  trackScrolling = () => {
+    const wrappedElement = document.getElementsByTagName('body')[0];
+    if (this.isBottom(wrappedElement)) {
+      this.getOrders(this.state.orders, this.state.page);
+    }
+  };
+
+  isBottom(el) {
+    return (window.innerHeight + window.scrollY) >= document.body.offsetHeight
+  }
+
+  pushToCollection(collection, original_collection){
+    collection.map((c) =>{original_collection.push(c)})
+  }
+
+  uniqueObjects(orders, order_collection){
+    var isPresent = false
+    return orders.filter((p) => {
+      order_collection.map((c) => { 
+        if (c.id == p.id) {
+          isPresent = true
+        } 
+      })
+      if (isPresent) {
+        isPresent = false
+        return false
+      } else {
+        return true
+      }
+    })
   }
 
   render () {

@@ -33,7 +33,6 @@ class Products extends React.Component {
   trackScrolling = () => {
     const wrappedElement = document.getElementsByTagName('body')[0];
     if (this.isBottom(wrappedElement)) {
-      console.log('header bottom reached');
       this.getCollections(this.state.collections, this.state.parts, this.state.page);
     }
   };
