@@ -1,18 +1,8 @@
 import PropTypes from "prop-types"
-import React, { useRef, useState } from "react";
+import React from "react";
 import { Formik, Form, Field } from "formik";
 import * as yup from "yup";
-function cardNumber(value) {
-   value.cardNumber.replace(/\s/g, "").replace(/(\d{4})/g, "$1 ").trim()
- }
 const CreditCard = props => {
-  const [element, setElement] = useState();
-  const [number, setNumber] = useState();
-  const cvvInput = useRef();
-  const handleTransition = (cardInner, numberItem) => {
-    setElement(cardInner);
-    setNumber(numberItem);
-  };
   const getSchema = () =>
     yup.object().shape({
       cardNumber: yup.number('Enter number value').required('Card Number Required')

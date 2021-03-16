@@ -16,7 +16,7 @@ class Order < ApplicationRecord
 
   def purchase(card_params)
     response = GATEWAY.purchase(price_in_cents, credit_card(card_params))
-    puts "////////////////////// responseeeeee====== #{response}"
+    puts "////////////////////// responseeeeee====== #{response.message}"
     response.success?
   end
 

@@ -11,12 +11,12 @@ class OrdersController < ApplicationController
         flash[:notice] = 'Order placed successfully.'
         url = order_path(@order.id)
       else
-        puts "/////////////// #{@order.errors.full_messages}"
         @order.destroy
         flash[:alert] = 'Error while making payment.'
         url = checkout_cart_path(@cart.id)
       end
     else
+      puts "/////////////// #{@order.errors.full_messages}"
       flash[:alert] = 'Error while placing order.'
       url = checkout_cart_path(@cart.id)
     end
