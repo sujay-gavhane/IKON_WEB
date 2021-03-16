@@ -3,7 +3,7 @@ class AddressesController < ApplicationController
 
   def index
     respond_to do |format|
-      format.json  { render json: { addresses: current_user.addresses } }
+      format.json  { render json: { addresses: current_user.addresses.order('id desc') } }
       format.html
     end
   end
@@ -28,7 +28,6 @@ class AddressesController < ApplicationController
       if @address.errors.blank?
         format.json { render json: { msg: 'Address Updated Successfully' }}
       else
-        debugger
         format.json { render json: { msg: '', errors: @address.errors.full_messages.join('<br>')}}
       end
       format.html

@@ -39,12 +39,12 @@ class EditAddress extends React.Component {
 
   handleSubmit(event) {
     const userInputs = {
-      address_line_one: this.state.address_line_one,
-      address_line_two: this.state.address_line_two,
-      city: this.state.city,
-      state: this.state.state,
-      country: this.state.country,
-      pincode: this.state.pincode
+      address_line_one: this.state.address_line_one || this.props.properties.address_line_one,
+      address_line_two: this.state.address_line_two || this.props.properties.address_line_two,
+      city: this.state.city || this.props.properties.city,
+      state: this.state.state || this.props.properties.state,
+      country: this.state.country || this.props.properties.country,
+      pincode: this.state.pincode || this.props.properties.pincode
     }
     axios
       .put("/addresses/" + this.props.properties.id + ".json", userInputs)
