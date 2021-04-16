@@ -24,4 +24,7 @@ Rails.application.routes.draw do
       put 'update_address'
     end
   end
+  resources :services
+  get '/quote', to: 'services#quote'
+
 end
