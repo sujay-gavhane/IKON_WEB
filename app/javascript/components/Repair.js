@@ -175,28 +175,28 @@ class Repair extends React.Component {
                     <label htmlFor="scoup-installation" className="s-input">
                       <span>
                         <input type="checkbox" id="scoup-installation" name="scoupInstallation" checked={this.state.scoupInstallation} onChange={this.updateState}></input>
-                        <span>Scoup/Sight Installation <a href="#"> <img src={AddBoxLine} alt=""></img></a> </span>
+                        <span>Scoup/Sight Installation <a href="/products"> <img src={AddBoxLine} alt=""></img></a> </span>
                         <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                       </span>
                     </label>
                     <label htmlFor="swivel-installation" className="s-input">
                       <span>
                         <input type="checkbox" id="swivel-installation" name="swivelInstallation" checked={this.state.swivelInstallation} data-id="swivel-installation-style" onChange={this.openSecondInputs}></input>
-                        <span>Swivel Installation <a href="#"> <img src={AddBoxLine} alt=""></img> </a> </span>
+                        <span>Swivel Installation <a href="/products"> <img src={AddBoxLine} alt=""></img> </a> </span>
                         <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                       </span>
                     </label>
                     <label htmlFor="glass-bed" className="s-input">
                       <span>
                         <input type="checkbox" id="glass-bed" checked={this.state.glassBed} name="glassBed" onChange={this.updateState}></input>
-                        <span>Glass Bed <a href="#"> <img src={AddBoxLine} alt=""></img> </a> </span>
+                        <span>Glass Bed <a href="/products"> <img src={AddBoxLine} alt=""></img> </a> </span>
                         <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                       </span>
                     </label>
                     <label htmlFor="grip-work" className="s-input">
                       <span>
                         <input type="checkbox" id="grip-work" checked={this.state.gripWork} name="gripWork" onChange={this.updateState}></input>
-                        <span>Grip Work <a href="#"> <img src={AddBoxLine} alt=""></img> </a> </span>
+                        <span>Grip Work <a href="/products"> <img src={AddBoxLine} alt=""></img> </a> </span>
                         <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                       </span>
                     </label>
@@ -207,42 +207,42 @@ class Repair extends React.Component {
                     <label htmlFor="barrel-cut" className="s-input">
                       <span>
                         <input type="checkbox" id="barrel-cut" name="barrelCut" checked={this.state.barrelCut} data-id="style-of-crown" onChange={this.openSecondInputs}></input>
-                        <span>Barrel Cut + Crown + Threading   <a href="#"> <img src={AddBoxLine} alt=""></img> </a> </span>
+                        <span>Barrel Cut + Crown + Threading   <a href="/products"> <img src={AddBoxLine} alt=""></img> </a> </span>
                         <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                       </span>
                     </label>
                     <label htmlFor="barrel-pin" className="s-input">
                       <span>
                         <input type="checkbox" id="barrel-pin" name="barrelPin" checked={this.state.barrelPin} onChange={this.updateState}></input>
-                        <span>Barrel Pin + Weld <a href="#"> <img src={AddBoxLine} alt=""></img> </a> </span>
+                        <span>Barrel Pin + Weld <a href="/products"> <img src={AddBoxLine} alt=""></img> </a> </span>
                         <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                       </span>
                     </label>
                     <label htmlFor="barrel-change" className="s-input">
                       <span>
                         <input type="checkbox" id="barrel-change" name="barrelChange" checked={this.state.barrelChange} onChange={this.updateState}></input>
-                        <span>Barrel Change <a href="#"> <img src={AddBoxLine} alt=""></img> </a> </span>
+                        <span>Barrel Change <a href="/products"> <img src={AddBoxLine} alt=""></img> </a> </span>
                         <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                       </span>
                     </label>
                     <label htmlFor="barrel-re-threading" className="s-input">
                       <span>
                         <input type="checkbox" id="barrel-re-threading" name="barrelReThreading" checked={this.state.barrelReThreading} onChange={this.updateState}></input>
-                        <span>Barrel Re-Threading "FIX" <a href="#"> <img src={AddBoxLine} alt=""></img> </a> </span>
+                        <span>Barrel Re-Threading "FIX" <a href="/products"> <img src={AddBoxLine} alt=""></img> </a> </span>
                         <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                       </span>
                     </label>
                     <label htmlFor="barrel-lengthen" className="s-input">
                       <span>
                         <input type="checkbox" id="barrel-lengthen" name="barrelLengthen" checked={this.state.barrelLengthen} onChange={this.updateState}></input>
-                        <span>Barrel Lengthen Forcing Cone <a href="#"> <img src={AddBoxLine} alt=""></img> </a> </span>
+                        <span>Barrel Lengthen Forcing Cone <a href="/products"> <img src={AddBoxLine} alt=""></img> </a> </span>
                         <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                       </span>
                     </label>
                     <label htmlFor="barrel-porting" className="s-input">
                       <span>
                         <input type="checkbox" id="barrel-porting" name="barrelPorting" checked={this.state.barrelPorting} onChange={this.updateState}></input>
-                        <span>Barrel Porting <a href="#"> <img src={AddBoxLine} alt=""></img> </a> </span>
+                        <span>Barrel Porting <a href="/products"> <img src={AddBoxLine} alt=""></img> </a> </span>
                         <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                       </span>
                     </label>
@@ -253,14 +253,14 @@ class Repair extends React.Component {
                     <label htmlFor="new-trigger" className="s-input">
                       <span>
                         <input type="checkbox" id="new-trigger" name="newTrigger" checked={this.state.newTrigger} data-id="new-trigger-installation" data-id2="new-trigger-installation" onChange={this.openSecondInputs}></input>
-                        <span>New Trigger Installation <a href="#"> <img src={AddBoxLine} alt=""></img> </a> </span>
+                        <span>New Trigger Installation <a href="/products"> <img src={AddBoxLine} alt=""></img> </a> </span>
                         <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                       </span>
                     </label>
                     <label htmlFor="function-test" className="s-input">
                       <span>
                         <input type="checkbox" id="function-test" name="functionTest" checked={this.state.functionTest} data-id="action-function-test" onChange={this.openSecondInputs}></input>
-                        <span>Action Function Test <a href="#"> <img src={AddBoxLine} alt=""></img> </a> </span>
+                        <span>Action Function Test <a href="/products"> <img src={AddBoxLine} alt=""></img> </a> </span>
                         <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                       </span>
                     </label>
@@ -271,7 +271,7 @@ class Repair extends React.Component {
                     <label htmlFor="recoil-installation" className="s-input">
                       <span>
                         <input type="checkbox" id="recoil-installation" name="recoilInstallation" checked={this.state.recoilInstallation} data-id="recoil-hardware" data-id2="recoil-hardware" onChange={this.openSecondInputs}></input>
-                        <span>Recoil Pad Installaitons <a href="#"> <img src={AddBoxLine} alt=""></img> </a> </span>
+                        <span>Recoil Pad Installaitons <a href="/products"> <img src={AddBoxLine} alt=""></img> </a> </span>
                         <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                       </span>
                     </label>
@@ -281,25 +281,25 @@ class Repair extends React.Component {
                     <label className="form-label">Finishing Work:</label>
                     <label htmlFor="recoil-installaton" className="s-input">
                       <span>
-                        <span>Parkorize <a href="#"> <img src={AddBoxLine} alt=""></img></a> </span>
+                        <span>Parkorize <a href="/products"> <img src={AddBoxLine} alt=""></img></a> </span>
                         <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                       </span>
                     </label>
                     <label htmlFor="recoil-installaton" className="s-input">
                       <span>
-                        <span>Cerakote <a href="#"> <img src={AddBoxLine} alt=""></img></a> </span>
+                        <span>Cerakote <a href="/products"> <img src={AddBoxLine} alt=""></img></a> </span>
                         <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                       </span>
                     </label>
                     <label htmlFor="recoil-installaton" className="s-input">
                       <span>
-                        <span>Titanium Nitrate <a href="#"> <img src={AddBoxLine} alt=""></img> </a> </span>
+                        <span>Titanium Nitrate <a href="/products"> <img src={AddBoxLine} alt=""></img> </a> </span>
                         <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                       </span>
                     </label>
                     <label htmlFor="recoil-installaton" className="s-input">
                       <span>
-                        <span>Engraving <a href="#"> <img src={AddBoxLine} alt=""></img> </a> </span>
+                        <span>Engraving <a href="/products"> <img src={AddBoxLine} alt=""></img> </a> </span>
                         <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                       </span>
                     </label>
@@ -409,14 +409,14 @@ class Repair extends React.Component {
                       <label htmlFor="11-degree" className="s-input">
                         <span>
                           <input type="radio" id="traditional" name="swivelInstallationStyle" value="traditional" checked={this.state.swivelInstallationStyle === "traditional"} onChange={this.updateState}></input>
-                          <span>Traditional  <a href="#"> <img src={AddBoxLine} alt=""></img> </a> </span>
+                          <span>Traditional  <a href="/products"> <img src={AddBoxLine} alt=""></img> </a> </span>
                           <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                         </span>
                       </label>
                       <label htmlFor="standard-recess" className="s-input">
                         <span>
                           <input type="radio" id="flush-mount-quick-detach" name="swivelInstallationStyle" value="flush-mount-quick-detach" checked={this.state.swivelInstallationStyle === "flush-mount-quick-detach"} onChange={this.updateState}></input>
-                          <span>Flush Mount Quick Detach  <a href="#"> <img src={AddBoxLine} alt=""></img> </a> </span>
+                          <span>Flush Mount Quick Detach  <a href="/products"> <img src={AddBoxLine} alt=""></img> </a> </span>
                           <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                         </span>
                       </label>
@@ -434,7 +434,7 @@ class Repair extends React.Component {
                       <label htmlFor="Shop-from-our-store" className="s-input">
                         <span>
                           <input type="radio" id="Shop-from-our-store" name="hardware" value="Shop-from-our-store" onChange={this.updateState} checked={this.state.hardware === "Shop-from-our-store"}></input>
-                          <span>Shop from our store  <a href="#"> <img src={AddBoxLine} alt=""></img> </a>  </span>
+                          <span>Shop from our store  <a href="/products"> <img src={AddBoxLine} alt=""></img> </a>  </span>
                           <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                         </span>
                       </label>
@@ -455,7 +455,7 @@ class Repair extends React.Component {
                       <label htmlFor="Shop-from-our-store" className="s-input">
                         <span>
                           <input type="radio" id="Shop-from-our-store" name="recoilHardwarePistol" value="Shop-from-our-store" onChange={this.updateState} checked={this.state.recoilHardwarePistol === "Shop-from-our-store"}></input>
-                          <span>Shop from our store  <a href="#"> <img src={AddBoxLine} alt=""></img> </a>  </span>
+                          <span>Shop from our store  <a href="/products"> <img src={AddBoxLine} alt=""></img> </a>  </span>
                           <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                         </span>
                       </label>
