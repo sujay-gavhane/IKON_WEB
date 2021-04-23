@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_11_095540) do
+ActiveRecord::Schema.define(version: 2021_04_22_112546) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -109,6 +109,19 @@ ActiveRecord::Schema.define(version: 2021_03_11_095540) do
     t.index ["product_id"], name: "index_coupons_products_on_product_id"
   end
 
+  create_table "firearm_types", force: :cascade do |t|
+    t.string "type_name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "firearm_types_service_types", force: :cascade do |t|
+    t.bigint "firearm_type_id"
+    t.bigint "service_type_id"
+    t.index ["firearm_type_id"], name: "index_firearm_types_service_types_on_firearm_type_id"
+    t.index ["service_type_id"], name: "index_firearm_types_service_types_on_service_type_id"
+  end
+
   create_table "orders", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "address_id", null: false
@@ -144,6 +157,24 @@ ActiveRecord::Schema.define(version: 2021_03_11_095540) do
     t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
     t.index ["name"], name: "index_roles_on_name"
     t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
+  end
+
+  create_table "service_types", force: :cascade do |t|
+    t.string "type_name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "service_works", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "work_description"
+    t.integer "service_type_id", null: false
+    t.integer "firearm_type_id", null: false
+    t.string "estimated_cost_labor"
+    t.string "estimated_time"
+    t.string "estimated_cost_part"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "static_pages", force: :cascade do |t|

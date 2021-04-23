@@ -25,6 +25,6 @@ Rails.application.routes.draw do
     end
   end
   resources :services
-  get '/quote', to: 'services#quote'
+  get '/quote', to: 'services#get_quote'
 
 end

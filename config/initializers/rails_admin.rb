@@ -101,4 +101,55 @@ RailsAdmin.config do |config|
     update do; end
   end
 
+  config.model 'ServiceWork' do 
+    edit do
+      field :name
+      field :work_description
+      field :estimated_cost_labor
+      field :estimated_time
+      field :estimated_cost_part
+      field :service_type_id, :enum do
+        enum do
+          ServiceType.all.collect {|u| [u.type_name, u.id]}
+        end
+      end
+      field :firearm_type_id, :enum do
+        enum do
+          FirearmType.all.collect {|u| [u.type_name, u.id]}
+        end
+      end
+    end
+    export do; end
+    create do; end
+    update do; end
+  end
+
+  # config.model 'ServiceType' do 
+  #   edit do
+  #     field :type_name
+  #     field :firearm_types, :enum do
+  #       enum do
+  #         FirearmType.all.collect {|u| [u.type_name, u.id]}
+  #       end
+  #     end
+  #   end
+  #   export do; end
+  #   create do; end
+  #   update do; end
+  # end
+
+  # config.model 'FirearmType' do 
+  #   edit do
+  #     field :type_name
+  #     field :service_types, :enum do
+  #       enum do
+  #         ServiceType.all.collect {|u| [u.type_name, u.id]}
+  #       end
+  #     end
+  #   end
+  #   export do; end
+  #   create do; end
+  #   update do; end
+  # end
+
 end
