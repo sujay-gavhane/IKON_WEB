@@ -114,7 +114,7 @@
     width: calc(100% - 30px);
   }
 .options-form-fields{
-  width: calc(100% - 30px);
+  width: calc(100% - 60px);
 }
 .options-form-fields label{
   width: 33.33%;
@@ -123,6 +123,44 @@
 .options-form-fields select{
   width: 66.67%;
 }
+.customer-support .popup-div{
+  width: calc(100vw - 60px);
+}
+.repair-form-m .options-form-fields{
+max-width: 500px;
+width: calc(100% - 30px - 40px);
+margin: 20px auto;
+
+}
+.quote-form-d .form-group.radio div{
+  padding: 0 10px;
+  width: 24%;
+}
+.pricings-list{
+  width: calc(100% - 30px);
+}
+.circle-wrapper{
+  width: 100px;
+  height: 100px;
+}
+.circle-wrapper .text p{
+  font-size: 12px;
+}
+.circle-wrapper .text::before,
+.circle-wrapper .text p::before{
+  /* shape-margin: 7%; */
+}
+.circle-wrapper h1{
+  font-size: 14px;
+  margin-top: 0;
+}
+.form-group .s-input:nth-of-type(2) {
+    width: calc(66.67% - 5px);
+
+}
+.form-group .s-input>span {
+    width: calc(66.67% - 25px);
+  }
 }
 @media (max-width:767px) and (min-width:567px) {
 
@@ -136,6 +174,7 @@
   .shop-m.parts .items#parts-div{
     display: block;
   }
+
 }
 @media (max-width:567px) {
 
@@ -178,6 +217,27 @@
   .options-form-fields select{
     width: 58.33%;
   }
+  .options-form-fields label{
+    width: 100% !important;
+    display: block;
+    text-align: left;
+  }
+  .options-form-fields select{
+    width: 100%;
+    display: block;
+  }
+  .options-form-fields .form-group{
+    display: block;
+    margin-bottom: 5px;
+  }
+  .form-group .s-input:nth-of-type(2),
+  .form-group.s-form-group label{
+    width: 100%;
+    margin-left: 0 !important;
+  }
+  .form-group .s-input>span {
+    width: calc(100% - 25px);
+}
 }
 @media (max-width: 450px) {
   .shop-m article>div{
@@ -191,17 +251,137 @@
     padding: 0;
     width: 100%;
   }
-  .options-form-fields .form-group{
-    display: block;
-    margin-bottom: 5px;
-  }
-  .options-form-fields label{
-    width: 100%;
+
+  .quote-form-d .form-group.input input{
+    width: calc(100% - 6px) !important;
     display: block;
     text-align: left;
   }
-  .options-form-fields select{
-    width: 100%;
+
+  #nfa-options.active,
+  #selectOptions.active{
     display: block;
+  }
+  .quote-form-d .form-group.radio div{
+    width: calc(50% - 25px);
+    }
+    .quote-form-d .form-group.radio div label{
+      width: calc(100% - 60px) !important;
+    }
+}
+
+
+
+
+
+
+
+
+
+/* cart page */
+@media (max-width:991px) {
+  .main-cart{
+    flex-direction: column;
+  }
+  .main-cart hr{
+    width: 100%;
+    /* height: 0px; */
+
+    background: black;
+  }
+  .my-orders .main-cart .item-side,
+  .main-cart .item-side{
+    width: calc(100% - 20px);
+  }
+  .checkout-side{
+    width: calc(100% - 20px);
+    max-width: 300px;
+    margin: auto;
+  }
+}
+@media (max-width: 667px) {
+  .cart-item{
+    flex-wrap: wrap;
+  }
+  .cart-item .titles{
+    width: calc(100% - 115px);
+
+  }
+  .my-orders .cart-item .titles{
+    width: calc(100% - 135px);
+
+  }
+
+}
+@media (max-width: 467px) {
+  .cart-top button{
+    display: none;
+  }
+}
+
+
+
+
+
+
+/* myorders page */
+@media (max-width: 767px) {
+  .my-orders .main-cart  .cart-item {
+    flex-direction: column;
+  }
+  .my-orders .main-cart  .cart-item .img{
+    width: 80%;
+    max-width: 200px;
+    height: 150px;
+  }
+  .my-orders .cart-item .titles{
+    width: calc(100% - 20px);
+    margin-top: 10px;
+    text-align: center;
+  }
+  .my-orders .main-cart .quantity{
+    width: calc(100% - 20px);
+  }
+   .my-orders .cart-item .total-price{
+     padding: 0 10px;
+   }
+  .my-orders .main-cart .quantity h5{
+    margin: 10px 0 5px 0;
+  }
+  .my-orders .main-cart .status h5{
+    margin: 5px 0 10px 0;
+  }
+}
+
+
+
+
+
+/* order summary */
+@media (max-width:667px) {
+  .order-summary .main-cart  .cart-item {
+    flex-direction: column;
+  }
+
+  .order-summary .main-cart  .cart-item .img{
+    width: 80%;
+    max-width: 200px;
+    height: 150px;
+  }
+  .order-summary .cart-item .titles{
+    margin-top: 10px;
+    text-align: center;
+  }
+  .order-summary .cart-item .titles{
+    width: calc(100% - 20px);
+  }
+   .order-summary .cart-item .total-price{
+     padding: 0 10px;
+   }
+  .order-summary .main-cart .quantity h5{
+    margin: 10px 0 5px 0;
+  }
+  .order-summary .main-cart .status h5{
+    margin: 5px 0 10px 0;
   }
 }

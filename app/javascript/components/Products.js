@@ -122,7 +122,7 @@ class Products extends React.Component {
 
     return (
       <React.Fragment>
-        <main className="shop-m" id="shop-m">
+        <main className="shop-m collection" id="shop-m">
           <div className="shop-d">
             <div className="btns">
               <button type="button" className="active switch-shop-page" data-collection="collection" name="button">Our Collection</button>
