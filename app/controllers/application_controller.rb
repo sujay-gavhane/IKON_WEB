@@ -1,7 +1,8 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :current_cart
-
+  before_action :current_service_cart
+  
   protected
 
   def configure_permitted_parameters
@@ -19,6 +20,21 @@ class ApplicationController < ActionController::Base
       else
         @cart = Cart.create(is_guest: true)
         session[:cart] = @cart.id
+      end
+    end
+  end
+
+  def current_service_cart
+    if current_user && session[:service_cart].present?
+      @service_cart = current_user.service_cart ? current_user.service_cart : ServiceCart.find_by(id: session[:service_cart])
+    else
+      if session[:service_cart] && params[:controller] == 'service_carts' && ['update', 'destroy'].exclude?(params[:action])
+        @service_cart = ServiceCart.find_by(id: params[:id])
+      elsif session[:service_cart]
+        @service_cart = ServiceCart.find_by(id: session[:service_cart])
+      else
+        @service_cart = ServiceCart.create(is_guest: true)
+        session[:service_cart] = @service_cart.id
       end
     end
   end

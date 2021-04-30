@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_22_112546) do
+ActiveRecord::Schema.define(version: 2021_04_30_133948) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(version: 2021_04_22_112546) do
     t.string "type_name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "key"
   end
 
   create_table "firearm_types_service_types", force: :cascade do |t|
@@ -159,10 +160,40 @@ ActiveRecord::Schema.define(version: 2021_04_22_112546) do
     t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
   end
 
+  create_table "service_cart_items", force: :cascade do |t|
+    t.string "service_work_name", null: false
+    t.bigint "firearm_type_id"
+    t.bigint "service_type_id"
+    t.bigint "service_work_id"
+    t.bigint "service_cart_id"
+    t.string "frame_work_style_of_crown"
+    t.string "frame_work_hardware"
+    t.string "barrel_work_style_of_crown"
+    t.string "barrel_work_lengthof_barrel"
+    t.string "barrel_work_barrel_threads"
+    t.string "action_work_model_name"
+    t.string "stock_work_hardware_type"
+    t.string "stock_work_hardware"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["firearm_type_id"], name: "index_service_cart_items_on_firearm_type_id"
+    t.index ["service_cart_id"], name: "index_service_cart_items_on_service_cart_id"
+    t.index ["service_type_id"], name: "index_service_cart_items_on_service_type_id"
+    t.index ["service_work_id"], name: "index_service_cart_items_on_service_work_id"
+  end
+
+  create_table "service_carts", force: :cascade do |t|
+    t.boolean "is_guest", default: false
+    t.integer "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "service_types", force: :cascade do |t|
     t.string "type_name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "key"
   end
 
   create_table "service_works", force: :cascade do |t|
@@ -175,6 +206,7 @@ ActiveRecord::Schema.define(version: 2021_04_22_112546) do
     t.string "estimated_cost_part"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "key"
   end
 
   create_table "static_pages", force: :cascade do |t|

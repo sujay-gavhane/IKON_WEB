@@ -1296,14 +1296,12 @@ text-align: center;
   margin: 0;
 }
 .cart-item .total-price{
-  width: 60px;
+  width: 30%;
   padding: 10px;
-  text-align: center;
 }
 .cart-item .total-price h4{
   font-size: 16px;
   font-weight: 700;
-  text-align: center;
   margin: 0;
 
 }

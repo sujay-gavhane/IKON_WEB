@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :addresses
   has_many :orders
   has_one :cart
+  has_one :service_cart
 
   def full_name
     "#{self.first_name} #{self.last_name}"

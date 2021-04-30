@@ -5,21 +5,10 @@ class ServicesController < ApplicationController
       format.json  do 
       	firearm_types = FirearmType.all.order('id desc')
       	service_types = ServiceType.all.order('id asc')
-        render json: { firearm_types: firearm_types, service_types: service_types }
+        service_cart_id = session[:service_cart] || current_user.service_cart.id
+        render json: { firearm_types: firearm_types, service_types: service_types, service_cart_id: service_cart_id }
       end
       format.html
-    end
-  end
-
-  def get_quote
-  end
-
-  def create
-    url = quote_path(quotes_params)
-    respond_to do |format|
-      format.json do
-        render json: { url: url }
-      end
     end
   end
 

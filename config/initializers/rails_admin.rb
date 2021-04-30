@@ -104,6 +104,7 @@ RailsAdmin.config do |config|
   config.model 'ServiceWork' do 
     edit do
       field :name
+      field :key
       field :work_description
       field :estimated_cost_labor
       field :estimated_time

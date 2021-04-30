@@ -25,6 +25,11 @@ Rails.application.routes.draw do
     end
   end
   resources :services
-  get '/quote', to: 'services#get_quote'
-
+  get '/quote', to: 'service_carts#show'
+  resources :service_carts, only: [:update, :show, :destroy] do
+    member do
+      put 'apply_coupon'
+      get 'checkout'
+    end
+  end
 end

@@ -140,7 +140,8 @@ class Repair extends React.Component {
         .then(res => {
           this.setState({ 
             firearmTypes: res.data.firearm_types,
-            serviceTypes: res.data.service_types
+            serviceTypes: res.data.service_types,
+            serviceCartId: res.data.service_cart_id
           })
         }
       )
@@ -157,7 +158,7 @@ class Repair extends React.Component {
   handleSubmit(){
     var params = {service: {"firearm_types": {'service_types': {}}}}
     for (const item in this.state) {
-      if(this.state[item] != "" && typeof(this.state[item]) != "object"){
+      if(this.state[item] != "" && typeof(this.state[item]) != "object" && item != "serviceCartId"){
         var nameSplit = item.split('Model')
         var model = nameSplit[0]
         var service_type = nameSplit[1].split('ServiceType')[1] || nameSplit[1]
@@ -178,17 +179,16 @@ class Repair extends React.Component {
         }
       }
     }
-    console.log(params)
+
     axios
-      .post("/services.json", params )
+      .put("/service_carts/" + this.state.serviceCartId + ".json", params)
         .then(res => {
-          console.log('you will get quote')
-          location.href = res.data.url
-        }
-      )
-      .catch(err => {
-         console.log(err);
-         return null;
+            location.href = res.data.url
+          }
+        )
+       .catch(err => {
+           console.log(err);
+           return null;
        });
   }
 
@@ -512,14 +512,14 @@ class Repair extends React.Component {
                       <label className="form-label">Hardware:</label>
                       <label htmlFor="provide-my-own" className="s-input">
                         <span>
-                          <input type="radio" id="provide-my-own" name="ServiceWorkModelhardwareWorkswivel_installationServiceTypeframe_work" value="provide-my-own" onChange={this.updateState} checked={this.state.ServiceWorkModelhardwareWorkswivel_installationServiceTypeframe_work === "provide-my-own"}></input>
+                          <input type="radio" id="provide-my-own" name="ServiceWorkModelframe_work_hardwareWorkswivel_installationServiceTypeframe_work" value="provide-my-own" onChange={this.updateState} checked={this.state.ServiceWorkModelframe_work_hardwareWorkswivel_installationServiceTypeframe_work === "provide-my-own"}></input>
                           <span>Will provide my own </span>
                           <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                         </span>
                       </label>
                       <label htmlFor="Shop-from-our-store" className="s-input">
                         <span>
-                          <input type="radio" id="Shop-from-our-store" name="ServiceWorkModelhardwareWorkswivel_installationServiceTypeframe_work" value="Shop-from-our-store" onChange={this.updateState} checked={this.state.ServiceWorkModelhardwareWorkswivel_installationServiceTypeframe_work === "Shop-from-our-store"}></input>
+                          <input type="radio" id="Shop-from-our-store" name="ServiceWorkModelframe_work_hardwareWorkswivel_installationServiceTypeframe_work" value="Shop-from-our-store" onChange={this.updateState} checked={this.state.ServiceWorkModelframe_work_hardwareWorkswivel_installationServiceTypeframe_work === "Shop-from-our-store"}></input>
                           <span>Shop from our store  <a href="/products"> <img src={AddBoxLine} alt=""></img> </a>  </span>
                           <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                         </span>
@@ -533,7 +533,7 @@ class Repair extends React.Component {
                       <label htmlFor="provide-my-own" className="s-input">
                         <span>
                           <input type="radio" id="provide-my-own" name="ServiceWorkModelrecoil_hardware_pistolWorkrecoil_installationServiceTypestock_work" value="provide-my-own" onChange={this.updateState} checked={this.state.ServiceWorkModelrecoil_hardware_pistolWorkrecoil_installationServiceTypestock_work === "provide-my-own"}></input>
-                          <span>Will provide my ownnnnnn</span>
+                          <span>Will provide my own</span>
                           <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                         </span>
                       </label>
@@ -697,14 +697,14 @@ class Repair extends React.Component {
 
                       <label htmlFor="trigger-1" className="s-input">
                         <span>
-                          <input type="radio" id="trigger-1" name="ServiceWorkModelnew_trigger_installation_pistolWorknew_triggerServiceTypeaction_work" value="trigger-1" onChange={this.updateState} checked={this.state.ServiceWorkModelnew_trigger_installation_pistolWorknew_triggerServiceTypeaction_work === "trigger-1"}></input>
+                          <input type="radio" id="trigger-1" name="ServiceWorkModelselect_modelWorknew_triggerServiceTypeaction_work" value="Smith & Wesson M&P-Apex Trigger" onChange={this.updateState} checked={this.state.ServiceWorkModelselect_modelWorknew_triggerServiceTypeaction_work === "Smith & Wesson M&P-Apex Trigger"}></input>
                           <span> Smith & Wesson M&P-Apex Trigger </span>
                           <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                         </span>
                       </label>
                       <label htmlFor="trigger-2" className="s-input">
                         <span>
-                          <input type="radio" id="trigger-2" name="ServiceWorkModelnew_trigger_installation_pistolWorknew_triggerServiceTypeaction_work" value="trigger-2" onChange={this.updateState} checked={this.state.ServiceWorkModelnew_trigger_installation_pistolWorknew_triggerServiceTypeaction_work === "trigger-2"}></input>
+                          <input type="radio" id="trigger-2" name="ServiceWorkModelselect_modelWorknew_triggerServiceTypeaction_work" value="SpringFiield- Armory XD Series-Powder river Trigger" onChange={this.updateState} checked={this.state.ServiceWorkModelselect_modelWorknew_triggerServiceTypeaction_work === "SpringFiield- Armory XD Series-Powder river Trigger"}></input>
                           <span>SpringFiield- Armory XD Series-Powder river Trigger</span>
                           <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                         </span>
@@ -712,7 +712,7 @@ class Repair extends React.Component {
 
                       <label htmlFor="trigger-3" className="s-input">
                         <span>
-                          <input type="radio" id="trigger-3" name="ServiceWorkModelnew_trigger_installation_pistolWorknew_triggerServiceTypeaction_work" value="trigger-3" onChange={this.updateState} checked={this.state.ServiceWorkModelnew_trigger_installation_pistolWorknew_triggerServiceTypeaction_work === "trigger-3"}></input>
+                          <input type="radio" id="trigger-3" name="ServiceWorkModelselect_modelWorknew_triggerServiceTypeaction_work" value="Glock Ghost Connector + Spring" onChange={this.updateState} checked={this.state.ServiceWorkModelselect_modelWorknew_triggerServiceTypeaction_work === "Glock Ghost Connector + Spring"}></input>
                           <span> Glock Ghost Connector + Spring </span>
                           <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                         </span>
@@ -720,7 +720,7 @@ class Repair extends React.Component {
 
                       <label htmlFor="trigger-4" className="s-input">
                         <span>
-                          <input type="radio" id="trigger-4" name="ServiceWorkModelnew_trigger_installation_pistolWorknew_triggerServiceTypeaction_work" value="trigger-4" checked={this.state.ServiceWorkModelnew_trigger_installation_pistolWorknew_triggerServiceTypeaction_work === "trigger-4"} onChange={this.popupOpenM}></input>
+                          <input type="radio" id="trigger-4" name="ServiceWorkModelselect_modelWorknew_triggerServiceTypeaction_work" value="Other" checked={this.state.ServiceWorkModelselect_modelWorknew_triggerServiceTypeaction_work === "Other"} onChange={this.popupOpenM}></input>
                           <span> Other </span>
                           <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                         </span>
@@ -733,35 +733,35 @@ class Repair extends React.Component {
                       <label className="form-label">Select Model:</label>
                       <label htmlFor="trigger-rifle-1" className="s-input">
                         <span>
-                          <input type="radio" id="trigger-rifle-1" name="ServiceWorkModelnew_trigger_installation_rifleWorknew_triggerServiceTypeaction_work" value="trigger-rifle-1" onChange={this.updateState} checked={this.state.ServiceWorkModelnew_trigger_installation_rifleWorknew_triggerServiceTypeaction_work === "trigger-rifle-1"}></input>
+                          <input type="radio" id="trigger-rifle-1" name="ServiceWorkModelselect_modelWorknew_triggerServiceTypeaction_work" value="IWI TAVOR" onChange={this.updateState} checked={this.state.ServiceWorkModelselect_modelWorknew_triggerServiceTypeaction_work === "IWI TAVOR"}></input>
                           <span> IWI TAVOR </span>
                           <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                         </span>
                       </label>
                       <label htmlFor="trigger-rifle-2" className="s-input">
                         <span>
-                          <input type="radio" id="trigger-rifle-2" name="ServiceWorkModelnew_trigger_installation_rifleWorknew_triggerServiceTypeaction_work" value="trigger-rifle-2" onChange={this.updateState} checked={this.state.ServiceWorkModelnew_trigger_installation_rifleWorknew_triggerServiceTypeaction_work === "trigger-rifle-2"}></input>
+                          <input type="radio" id="trigger-rifle-2" name="ServiceWorkModelselect_modelWorknew_triggerServiceTypeaction_work" value="FNH USA SCAR 17" onChange={this.updateState} checked={this.state.ServiceWorkModelselect_modelWorknew_triggerServiceTypeaction_work === "FNH USA SCAR 17"}></input>
                           <span> FNH USA SCAR 17 </span>
                           <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                         </span>
                       </label>
                       <label htmlFor="trigger-rifle-3" className="s-input">
                         <span>
-                          <input type="radio" id="trigger-rifle-3" name="ServiceWorkModelnew_trigger_installation_rifleWorknew_triggerServiceTypeaction_work" value="trigger-rifle-3" onChange={this.updateState} checked={this.state.ServiceWorkModelnew_trigger_installation_rifleWorknew_triggerServiceTypeaction_work === "trigger-rifle-3"}></input>
+                          <input type="radio" id="trigger-rifle-3" name="ServiceWorkModelselect_modelWorknew_triggerServiceTypeaction_work" value="AR Tavga 2 Stage Short Trigger" onChange={this.updateState} checked={this.state.ServiceWorkModelselect_modelWorknew_triggerServiceTypeaction_work === "AR Tavga 2 Stage Short Trigger"}></input>
                           <span> AR Tavga 2 Stage Short Trigger </span>
                           <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                         </span>
                       </label>
                       <label htmlFor="trigger-rifle-4" className="s-input">
                         <span>
-                          <input type="radio" id="trigger-rifle-4" name="ServiceWorkModelnew_trigger_installation_rifleWorknew_triggerServiceTypeaction_work" value="trigger-rifle-4" onChange={this.updateState} checked={this.state.ServiceWorkModelnew_trigger_installation_rifleWorknew_triggerServiceTypeaction_work === "trigger-rifle-4"}></input>
+                          <input type="radio" id="trigger-rifle-4" name="ServiceWorkModelselect_modelWorknew_triggerServiceTypeaction_work" value="AR 15 competition Trigger" onChange={this.updateState} checked={this.state.ServiceWorkModelselect_modelWorknew_triggerServiceTypeaction_work === "AR 15 competition Trigger"}></input>
                           <span> AR 15 competition Trigger </span>
                           <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                         </span>
                       </label>
                       <label htmlFor="trigger-rifle-5" className="s-input">
                         <span>
-                          <input type="radio" id="trigger-rifle-5" name="ServiceWorkModelnew_trigger_installation_rifleWorknew_triggerServiceTypeaction_work" value="trigger-rifle-5" checked={this.state.ServiceWorkModelnew_trigger_installation_rifleWorknew_triggerServiceTypeaction_work === "trigger-rifle-5"} onChange={this.popupOpenM}></input>
+                          <input type="radio" id="trigger-rifle-5" name="ServiceWorkModelselect_modelWorknew_triggerServiceTypeaction_work" value="Other" checked={this.state.ServiceWorkModelselect_modelWorknew_triggerServiceTypeaction_work === "Other"} onChange={this.popupOpenM}></input>
                           <span> Other </span>
                           <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                         </span>
@@ -774,22 +774,22 @@ class Repair extends React.Component {
                       <label className="form-label">Select Model:</label>
                       <label htmlFor="action-function-1" className="s-input">
                         <span>
-                          <input type="radio" id="action-function-1" name="ServiceWorkModelaction_function_testWorkaction_function_testServiceTypeaction_work" value="action-function-1" onChange={this.updateState} checked={this.state.ServiceWorkModelaction_function_testWorkaction_function_testServiceTypeaction_work === "action-function-1"}></input>
+                          <input type="radio" id="action-function-1" name="ServiceWorkModelselect_modelWorkaction_function_testServiceTypeaction_work" value="Smith & Wesson Model K" onChange={this.updateState} checked={this.state.ServiceWorkModelselect_modelWorkaction_function_testServiceTypeaction_work === "Smith & Wesson Model K"}></input>
                           <span> Smith & Wesson Model K </span>
                           <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                         </span>
                       </label>
                       <label htmlFor="action-function-2" className="s-input">
                         <span>
-                          <input type="radio" id="action-function-2" name="ServiceWorkModelaction_function_testWorkaction_function_testServiceTypeaction_work" value="action-function-2" onChange={this.updateState} checked={this.state.ServiceWorkModelaction_function_testWorkaction_function_testServiceTypeaction_work === "action-function-2"}></input>
-                          <span>Smith & Wesson Model L</span>
+                          <input type="radio" id="action-function-2" name="ServiceWorkModelselect_modelWorkaction_function_testServiceTypeaction_work" value="Smith & Wesson Model L" onChange={this.updateState} checked={this.state.ServiceWorkModelselect_modelWorkaction_function_testServiceTypeaction_work === "Smith & Wesson Model L"}></input>
+                          <span> Smith & Wesson Model L</span>
                           <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                         </span>
                       </label>
 
                       <label htmlFor="action-function-3" className="s-input">
                         <span>
-                          <input type="radio" id="action-function-3" name="ServiceWorkModelaction_function_testWorkaction_function_testServiceTypeaction_work" value="action-function-3" onChange={this.updateState} checked={this.state.ServiceWorkModelaction_function_testWorkaction_function_testServiceTypeaction_work === "action-function-3"}></input>
+                          <input type="radio" id="action-function-3" name="ServiceWorkModelselect_modelWorkaction_function_testServiceTypeaction_work" value="Smith & Wesson Model N" onChange={this.updateState} checked={this.state.ServiceWorkModelselect_modelWorkaction_function_testServiceTypeaction_work === "Smith & Wesson Model N"}></input>
                           <span> Smith & Wesson Model N </span>
                           <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                         </span>
@@ -797,28 +797,28 @@ class Repair extends React.Component {
 
                       <label htmlFor="action-function-4" className="s-input">
                         <span>
-                          <input type="radio" id="action-function-4" name="ServiceWorkModelaction_function_testWorkaction_function_testServiceTypeaction_work" value="action-function-4" onChange={this.updateState} checked={this.state.ServiceWorkModelaction_function_testWorkaction_function_testServiceTypeaction_work === "action-function-4"}></input>
+                          <input type="radio" id="action-function-4" name="ServiceWorkModelselect_modelWorkaction_function_testServiceTypeaction_work" value="Roger Blackhawk" onChange={this.updateState} checked={this.state.ServiceWorkModelselect_modelWorkaction_function_testServiceTypeaction_work === "Roger Blackhawk"}></input>
                           <span> Roger Blackhawk </span>
                           <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                         </span>
                       </label>
                       <label htmlFor="action-function-5" className="s-input">
                         <span>
-                          <input type="radio" id="action-function-5" name="ServiceWorkModelaction_function_testWorkaction_function_testServiceTypeaction_work" value="action-function-5" onChange={this.updateState} checked={this.state.ServiceWorkModelaction_function_testServiceTypeaction_work === "action-function-5"}></input>
+                          <input type="radio" id="action-function-5" name="ServiceWorkModelselect_modelWorkaction_function_testServiceTypeaction_work" value="Roger Redhawk" onChange={this.updateState} checked={this.state.ServiceWorkModelselect_modelWorkaction_function_testServiceTypeaction_work === "Roger Redhawk"}></input>
                           <span> Roger Redhawk </span>
                           <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                         </span>
                       </label>
                       <label htmlFor="action-function-6" className="s-input">
                         <span>
-                          <input type="radio" id="action-function-6" name="ServiceWorkModelaction_function_testWorkaction_function_testServiceTypeaction_work" value="action-function-6" onChange={this.updateState} checked={this.state.ServiceWorkModelaction_function_testWorkaction_function_testServiceTypeaction_work === "action-function-6"}></input>
+                          <input type="radio" id="action-function-6" name="ServiceWorkModelselect_modelWorkaction_function_testServiceTypeaction_work" value="Roger GPIOD" onChange={this.updateState} checked={this.state.ServiceWorkModelselect_modelWorkaction_function_testServiceTypeaction_work === "Roger GPIOD"}></input>
                           <span> Roger GPIOD </span>
                           <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                         </span>
                       </label>
                       <label htmlFor="action-function-7" className="s-input">
                         <span>
-                          <input type="radio" id="action-function-7" name="ServiceWorkModelaction_function_testWorkaction_function_testServiceTypeaction_work" value="action-function-7" checked={this.state.ServiceWorkModelaction_function_testWorkaction_function_testServiceTypeaction_work === "action-function-7"} onChange={this.popupOpenM}></input>
+                          <input type="radio" id="action-function-7" name="ServiceWorkModelselect_modelWorkaction_function_testServiceTypeaction_work" value="Other" checked={this.state.ServiceWorkModelselect_modelWorkaction_function_testServiceTypeaction_work === "Other"} onChange={this.popupOpenM}></input>
                           <span> Other </span>
                           <span className="info"><img src={InformationLine} alt="" title="xyz"></img></span>
                         </span>
