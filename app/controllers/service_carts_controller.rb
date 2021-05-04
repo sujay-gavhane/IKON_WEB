@@ -133,21 +133,21 @@ class ServiceCartsController < ApplicationController
     end
   end
 
-  # def apply_coupon
-  #   @coupon = if params[:code].present?
-  #     Coupon.find_by(code: params[:code])
-  #   end 
-  #   if @coupon && @coupon.start_at < Time.now && @coupon.end_at > Time.now
-  #     msg = "Discount $#{@coupon.discount} applied on total amount"
-  #   else
-  #     msg = 'Invalid Coupon'
-  #   end
-  #   respond_to do |format|
-  #     format.json do
-  #       render json: { msg: msg, discount: @coupon.present? ? @coupon.discount : 0, coupon_id: @coupon.id }
-  #     end
-  #   end
-  # end
+  def apply_coupon
+    @coupon = if params[:code].present?
+      Coupon.find_by(code: params[:code])
+    end 
+    if @coupon && @coupon.start_at < Time.now && @coupon.end_at > Time.now
+      msg = "Discount $#{@coupon.discount} applied on total amount"
+    else
+      msg = 'Invalid Coupon'
+    end
+    respond_to do |format|
+      format.json do
+        render json: { msg: msg, discount: @coupon.present? ? @coupon.discount : 0, coupon_id: @coupon.id }
+      end
+    end
+  end
 
   # def checkout
   #   if session[:cart].present? && current_user.try(:cart)

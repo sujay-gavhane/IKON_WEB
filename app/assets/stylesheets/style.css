@@ -1296,8 +1296,9 @@ text-align: center;
   margin: 0;
 }
 .cart-item .total-price{
-  width: 30%;
+  width: 60%;
   padding: 10px;
+  text-align: center;
 }
 .cart-item .total-price h4{
   font-size: 16px;
@@ -1322,7 +1323,7 @@ text-align: center;
   position: relative;
 }
 .checkout-side h1{
-  width: calc(50% - 10px);
+  width: calc(70% - 10px);
   display: inline-block;
   font-size: 14px;
   font-weight: 700;
@@ -1332,7 +1333,7 @@ text-align: center;
   margin-bottom: 5px;
 }
 .checkout-side h2{
-  width: calc(50% - 10px);
+  width: calc(30% - 10px);
   display: inline-block;
   font-size: 14px;
   font-weight: 500;
