@@ -1,15 +1,14 @@
 import React from "react"
 import PropTypes from "prop-types"
-import CartItems from "./CartItems"
+import ServiceCartItems from "./ServiceCartItems"
 import SelectAddress from "./SelectAddress"
-import CartAmount from "./CartAmount"
+import ServiceCartAmount from "./ServiceCartAmount"
 import CreditCard from "./CreditCard"
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-
-class Checkout extends React.Component {
+class ServiceCheckout extends React.Component {
   state = {
     totalAmount: 0,
     couponMsg: '',
@@ -49,7 +48,7 @@ class Checkout extends React.Component {
   }
 
   redirectPage() {
-    location.href = "/products"
+    location.href = "/services/new"
   }
 
   updateState(value, name, discount) {
@@ -129,15 +128,20 @@ class Checkout extends React.Component {
           <div className="cart-d">
             <div className="cart-top">
               <h1>Shoping Cart</h1>
-              <button onClick={this.redirectPage} type="button" name="button">Continue Shoping</button>
+              <button onClick={this.redirectPage} type="button" name="button">Add New Services</button>
             </div>
             <div className="main-cart">
               <div className="item-side">
-                <CartItems updateTotalAmmount={this.updateState} checkout={this.state.checkout}/>
+                <ServiceCartItems updateState={this.updateState} checkout={this.state.checkout}/>
               </div>
               <hr></hr>
               <div className="checkout-side">
-                <CartAmount updateTotalAmmount={this.updateState} totalAmount={this.state.totalAmount} netPayable={this.state.netPayable} checkout={this.state.checkout}/>
+                <ServiceCartAmount
+                  updateState={this.updateState}
+                  totalEstimatedCostLabor={this.state.totalEstimatedCostLabor}
+                  totalEstimatedCostPart={this.state.totalEstimatedCostPart}
+                  totalEstimatedTime={this.state.totalEstimatedTime}
+                  netPayable={this.state.netPayable} checkout={this.state.checkout}/>
               </div>
             </div>
             <hr></hr>
@@ -181,4 +185,4 @@ class Checkout extends React.Component {
   }
 }
 
-export default Checkout
+export default ServiceCheckout

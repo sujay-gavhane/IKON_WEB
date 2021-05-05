@@ -44,6 +44,13 @@ class Ability
           session_id == cart.id
         end
       end
+      can :manage_service_cart, ServiceCart do |service_cart, session_id|
+        if user.present? && service_cart.user.present?
+          user.id == service_cart.user.id
+        else
+          session_id == service_cart.id
+        end
+      end
     end
   end
 end

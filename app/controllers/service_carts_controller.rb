@@ -1,6 +1,6 @@
 class ServiceCartsController < ApplicationController
-  # before_action :authenticate_user!, only: [:checkout]
-  # before_action :authorize_user
+  before_action :authenticate_user!, only: [:checkout]
+  before_action :authorize_user
 
   def update
     begin
@@ -109,7 +109,7 @@ class ServiceCartsController < ApplicationController
 
   def show
     if session[:service_cart].present? && current_user.try(:service_cart)
-      Cart.find(session[:service_cart]).service_cart_items.update(service_cart_id: current_user.service_cart.id)
+      ServiceCart.find(session[:service_cart]).service_cart_items.update(service_cart_id: current_user.service_cart.id)
     end
     respond_to do |format|
       format.json do
@@ -149,20 +149,20 @@ class ServiceCartsController < ApplicationController
     end
   end
 
-  # def checkout
-  #   if session[:cart].present? && current_user.try(:cart)
-  #     Cart.find(session[:cart]).user_carts.update(cart_id: current_user.cart.id)
-  #   else
-  #     @cart.update(is_guest: false, user_id: current_user.id)
-  #   end
-  #   respond_to do |format|
-  #     format.html
-  #   end
-  # end
+  def checkout
+    if session[:service_cart].present? && current_user.try(:service_cart)
+      ServiceCart.find(session[:service_cart]).service_cart_items.update(service_cart_id: current_user.service_cart.id)
+    else
+      @service_cart.update(is_guest: false, user_id: current_user.id)
+    end
+    respond_to do |format|
+      format.html
+    end
+  end
 
   private
 
   def authorize_user
-    authorize! :manage_cart, @cart, session[:cart]
+    authorize! :manage_service_cart, @service_cart, session[:service_cart]
   end
 end
