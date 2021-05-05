@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import SelectAddress from "./SelectAddress"
 import axios from 'axios';
-class OrderAmount extends React.Component {
+class ServiceRequestAmount extends React.Component {
   state = {
     toggleAddressPopup: ''
   }
@@ -38,7 +38,7 @@ class OrderAmount extends React.Component {
   updateAddress(addressId){
     var orderID = document.getElementById('order-id').textContent
     axios
-      .put("/orders/" + orderID + "/update_address.json", {address_id: addressId})
+      .put("/service_requests/" + orderID + "/update_address.json", {address_id: addressId})
         .then(res => {
           this.props.updateAddress('address', res.data.address)
           this.closeAddressPopup()
@@ -60,6 +60,8 @@ class OrderAmount extends React.Component {
             <h2>${this.props.discount || 0}</h2>
             <h1>Grand Total:</h1>
             <h2>${this.props.order.net_amount}</h2>
+            <h1>Estimated Time:</h1>
+            <h2>{this.props.order.total_estimated_time && this.props.order.total_estimated_time + " Minutes"}</h2>
             <h1>Status:</h1>
             <h2>{this.props.status}</h2>
             <hr></hr>
@@ -80,4 +82,4 @@ class OrderAmount extends React.Component {
   }
 }
 
-export default OrderAmount
+export default ServiceRequestAmount

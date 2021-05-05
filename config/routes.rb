@@ -32,4 +32,9 @@ Rails.application.routes.draw do
       get 'checkout'
     end
   end
+  resources :service_requests, only: [:create, :show, :index, :destroy] do
+    member do
+      put 'update_address'
+    end
+  end
 end

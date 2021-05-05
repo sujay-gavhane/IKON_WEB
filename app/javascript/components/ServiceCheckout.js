@@ -80,10 +80,11 @@ class ServiceCheckout extends React.Component {
   }
 
   placeOrder(){
-    var order_params = { order: {
+    var service_request_params = { service_request: {
       coupon_id: this.state.couponId,
       address_id: this.state.selectedAddress.id,
-      total_amount: this.state.totalAmount,
+      total_amount: this.state.totalEstimatedCostLabor + this.state.totalEstimatedCostPart,
+      total_estimated_time: this.state.totalEstimatedTime,
       net_amount: this.state.netPayable,
       taxes: 20
       },
@@ -96,7 +97,7 @@ class ServiceCheckout extends React.Component {
     }
     if (this.state.selectedAddress.id) {
       axios
-        .post("/orders.json", order_params)
+        .post("/service_requests.json", service_request_params)
           .then(res => {
             location.href = res.data.url
           })

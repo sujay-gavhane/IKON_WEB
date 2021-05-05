@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_30_133948) do
+ActiveRecord::Schema.define(version: 2021_05_05_112233) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -176,6 +176,7 @@ ActiveRecord::Schema.define(version: 2021_04_30_133948) do
     t.string "stock_work_hardware"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "service_request_id"
     t.index ["firearm_type_id"], name: "index_service_cart_items_on_firearm_type_id"
     t.index ["service_cart_id"], name: "index_service_cart_items_on_service_cart_id"
     t.index ["service_type_id"], name: "index_service_cart_items_on_service_type_id"
@@ -187,6 +188,23 @@ ActiveRecord::Schema.define(version: 2021_04_30_133948) do
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "service_requests", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "address_id", null: false
+    t.bigint "coupon_id"
+    t.bigint "status_id"
+    t.float "total_amount", null: false
+    t.float "net_amount", null: false
+    t.float "taxes", null: false
+    t.integer "total_estimated_time"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["address_id"], name: "index_service_requests_on_address_id"
+    t.index ["coupon_id"], name: "index_service_requests_on_coupon_id"
+    t.index ["status_id"], name: "index_service_requests_on_status_id"
+    t.index ["user_id"], name: "index_service_requests_on_user_id"
   end
 
   create_table "service_types", force: :cascade do |t|

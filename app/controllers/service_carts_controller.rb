@@ -113,7 +113,7 @@ class ServiceCartsController < ApplicationController
     end
     respond_to do |format|
       format.json do
-        @service_cart_items = @service_cart.service_cart_items.includes(:service_type, :service_work, :firearm_type).order('id desc')
+        @service_cart_items = @service_cart.service_cart_items.includes(:service_type, :service_work, :firearm_type).where('service_request_id IS NULL').order('id desc')
         @service_cart_items = @service_cart_items.map { |item| item.as_json.merge({
          firearm_type_name: item.firearm_type.type_name,
          service_type_name: item.service_type.type_name,

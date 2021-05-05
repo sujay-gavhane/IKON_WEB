@@ -30,7 +30,7 @@ class ServiceCartAmount extends React.Component {
   }
 
   appplyCoupon(){
-    var coupon = this.state.couponCode  
+    var coupon = this.props.checkout ? document.querySelector("#coupon").textContent : document.querySelector(".coupon-input").value
     var cartID = document.getElementById('cart-id').textContent
     if (coupon) {
       axios
