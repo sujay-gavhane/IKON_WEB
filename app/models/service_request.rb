@@ -5,6 +5,13 @@ class ServiceRequest < ApplicationRecord
   belongs_to :status, optional: true
   has_many :service_cart_items
 
+  validates :user, presence: true
+  validates :address, presence: true
+  validates :total_amount, presence: true
+  validates :net_amount, presence: true
+  validates :taxes, presence: true
+  validates :total_estimated_time, presence: true
+
 	before_update :send_status_email
 
   def purchase(card_params)

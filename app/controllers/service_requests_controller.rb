@@ -63,12 +63,12 @@ class ServiceRequestsController < ApplicationController
   def index
     respond_to do |format|
       format.json do
-        orders = current_user.orders.includes(user_carts: [:color, product: [:category]]).order('id desc').page(params[:page]).per(4)
-        orders = orders.map{ |order| order.as_json.merge({
-          status: order.status.try(:name),
-          user_carts: order.user_carts.map { |item| item.as_json.merge({ product: item.product }) }
+        service_requests = current_user.service_requests.includes(:status, service_cart_items: [:firearm_type, :service_type]).order('id desc').page(params[:page]).per(4)
+        service_requests = service_requests.map{ |service_request| service_request.as_json.merge({
+          status: service_request.status.try(:name),
+          service_cart_items: service_request.service_cart_items.map { |item| item.as_json.merge({ firearm_type: item.firearm_type.type_name, service_type: item.service_type.type_name }) }
         })}
-        render json: { orders: orders }
+        render json: { orders: service_requests, cart: @service_cart.id }
       end
       format.html
     end
@@ -77,11 +77,11 @@ class ServiceRequestsController < ApplicationController
   def destroy
     respond_to do |format|
       format.json do
-        if @order.update(status_id: Status.find_by(name: 'Canceled').id)
-          OrderMailer.with(user: current_user.email, order: @order.id).order_cancel.deliver_now
-          msg = 'Order Canceled sunccessfully'
+        if @service_request.update(status_id: Status.find_by(name: 'Canceled').id)
+          # OrderMailer.with(user: current_user.email, order: @order.id).order_cancel.deliver_now
+          msg = 'Service Request Canceled sunccessfully'
         else
-          msg = 'Error while canceling Order'
+          msg = 'Error while canceling Service Request'
         end
         render json: { msg: msg }
       end

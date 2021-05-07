@@ -71,9 +71,9 @@ class ServiceCartAmount extends React.Component {
           ?
           <div className="">
             <h1>Total Estimated Cost Labor:</h1>
-            <h2>${this.props.totalEstimatedCostLabor}</h2>
+            <h2>${this.props.totalEstimatedCostLabor.toFixed(2)}</h2>
             <h1>Total Estimated Cost Parts:</h1>
-            <h2>${this.props.totalEstimatedCostPart}</h2>
+            <h2>${this.props.totalEstimatedCostPart.toFixed(2)}</h2>
             <h1>Total Estimated Repair Time:</h1>
             <h2>{this.props.totalEstimatedTime && this.props.totalEstimatedTime + " Minutes"} </h2>
             <div className="coupan-code">
@@ -91,9 +91,9 @@ class ServiceCartAmount extends React.Component {
           :
           <div className="">
             <h1>Total Estimated Cost Labor:</h1>
-            <h2>${this.props.totalEstimatedCostLabor}</h2>
+            <h2>${this.props.totalEstimatedCostLabor.toFixed(2)}</h2>
             <h1>Total Estimated Cost Parts:</h1>
-            <h2>${this.props.totalEstimatedCostPart}</h2>
+            <h2>${this.props.totalEstimatedCostPart.toFixed(2)}</h2>
             <h1>Total Estimated Repair Time:</h1>
             <h2>{this.props.totalEstimatedTime && this.props.totalEstimatedTime + " Minutes"} </h2>
 

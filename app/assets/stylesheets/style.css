@@ -886,6 +886,15 @@ margin: 5px;
 width: 16px;
 color: #007bff;
 }
+.sr-cart{
+  display: inline-block;
+  float: right;
+  margin: 20px;
+}
+.sr-cart svg{
+  width: 16px;
+  color: #fff;
+}
 
 /* product page */
 .product-m{
@@ -2251,6 +2260,9 @@ margin: 20px auto;
   .cart-top button{
     display: none;
   }
+  .sr-cart {
+    margin-left: 80px;
+  }
 }
 
 
@@ -2311,6 +2323,7 @@ margin: 20px auto;
   }
    .order-summary .cart-item .total-price{
      padding: 0 10px;
+    margin-top: 10px;
    }
   .order-summary .main-cart .quantity h5{
     margin: 10px 0 5px 0;

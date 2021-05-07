@@ -125,7 +125,7 @@ class ServiceCheckout extends React.Component {
   render () {
     return (
       <React.Fragment>
-        <main className="cart-m">
+        <main className="cart-m order-summary">
           <div className="cart-d">
             <div className="cart-top">
               <h1>Shoping Cart</h1>
