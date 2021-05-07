@@ -825,7 +825,7 @@ class Repair extends React.Component {
                       </label>
                     </div>
                   </div>
-                  <button type="button" name="button" onClick={this.handleSubmit}>Get Quote</button>
+                  <button type="button" name="button" onClick={this.handleSubmit}>Get Quote & Repair Time</button>
                 </div>
               </div>
             </div>

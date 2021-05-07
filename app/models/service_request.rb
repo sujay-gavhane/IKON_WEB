@@ -26,7 +26,8 @@ class ServiceRequest < ApplicationRecord
 
   def send_status_email
     if self.changes.include?(:status_id) && self.valid?
-      # OrderMailer.with(user: self.user.email, order: self.id).order_status_update.deliver_now
+      ServiceRequestMailer.with(user: self.user.email, service_request: self.id)
+        .service_request_status_update.deliver_now
     end
   end
 

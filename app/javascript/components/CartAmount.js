@@ -114,4 +114,11 @@ class CartAmount extends React.Component {
   }
 }
 
+ServiceCartAmount.defaultProps = {
+  totalEstimatedCostLabor: 0,
+  totalEstimatedCostPart: 0,
+  totalEstimatedTime: 0,
+  netPayable: 0
+}
+
 export default CartAmount

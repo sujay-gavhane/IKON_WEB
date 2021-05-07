@@ -4,18 +4,18 @@ class ServiceCartsController < ApplicationController
 
   def update
     begin
-      firearm_type_id = FirearmType.find_by(key: params[:service][:firearm_types]['name']).id
+      firearm_type_id = FirearmType.find_by(key: params[:service][:firearm_types]['name']).try(:id)
       cart_id = session[:service_cart] || current_user.try(:service_cart).id
       if params[:service][:firearm_types][:service_types].keys.length > 1
         params[:service][:firearm_types][:service_types].keys.each do |k|
-          service_type_id = ServiceType.find_by(key: k).id
+          service_type_id = ServiceType.find_by(key: k).try(:id)
           if params[:service][:firearm_types][:service_types][k].keys.length > 1
             params[:service][:firearm_types][:service_types][k].keys.each do |j|
               service_work = ServiceWork.find_by(key: j, firearm_type_id: firearm_type_id, service_type_id: service_type_id)
               work_items = params[:service][:firearm_types][:service_types][k][j]
               @user_cart = ServiceCartItem.create(
                 service_cart_id: cart_id,
-                service_work_id: service_work.id,
+                service_work_id: service_work.try(:id),
                 service_type_id: service_type_id,
                 firearm_type_id: firearm_type_id,
                 service_work_name: service_work.key,
@@ -35,7 +35,7 @@ class ServiceCartsController < ApplicationController
             work_items = params[:service][:firearm_types][:service_types][k][keys.first]
             @user_cart = ServiceCartItem.create(
               service_cart_id: cart_id,
-              service_work_id: service_work.id,
+              service_work_id: service_work.try(:id),
               service_type_id: service_type_id,
               firearm_type_id: firearm_type_id,
               service_work_name: service_work.key,
@@ -51,7 +51,7 @@ class ServiceCartsController < ApplicationController
           end
         end
       else
-        service_type_id = ServiceType.find_by(key: params[:service][:firearm_types][:service_types].keys.first).id
+        service_type_id = ServiceType.find_by(key: params[:service][:firearm_types][:service_types].keys.first).try(:id)
         service_type = params[:service][:firearm_types][:service_types].keys.first
         if params[:service][:firearm_types][:service_types][service_type].keys.length > 1
           params[:service][:firearm_types][:service_types][service_type].keys.each do |k|
@@ -60,7 +60,7 @@ class ServiceCartsController < ApplicationController
             work_items = params[:service][:firearm_types][:service_types][service_type]
             @user_cart = ServiceCartItem.create(
               service_cart_id: cart_id,
-              service_work_id: service_work.id,
+              service_work_id: service_work.try(:id),
               service_type_id: service_type_id,
               firearm_type_id: firearm_type_id,
               service_work_name: service_work.key,
@@ -80,7 +80,7 @@ class ServiceCartsController < ApplicationController
           work_items = params[:service][:firearm_types][:service_types][service_type][keys.first]
           @user_cart = ServiceCartItem.create(
             service_cart_id: cart_id,
-            service_work_id: service_work.id,
+            service_work_id: service_work.try(:id),
             service_type_id: service_type_id,
             firearm_type_id: firearm_type_id,
             service_work_name: service_work.key,
