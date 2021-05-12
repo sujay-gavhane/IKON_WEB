@@ -1,5 +1,6 @@
 class Status < ApplicationRecord
   has_many :orders
+  has_many :service_requests
   
   validates :name, presence: true
 
