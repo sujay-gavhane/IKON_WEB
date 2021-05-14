@@ -34,3 +34,11 @@
 yarn-debug.log*
 .yarn-integrity
 .env
+sujay.pem
+sujay-1.pem
+deploy.zip
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
