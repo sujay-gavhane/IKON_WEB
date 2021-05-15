@@ -29,7 +29,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 # rails_admin gem fro admin backend
-gem 'rails_admin', '~> 2.0'
+gem 'rails_admin', '2.0.2'
 
 # Devise gem for authentication
 gem 'devise'
