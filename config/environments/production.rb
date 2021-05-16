@@ -113,14 +113,16 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     address: "smtp.gmail.com",
     port: 587,
-    domain: "staging-ikon.herokuapp.com",
+    domain: "prod.eba-hzrkrh26.us-east-2.elasticbeanstalk.com",
     authentication: "plain",
     enable_starttls_auto: true,
     user_name: ENV["GMAIL_USERNAME"],
     password:ENV["GMAIL_PASSWORD"]
   }
 
-  config.action_mailer.default_url_options = { :host => 'staging-ikon.herokuapp.com' }
+  config.action_mailer.default_url_options = { :host => 'prod.eba-hzrkrh26.us-east-2.elasticbeanstalk.com' }
+
+  # config.action_mailer.default_url_options = { :host => 'staging-ikon.herokuapp.com' }
 
   config.after_initialize do
     ActiveMerchant::Billing::Base.mode = :test

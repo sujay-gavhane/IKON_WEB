@@ -6,11 +6,11 @@ class User < ApplicationRecord
 
   validates :email, presence: true
 
-  has_many :addresses
-  has_many :orders
+  has_many :addresses, dependent: :destroy
+  has_many :orders, dependent: :destroy
   has_one :cart
-  has_one :service_cart
-  has_many :service_requests
+  has_one :service_cart, dependent: :destroy
+  has_many :service_requests, dependent: :destroy
 
   def full_name
     "#{self.first_name} #{self.last_name}"
