@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   has_many :addresses, dependent: :destroy
   has_many :orders, dependent: :destroy
-  has_one :cart
+  has_one :cart, dependent: :destroy
   has_one :service_cart, dependent: :destroy
   has_many :service_requests, dependent: :destroy
 

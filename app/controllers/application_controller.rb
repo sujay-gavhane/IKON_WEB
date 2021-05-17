@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
     else
       if session[:cart] && params[:controller] == 'carts' && ['update', 'destroy'].exclude?(params[:action])
         @cart = Cart.find_by(id: params[:id])
-      elsif session[:cart]
+      elsif session[:cart].present?
         @cart = Cart.find_by(id: session[:cart])
       else
         @cart = Cart.create(is_guest: true)
@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
     else
       if session[:service_cart] && params[:controller] == 'service_carts' && ['update', 'destroy'].exclude?(params[:action])
         @service_cart = ServiceCart.find_by(id: params[:id])
-      elsif session[:service_cart]
+      elsif session[:service_cart].present?
         @service_cart = ServiceCart.find_by(id: session[:service_cart])
       else
         @service_cart = ServiceCart.create(is_guest: true)
