@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_cart
+    return if request.host == ENV['HOST_IP']
     if current_user && session[:cart].present?
       @cart = current_user.cart ? current_user.cart : Cart.find_by(id: session[:cart])
     else
@@ -25,6 +26,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_service_cart
+    return if request.host == ENV['HOST_IP']
     if current_user && session[:service_cart].present?
       @service_cart = current_user.service_cart ? current_user.service_cart : ServiceCart.find_by(id: session[:service_cart])
     else
