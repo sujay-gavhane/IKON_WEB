@@ -32,35 +32,35 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'rails_admin', '2.0.2'
 
 # Devise gem for authentication
-gem 'devise'
+gem 'devise', '4.8.0'
 
 # rolify gem for different roles of users or admin
-gem "rolify"
+gem "rolify", '6.0.0'
 
 # cancancan gem for user or admin authorization
-gem 'cancancan'
+gem 'cancancan', '3.2.1'
 
 # dotenv-rails for secret environment variables
-gem 'dotenv-rails'
-gem 'simple_form'
+gem 'dotenv-rails', '2.7.6'
+gem 'simple_form', '5.1.0'
 
 # 'react-rails' react rails integration
-gem 'react-rails'
+gem 'react-rails', '2.6.1'
 
 # for pagination
-gem 'kaminari'
+gem 'kaminari', '1.2.1'
 
 # for navigation breadcrumbs
-gem "breadcrumbs_on_rails"
+gem "breadcrumbs_on_rails", '4.1.0'
 
 # gem 'activemerchant' for payment gateway integration
-gem 'activemerchant'
+gem 'activemerchant', '1.119.0'
 
 # gem for maintenance page
-gem 'turnout'
+gem 'turnout', '2.5.0'
 
-gem "aws-sdk-s3", require: false
-gem 'image_processing'
+gem "aws-sdk-s3", '1.94.1', require: false
+gem 'image_processing', '1.12.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
