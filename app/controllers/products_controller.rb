@@ -17,13 +17,13 @@ class ProductsController < ApplicationController
   def show
     add_breadcrumb "Product", product_path(@product)
     respond_to do |format|
-      format.json  { render json: { product: @product.as_json.merge({colors: @product.colors.pluck(:name), cart: @cart.id}) } }
+      format.json  { render json: { product: @product.as_json.merge({colors: @product.colors.pluck(:name), cart: @cart.id, images: @product.images.map{|i| url_for(i)} }) } }
       format.html
     end
   end
 
   def format_json(collection)
-    collection.map { |product| product.as_json.merge({category_name: product.category.name}) }
+    collection.map { |product| product.as_json.merge({category_name: product.category.name, images: product.images.map{|i| url_for(i)}}) }
   end
 
   def get_product

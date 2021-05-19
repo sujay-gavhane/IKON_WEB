@@ -1,11 +1,2 @@
 <%= react_component("ProductShow", breadcrumb: render_breadcrumbs) %>
 <span id="product-id" style="display: none;"><%= @product.id %></span>
-<script type="text/javascript">
-  $(document).ready(function(){
-    showThisImg(document.querySelector(".all-imgs .img"));
-    function showThisImg(id){
-      var img = id.querySelector("img").src;
-      var par = id.parentElement.parentElement.querySelector(".one-img").style.background="url("+img+")";
-    }
-  });
-</script>

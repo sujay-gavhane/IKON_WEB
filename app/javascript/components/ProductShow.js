@@ -4,6 +4,7 @@ import axios from 'axios';
 import Product1 from 'images/product1.jpg'
 import Product2 from 'images/product2.jpg'
 import Product3 from 'images/product3.jpg'
+import NoImage from 'images/no-image.jpeg'
 import parse from 'html-react-parser';
 
 class ProductShow extends React.Component {
@@ -12,7 +13,8 @@ class ProductShow extends React.Component {
     color: '',
     colors: [],
     msg: '',
-    cart: 0
+    cart: 0,
+    images: []
   };
 
   constructor(props) {
@@ -43,6 +45,7 @@ class ProductShow extends React.Component {
             this.setState({ colors: res.data.product.colors })
             this.setState({ color: res.data.product.colors[0] })
             this.setState({ cart: res.data.product.cart })
+            this.setState({ images: res.data.product.images })
           }
         )
        .catch(err => {
@@ -94,17 +97,16 @@ class ProductShow extends React.Component {
               <div className="imgss">
                 <div className="all-imgs">
                   <div className="img" onClick={this.showThisImg}>
-                    <img src={Product1} alt="product"></img>
+                    <img src={this.state.images[0] ? this.state.images[0] : NoImage} alt="product"></img>
                   </div>
                   <div className="img" onClick={this.showThisImg}>
-                    <img src={Product2} alt="product"></img>
+                    <img src={this.state.images[1] ? this.state.images[1] : NoImage} alt="product"></img>
                   </div>
                   <div className="img" onClick={this.showThisImg}>
-                    <img src={Product3} alt="product"></img>
+                    <img src={this.state.images[2] ? this.state.images[2] : NoImage} alt="product"></img>
                   </div>
                 </div>
-                <div className="one-img">
-
+                <div className="one-img" style={{backgroundImage: `url(${this.state.images[0] ? this.state.images[0] : NoImage})`}}>
                 </div>
               </div>
             </div>

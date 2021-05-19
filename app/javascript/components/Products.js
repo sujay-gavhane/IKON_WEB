@@ -1,7 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import Product2 from 'images/product2.jpg'
-import Product3 from 'images/product3.jpg'
+import NoImage from 'images/no-image.jpeg'
 import axios from 'axios';
 
 class Products extends React.Component {
@@ -86,7 +85,7 @@ class Products extends React.Component {
         <a href={"/products/" + product.id}>
           <div>
             <div className="img">
-              <img src={Product2} alt="product"></img>
+              <img src={product.images.length > 0 ? product.images[0] : NoImage} alt="product"></img>
             </div>
             <div className="info">
               <div className="">
@@ -105,7 +104,7 @@ class Products extends React.Component {
         <a href={"/products/" + part.id}>
           <div>
             <div className="img">
-              <img src={Product3} alt="product"></img>
+              <img src={part.images.length > 0 ? part.images[0] : NoImage} alt="part"></img>
             </div>
             <div className="info">
               <div className="">

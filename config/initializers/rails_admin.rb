@@ -153,4 +153,36 @@ RailsAdmin.config do |config|
   #   update do; end
   # end
 
+  config.model 'Product' do 
+    edit do
+      field :name
+      field :description
+      field :price
+      field :category_id, :enum do
+        enum do
+          Category.all.collect {|u| [u.name, u.id]}
+        end
+      end
+      field :collection_type_id, :enum do
+        enum do
+          CollectionType.all.collect {|u| [u.name, u.id]}
+        end
+      end
+      field :colors
+      field :coupons
+      field :images, :multiple_active_storage do
+        label 'You can select multiple images to upload'
+        delete_method :remove_images
+        pretty_value do
+          if value
+            path = Rails.application.routes.url_helpers.rails_blob_path(value, only_path: true)
+            bindings[:view].content_tag(:a, value.filename, href: path)
+          end
+        end
+      end
+    end
+    export do; end
+    create do; end
+    update do; end
+  end
 end
