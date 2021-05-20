@@ -1,4 +1,5 @@
 class ServicesController < ApplicationController
+  before_action :redirect_to_root
 
   def new
     respond_to do |format|
@@ -14,6 +15,9 @@ class ServicesController < ApplicationController
 
   private
 
+  def redirect_to_root
+    redirect_to root_path
+  end
   def quotes_params
     params.require(:service).permit(:firearm_type, :service_type, :service_work)
   end
