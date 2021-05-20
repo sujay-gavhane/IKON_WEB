@@ -33,7 +33,7 @@ class OrdersController < ApplicationController
         order_items = @order.user_carts.includes(:color, product: [:category]).order('id desc')
         order_items = order_items.map { |item| item.as_json.merge({ 
           product: item.product, color: item.color,
-          category_name: item.product.category.name
+          category_name: item.product.category.name, images: item.product.images.map{|i| url_for(i)}
         })}
         render json: { status: @order.status.try(:name), order_items: order_items, order: @order, address: @order.address, discount: @order.coupon.try(:discount) }
       end

@@ -54,7 +54,7 @@ class OrderSummary extends React.Component {
     const orderItems = this.state.orderItems.map((item) => 
       <div key={item.id} className="cart-item">
         <div className="img">
-          <img src={Product2} alt="product"></img>
+          <img src={item.images[0]} alt="product"></img>
         </div>
         <div className="titles">
           <h2>{item.product.name}</h2>
