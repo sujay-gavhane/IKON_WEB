@@ -7,7 +7,7 @@ class ServiceRequestsController < ApplicationController
     if @service_request.save
       if @service_request.purchase(card_params)
         @service_cart.service_cart_items.where('service_request_id IS NULL').update(service_request_id: @service_request.id)
-        unless current_user.email == 'ikon.web.test.email@gmail.com'
+        unless current_user.email == 'ikon.web.test.email@gmail.com' || current_user.email == 'hornezachary93@gmail.com'
           ServiceRequestMailer.with(user: current_user.email, service_request: @service_request.id)
           .service_request_placed_successfully.deliver_now
         end
@@ -81,7 +81,7 @@ class ServiceRequestsController < ApplicationController
     respond_to do |format|
       format.json do
         if @service_request.update(status_id: Status.find_by(name: 'Canceled').id)
-          unless current_user.email == 'ikon.web.test.email@gmail.com'
+          unless current_user.email == 'ikon.web.test.email@gmail.com' || current_user.email == 'hornezachary93@gmail.com'
             ServiceRequestMailer.with(user: current_user.email, service_request: @service_request.id)
             .service_request_cancel.deliver_now
           end

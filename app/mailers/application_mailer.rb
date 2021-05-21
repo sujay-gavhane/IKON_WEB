@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'ikon.web.test.email@gmail.com'
+  default from: 'sales@ikonweapons.com'
   layout 'mailer'
 end
