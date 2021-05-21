@@ -29,7 +29,9 @@ class CartsController < ApplicationController
     respond_to do |format|
       format.json do
         @users_cart_products = @cart.user_carts.includes(:color, product: [:category]).where('order_id IS NULL').order('id desc')
-        @users_cart_products = @users_cart_products.map { |item| item.as_json.merge({ product: item.product, color: item.color, category_name: item.product.category.name }) }
+        @users_cart_products = @users_cart_products.map { |item| item.as_json.merge({ 
+         product: item.product, color: item.color, images: item.product.images.map{|i| url_for(i)}, 
+         category_name: item.product.category.name }) }
         render json: { cart_items: @users_cart_products }
       end
       format.html

@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import Product2 from 'images/product2.jpg'
 import OrderAmount from "./OrderAmount"
 import axios from 'axios';
+import NoImage from 'images/no-image.jpeg'
 class OrderSummary extends React.Component {
   state = {
     orderItems: [],
@@ -54,7 +55,7 @@ class OrderSummary extends React.Component {
     const orderItems = this.state.orderItems.map((item) => 
       <div key={item.id} className="cart-item">
         <div className="img">
-          <img src={item.images[0]} alt="product"></img>
+          <img src={item.images[0].length > 0 ? item.images[0] : NoImage} alt="product"></img>
         </div>
         <div className="titles">
           <h2>{item.product.name}</h2>

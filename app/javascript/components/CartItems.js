@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { faMinus } from '@fortawesome/free-solid-svg-icons'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import NoImage from 'images/no-image.jpeg'
 
 class CartItems extends React.Component {
   state = {
@@ -97,7 +98,7 @@ class CartItems extends React.Component {
         }
             
         <div className="img">
-          <img src={Product2} alt="product"></img>
+          <img src={item.images[0].length > 0 ? item.images[0] : NoImage} alt="product"></img>
         </div>
         <div className="titles">
           <h2>{item.product.name}</h2>
