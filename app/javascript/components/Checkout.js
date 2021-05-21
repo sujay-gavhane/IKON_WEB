@@ -120,6 +120,7 @@ class Checkout extends React.Component {
     this.setState({ lastName: values.cardHolder.split(' ')[1] })
     this.setState({ cardMonth: values.cardMonth })
     this.setState({ cardYear: values.cardYear })
+    this.setState({ cvv: values.cvv })
   }
 
   render () {

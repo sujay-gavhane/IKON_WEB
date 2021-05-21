@@ -27,6 +27,7 @@ const CreditCard = props => {
             cvv: ""
           }}
           onSubmit={(values, formikBag) => {
+            props.updateChange(values)
             props.placeOrder();
             formikBag.resetForm();
           }}
