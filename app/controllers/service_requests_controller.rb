@@ -7,8 +7,10 @@ class ServiceRequestsController < ApplicationController
     if @service_request.save
       if @service_request.purchase(card_params)
         @service_cart.service_cart_items.where('service_request_id IS NULL').update(service_request_id: @service_request.id)
-        ServiceRequestMailer.with(user: current_user.email, service_request: @service_request.id)
+        unless current_user.email == 'ikon.web.test.email@gmail.com'
+          ServiceRequestMailer.with(user: current_user.email, service_request: @service_request.id)
           .service_request_placed_successfully.deliver_now
+        end
         flash[:notice] = 'Service Request placed successfully.'
         url = service_request_path(@service_request.id)
       else
@@ -79,8 +81,10 @@ class ServiceRequestsController < ApplicationController
     respond_to do |format|
       format.json do
         if @service_request.update(status_id: Status.find_by(name: 'Canceled').id)
-          ServiceRequestMailer.with(user: current_user.email, service_request: @service_request.id)
+          unless current_user.email == 'ikon.web.test.email@gmail.com'
+            ServiceRequestMailer.with(user: current_user.email, service_request: @service_request.id)
             .service_request_cancel.deliver_now
+          end
           msg = 'Service Request Canceled sunccessfully'
         else
           msg = 'Error while canceling Service Request'

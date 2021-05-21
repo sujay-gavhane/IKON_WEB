@@ -7,7 +7,9 @@ class OrdersController < ApplicationController
     if @order.save
       if @order.purchase(card_params)
         @cart.user_carts.where('order_id IS NULL').update(order_id: @order.id)
-        OrderMailer.with(user: current_user.email, order: @order.id).order_placed_successfully.deliver_now
+        unless current_user.email == 'ikon.web.test.email@gmail.com'
+          OrderMailer.with(user: current_user.email, order: @order.id).order_placed_successfully.deliver_now
+        end
         flash[:notice] = 'Order placed successfully.'
         url = order_path(@order.id)
       else
@@ -74,7 +76,9 @@ class OrdersController < ApplicationController
     respond_to do |format|
       format.json do
         if @order.update(status_id: Status.find_by(name: 'Canceled').id)
+        unless current_user.email == 'ikon.web.test.email@gmail.com'
           OrderMailer.with(user: current_user.email, order: @order.id).order_cancel.deliver_now
+        end
           msg = 'Order Canceled sunccessfully'
         else
           msg = 'Error while canceling Order'
