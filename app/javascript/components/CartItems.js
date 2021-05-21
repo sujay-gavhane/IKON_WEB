@@ -98,7 +98,7 @@ class CartItems extends React.Component {
         }
             
         <div className="img">
-          <img src={item.images[0].length > 0 ? item.images[0] : NoImage} alt="product"></img>
+          <img src={item.images.length > 0 ? item.images[0] : NoImage} alt="product"></img>
         </div>
         <div className="titles">
           <h2>{item.product.name}</h2>
