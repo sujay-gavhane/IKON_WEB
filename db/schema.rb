@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_19_105937) do
+ActiveRecord::Schema.define(version: 2021_05_21_115813) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,7 +115,7 @@ ActiveRecord::Schema.define(version: 2021_05_19_105937) do
   end
 
   create_table "coupons", force: :cascade do |t|
-    t.string "code", null: false
+    t.string "name", null: false
     t.datetime "start_at"
     t.datetime "end_at"
     t.integer "discount"
@@ -131,7 +131,7 @@ ActiveRecord::Schema.define(version: 2021_05_19_105937) do
   end
 
   create_table "firearm_types", force: :cascade do |t|
-    t.string "type_name", null: false
+    t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "key"
@@ -229,7 +229,7 @@ ActiveRecord::Schema.define(version: 2021_05_19_105937) do
   end
 
   create_table "service_types", force: :cascade do |t|
-    t.string "type_name", null: false
+    t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "key"

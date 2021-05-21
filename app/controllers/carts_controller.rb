@@ -60,7 +60,7 @@ class CartsController < ApplicationController
 
   def apply_coupon
     @coupon = if params[:code].present?
-      Coupon.find_by(code: params[:code])
+      Coupon.find_by(name: params[:code])
     end 
     if @coupon && @coupon.start_at < Time.now && @coupon.end_at > Time.now
       msg = "Discount $#{@coupon.discount} applied on total amount"

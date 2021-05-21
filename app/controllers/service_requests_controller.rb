@@ -33,8 +33,8 @@ class ServiceRequestsController < ApplicationController
       format.json do
         service_request_items = @service_request.service_cart_items.order('id desc')
         @service_request_items = service_request_items.map { |item| item.as_json.merge({
-        	firearm_type_name: item.firearm_type.type_name,
-         	service_type_name: item.service_type.type_name,
+        	firearm_type_name: item.firearm_type.name,
+         	service_type_name: item.service_type.name,
          	service_work: item.service_work }) }
         render json: { status: @service_request.status.try(:name),
          service_request_items: @service_request_items,
@@ -67,7 +67,7 @@ class ServiceRequestsController < ApplicationController
         service_requests = current_user.service_requests.includes(:status, service_cart_items: [:firearm_type, :service_type]).order('id desc').page(params[:page]).per(4)
         service_requests = service_requests.map{ |service_request| service_request.as_json.merge({
           status: service_request.status.try(:name),
-          service_cart_items: service_request.service_cart_items.map { |item| item.as_json.merge({ firearm_type: item.firearm_type.type_name, service_type: item.service_type.type_name }) }
+          service_cart_items: service_request.service_cart_items.map { |item| item.as_json.merge({ firearm_type: item.firearm_type.name, service_type: item.service_type.name }) }
         })}
         render json: { orders: service_requests, cart: @service_cart.id }
       end

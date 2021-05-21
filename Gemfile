@@ -61,6 +61,7 @@ gem 'turnout', '2.5.0'
 
 gem "aws-sdk-s3", '1.94.1', require: false
 gem 'image_processing', '1.12.1'
+gem 'active_storage_validations'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

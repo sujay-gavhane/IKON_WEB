@@ -16,4 +16,8 @@ class Product < ApplicationRecord
 
   validates :name, presence: true
   validates :price, presence: true
+  validates :category_id, presence: true
+  validates :collection_type_id, presence: true
+  validates :colors, presence: true
+  validates :images, content_type: ['image/png', 'image/jpg', 'image/jpeg']
 end

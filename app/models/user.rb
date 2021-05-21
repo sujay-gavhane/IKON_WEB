@@ -13,6 +13,6 @@ class User < ApplicationRecord
   has_many :service_requests, dependent: :destroy
 
   def full_name
-    "#{self.first_name} #{self.last_name}"
+    "#{self.try(:first_name)} #{self.try(:last_name)}"
   end
 end

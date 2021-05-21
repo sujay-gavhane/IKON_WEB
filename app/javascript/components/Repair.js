@@ -194,7 +194,7 @@ class Repair extends React.Component {
 
   render () {
     const firearmTypes = this.state.firearmTypes.map((firearmType, i) =>
-      <option value={firearmType.type_name.toLowerCase()} key={firearmType.id}>{firearmType.type_name}</option>
+      <option value={firearmType.name.toLowerCase()} key={firearmType.id}>{firearmType.name}</option>
     );
     return (
       <React.Fragment>

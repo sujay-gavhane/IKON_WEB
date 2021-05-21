@@ -39,6 +39,13 @@ RailsAdmin.config do |config|
     # history_show
   end
   # config.excluded_models = [Cart, UserCart]
+  config.model 'ActiveStorage::Blob' do
+    visible false
+  end
+
+  config.model 'ActiveStorage::Attachment' do
+    visible false
+  end
 
   config.model 'Role' do 
     edit do
@@ -111,12 +118,12 @@ RailsAdmin.config do |config|
       field :estimated_cost_part
       field :service_type_id, :enum do
         enum do
-          ServiceType.all.collect {|u| [u.type_name, u.id]}
+          ServiceType.all.collect {|u| [u.name, u.id]}
         end
       end
       field :firearm_type_id, :enum do
         enum do
-          FirearmType.all.collect {|u| [u.type_name, u.id]}
+          FirearmType.all.collect {|u| [u.name, u.id]}
         end
       end
     end
@@ -124,34 +131,6 @@ RailsAdmin.config do |config|
     create do; end
     update do; end
   end
-
-  # config.model 'ServiceType' do 
-  #   edit do
-  #     field :type_name
-  #     field :firearm_types, :enum do
-  #       enum do
-  #         FirearmType.all.collect {|u| [u.type_name, u.id]}
-  #       end
-  #     end
-  #   end
-  #   export do; end
-  #   create do; end
-  #   update do; end
-  # end
-
-  # config.model 'FirearmType' do 
-  #   edit do
-  #     field :type_name
-  #     field :service_types, :enum do
-  #       enum do
-  #         ServiceType.all.collect {|u| [u.type_name, u.id]}
-  #       end
-  #     end
-  #   end
-  #   export do; end
-  #   create do; end
-  #   update do; end
-  # end
 
   config.model 'Product' do 
     edit do
@@ -180,6 +159,28 @@ RailsAdmin.config do |config|
           end
         end
       end
+    end
+    export do; end
+    create do; end
+    update do; end
+  end
+
+  config.model 'Color' do 
+    edit do
+      field :name
+      field :products
+    end
+    export do; end
+    create do; end
+    update do; end
+  end
+
+  config.model 'Coupon' do 
+    edit do
+      field :name
+      field :start_at
+      field :end_at
+      field :discount
     end
     export do; end
     create do; end

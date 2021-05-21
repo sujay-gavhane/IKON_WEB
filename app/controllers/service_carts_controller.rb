@@ -115,8 +115,8 @@ class ServiceCartsController < ApplicationController
       format.json do
         @service_cart_items = @service_cart.service_cart_items.includes(:service_type, :service_work, :firearm_type).where('service_request_id IS NULL').order('id desc')
         @service_cart_items = @service_cart_items.map { |item| item.as_json.merge({
-         firearm_type_name: item.firearm_type.type_name,
-         service_type_name: item.service_type.type_name,
+         firearm_type_name: item.firearm_type.name,
+         service_type_name: item.service_type.name,
          service_work: item.service_work }) }
         render json: { service_cart_items: @service_cart_items }
       end
@@ -135,7 +135,7 @@ class ServiceCartsController < ApplicationController
 
   def apply_coupon
     @coupon = if params[:code].present?
-      Coupon.find_by(code: params[:code])
+      Coupon.find_by(name: params[:code])
     end 
     if @coupon && @coupon.start_at < Time.now && @coupon.end_at > Time.now
       msg = "Discount $#{@coupon.discount} applied on total amount"
