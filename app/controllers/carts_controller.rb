@@ -69,7 +69,7 @@ class CartsController < ApplicationController
     end
     respond_to do |format|
       format.json do
-        render json: { msg: msg, discount: @coupon.present? ? @coupon.discount : 0, coupon_id: @coupon.id }
+        render json: { msg: msg, discount: @coupon.present? ? @coupon.discount : 0, coupon_id: @coupon ? @coupon.id : 0}
       end
     end
   end

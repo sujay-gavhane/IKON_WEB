@@ -15,7 +15,7 @@ class Checkout extends React.Component {
     couponMsg: '',
     netPayable: 0,
     discount: 0,
-    checkout: true,
+    checkout: false,
     toggleAddressPopup: '',
     selectedAddress: {},
     couponId: 0,
@@ -23,7 +23,9 @@ class Checkout extends React.Component {
     cardHolder: '',
     cardMonth: '',
     cardYear: '',
-    cvv: ''
+    cvv: '',
+    tax: 0,
+    amountSet: false
   }
 
   constructor(props) {
@@ -86,7 +88,7 @@ class Checkout extends React.Component {
       address_id: this.state.selectedAddress.id,
       total_amount: this.state.totalAmount,
       net_amount: this.state.netPayable,
-      taxes: 20
+      taxes: this.state.tax
       },
       card_number: this.state.cardNumber,
       first_name: this.state.firstName,
@@ -124,6 +126,7 @@ class Checkout extends React.Component {
   }
 
   render () {
+    debugger
     return (
       <React.Fragment>
         <main className="cart-m">
@@ -138,7 +141,9 @@ class Checkout extends React.Component {
               </div>
               <hr></hr>
               <div className="checkout-side">
-                <CartAmount updateTotalAmmount={this.updateState} totalAmount={this.state.totalAmount} netPayable={this.state.netPayable} checkout={this.state.checkout}/>
+                { this.state.amountSet &&
+                <CartAmount tax={this.state.tax} updateTotalAmmount={this.updateState} totalAmount={this.state.totalAmount} netPayable={this.state.netPayable} checkout={this.state.amountSet}/>
+                }
               </div>
             </div>
             <hr></hr>

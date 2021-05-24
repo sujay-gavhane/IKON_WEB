@@ -32,22 +32,26 @@ class CartAmount extends React.Component {
   appplyCoupon(){
     var coupon = this.props.checkout ? document.querySelector("#coupon").textContent : document.querySelector(".coupon-input").value  
     var cartID = document.getElementById('cart-id').textContent
-    if (coupon) {
       axios
         .put("/carts/" + cartID + "/apply_coupon.json", {code: coupon})
           .then(res => {
             this.setState({ couponMsg: res.data.msg, discount: res.data.discount,
             couponId: res.data.coupon_id })
             this.props.updateTotalAmmount(this.state.discount, 'discount', 0)
-            this.props.updateTotalAmmount(this.props.totalAmount, 'netPayable', this.state.discount)
-            this.props.updateTotalAmmount(res.data.coupon_id, 'couponId', 0)
+            this.props.updateTotalAmmount(this.state.couponId, 'couponId', 0)
+            if (this.props.checkout) {
+              var tax = ((this.props.totalAmount - (this.state.discount)) * 7) / 100 || 0
+              this.props.updateTotalAmmount(tax, 'tax', 0)
+              this.props.updateTotalAmmount(this.props.totalAmount + tax, 'netPayable', this.state.discount)
+            } else {
+              this.props.updateTotalAmmount(this.props.totalAmount, 'netPayable', this.state.discount)
+            }
           }
         )
         .catch(err => {
            console.log(err);
            return null;
          });
-    }
   }
 
   redirectToCheckout() {
@@ -82,7 +86,7 @@ class CartAmount extends React.Component {
 
           <hr></hr>
 
-          <h1>Net Payment:</h1>
+          <h1>Amount Payable with Discount:</h1>
           <h2>${this.props.netPayable}</h2>
           { this.props.cartItemsCount && <button data-checkout='true' onClick={this.redirectToCheckout} className="checkout-btn" type="button" name="button">Checkout</button>}
         </div>
@@ -94,13 +98,18 @@ class CartAmount extends React.Component {
             <h1>Coupon Discount:</h1>
             <h2>${this.state.discount}</h2>
 
-            <h1>Sales Tax:</h1>
-            <h2>$20</h2>
+            <h1>Total:</h1>
+            <h2>${this.props.totalAmount - this.state.discount}</h2>
 
             <hr></hr>
 
+            <h1>Tax:</h1>
+            <h2>${this.props.tax}</h2>
+
             <h1>Net Payment:</h1>
             <h2>${this.props.netPayable}</h2>
+            <hr></hr>
+            
             <div className="payment-method">
               <h1>Payment Method:</h1>
               <select className="" name="">

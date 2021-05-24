@@ -26,7 +26,7 @@ class Order < ApplicationRecord
 
   def send_status_email
     if self.changes.include?(:status_id) && self.valid?
-      unless self.user.email == 'ikon.web.test.email@gmail.com'
+      unless self.user.email == 'ikon.web.test.email@gmail.com' || self.user.email == 'hornezachary93@gmail.com'
         OrderMailer.with(user: self.user.email, order: self.id).order_status_update.deliver_now
       end
     end

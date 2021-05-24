@@ -37,6 +37,7 @@ class CartItems extends React.Component {
           this.props.updateTotalAmmount(totalAmount, 'totalAmount', 0)
           this.props.updateTotalAmmount(res.data.cart_items.length, 'cartItemsCount', 0)
           this.props.updateTotalAmmount(totalAmount, 'netPayable', 0)
+          this.props.updateTotalAmmount(true, 'amountSet', 0)
         }
       )
       .catch(err => {
