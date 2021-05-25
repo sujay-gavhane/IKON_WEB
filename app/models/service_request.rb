@@ -59,10 +59,10 @@ class ServiceRequest < ApplicationRecord
 
   def credit_card(card_params)
     @credit_card ||= ActiveMerchant::Billing::CreditCard.new(
-      :number             => '4242424242424242',
-      :verification_value => '123',
-      :month              => '07',
-      :year               => '28',
+      :number             => card_params['card_number'].gsub(' ',''),
+      :verification_value => card_params['cvv'],
+      :month              => card_params['card_month'],
+      :year               => card_params['card_year'],
       :first_name         => card_params[:first_name],
       :last_name          => card_params[:last_name]
     )

@@ -14,7 +14,7 @@ class ServiceCheckout extends React.Component {
     couponMsg: '',
     netPayable: 0,
     discount: 0,
-    checkout: true,
+    checkout: false,
     toggleAddressPopup: '',
     selectedAddress: {},
     couponId: 0,
@@ -22,7 +22,9 @@ class ServiceCheckout extends React.Component {
     cardHolder: '',
     cardMonth: '',
     cardYear: '',
-    cvv: ''
+    cvv: '',
+    tax: 0,
+    amountSet: false
   }
 
   constructor(props) {
@@ -86,7 +88,7 @@ class ServiceCheckout extends React.Component {
       total_amount: this.state.totalEstimatedCostLabor + this.state.totalEstimatedCostPart,
       total_estimated_time: this.state.totalEstimatedTime,
       net_amount: this.state.netPayable,
-      taxes: 20
+      taxes: this.state.tax
       },
       card_number: this.state.cardNumber,
       first_name: this.state.firstName,
@@ -137,12 +139,15 @@ class ServiceCheckout extends React.Component {
               </div>
               <hr></hr>
               <div className="checkout-side">
-                <ServiceCartAmount
-                  updateState={this.updateState}
-                  totalEstimatedCostLabor={this.state.totalEstimatedCostLabor}
-                  totalEstimatedCostPart={this.state.totalEstimatedCostPart}
-                  totalEstimatedTime={this.state.totalEstimatedTime}
-                  netPayable={this.state.netPayable} checkout={this.state.checkout}/>
+                { this.state.amountSet &&
+                  <ServiceCartAmount
+                    tax={this.state.tax}
+                    updateState={this.updateState}
+                    totalEstimatedCostLabor={this.state.totalEstimatedCostLabor}
+                    totalEstimatedCostPart={this.state.totalEstimatedCostPart}
+                    totalEstimatedTime={this.state.totalEstimatedTime}
+                    netPayable={this.state.netPayable} checkout={this.state.amountSet}/>
+                }
               </div>
             </div>
             <hr></hr>

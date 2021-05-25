@@ -32,7 +32,6 @@ class ServiceCartAmount extends React.Component {
   appplyCoupon(){
     var coupon = this.props.checkout ? document.querySelector("#coupon").textContent : document.querySelector(".coupon-input").value
     var cartID = document.getElementById('cart-id').textContent
-    if (coupon) {
       axios
         .put("/service_carts/" + cartID + "/apply_coupon.json", {code: coupon})
           .then(res => {
@@ -41,13 +40,19 @@ class ServiceCartAmount extends React.Component {
             this.props.updateState(this.state.discount, 'discount', 0)
             this.props.updateState(this.props.totalEstimatedCostLabor + this.props.totalEstimatedCostPart, 'netPayable', this.state.discount)
             this.props.updateState(res.data.coupon_id, 'couponId', 0)
+            if (this.props.checkout) {
+              var tax = ((this.props.totalEstimatedCostLabor + this.props.totalEstimatedCostPart - (this.state.discount)) * 7) / 100 || 0
+              this.props.updateState(tax, 'tax', 0)
+              this.props.updateState(this.props.totalEstimatedCostLabor + this.props.totalEstimatedCostPart + tax, 'netPayable', this.state.discount)
+            } else {
+              this.props.updateState(this.props.totalEstimatedCostLabor + this.props.totalEstimatedCostPart, 'netPayable', this.state.discount)
+            }
           }
         )
         .catch(err => {
            console.log(err);
            return null;
          });
-    }
   }
 
   redirectToCheckout() {
@@ -96,12 +101,16 @@ class ServiceCartAmount extends React.Component {
             <h2>${this.props.totalEstimatedCostPart.toFixed(2)}</h2>
             <h1>Total Estimated Repair Time:</h1>
             <h2>{this.props.totalEstimatedTime && this.props.totalEstimatedTime + " Minutes"} </h2>
-
             <h1>Coupan Discount:</h1>
             <h2>${this.state.discount}</h2>
+            <h1>Total:</h1>
+            <h2>{(parseFloat(this.props.totalEstimatedCostLabor) + parseFloat(this.props.totalEstimatedCostPart) - parseInt(this.state.discount)).toFixed(2)} </h2>
             <hr></hr>
+            <h1>Tax:</h1>
+            <h2>${this.props.tax.toFixed(2)}</h2>
             <h1>Net Payment:</h1>
             <h2>${this.props.netPayable.toFixed(2)}</h2>
+            <hr></hr>
             <div className="payment-method">
               <h1>Payment Method:</h1>
               <select className="" name="">

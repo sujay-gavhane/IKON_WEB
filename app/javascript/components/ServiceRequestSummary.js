@@ -84,7 +84,7 @@ class ServiceRequestSummary extends React.Component {
                 {serviceRequestItems}
               </div>
               <hr></hr>
-              <ServiceRequestAmount updateAddress={this.updateState} status={this.state.status} address={this.state.address} discount={this.state.discount} order={this.state.serviceRequest} />
+              <ServiceRequestAmount tax={this.state.serviceRequest.taxes} updateAddress={this.updateState} status={this.state.status} address={this.state.address} discount={this.state.discount} order={this.state.serviceRequest} />
             </div>
           </div>
         </main>
