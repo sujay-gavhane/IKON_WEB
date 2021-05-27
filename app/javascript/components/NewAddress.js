@@ -1,13 +1,15 @@
 import React from "react"
 import PropTypes from "prop-types"
 import axios from 'axios';
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as yup from "yup";
 
 class NewAddress extends React.Component {
   state = {
     options: [],
     userInput: '',
-    address_line_one: '',
-    address_line_two: '',
+    addressLineOne: '',
+    addressLineTwo: '',
     city: '',
     state: '',
     country: '',
@@ -27,8 +29,24 @@ class NewAddress extends React.Component {
     this.setCsrfToken();
   }
 
-  handleChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value })
+  getSchema(){
+    return yup.object().shape({
+      addressLineOne: yup.string().required('Address Line 1 is Required'),
+      addressLineTwo: yup.string().required('Address Line 2 is Required'),
+      city: yup.string().required('City is Required'),
+      state: yup.string().required('State is Required'),
+      country: yup.string().required('Country is Required'),
+      pincode: yup.number('Enter number value').required('Pincode is Required')
+    });
+  }
+
+  handleChange = (values) => {
+    this.setState({ addressLineOne: values.addressLineOne })
+    this.setState({ addressLineTwo: values.addressLineTwo })
+    this.setState({ city: values.city })
+    this.setState({ state: values.state })
+    this.setState({ country: values.country })
+    this.setState({ pincode: values.pincode })
   }
 
   setCsrfToken() {
@@ -36,14 +54,14 @@ class NewAddress extends React.Component {
     axios.defaults.headers.common['X-CSRF-Token'] = csrfToken
   }
 
-  handleSubmit(event) {
+  handleSubmit(values) {
     const userInputs = {
-      address_line_one: this.state.address_line_one,
-      address_line_two: this.state.address_line_two,
-      city: this.state.city,
-      state: this.state.state,
-      country: this.state.country,
-      pincode: this.state.pincode
+      address_line_one: values.addressLineOne,
+      address_line_two: values.addressLineTwo,
+      city: values.city,
+      state: values.state,
+      country: values.country,
+      pincode: values.pincode
     }
     axios
       .post("/addresses.json", userInputs)
@@ -63,8 +81,8 @@ class NewAddress extends React.Component {
   popupClose(){
     this.props.setPopupProps('show', 'close')
     this.props.setPopupProps('properties', {})
-    this.setState({address_line_one: ''})
-    this.setState({address_line_two: ''})
+    this.setState({addressLineOne: ''})
+    this.setState({addressLineTwo: ''})
     this.setState({state: ''})
     this.setState({city: ''})
     this.setState({country: ''})
@@ -74,40 +92,64 @@ class NewAddress extends React.Component {
   render () {
     return (
       <React.Fragment>
-        <main className={this.props.show + " popup-main"}>
-          <div className="popup-div">
-            <a onClick={this.popupClose} className="close-btn"> <span></span> </a>
-            <div className="repair-form">
-              <form>
-                <div className="form-group">
-                  <label className="form-label">Address Line 1</label>
-                  <input onChange={this.handleChange} name="address_line_one" placeholder="Address" required="" type="text" className="form-control" value={this.state.address_line_one}></input>
-                </div>
-                <div className="form-group">
-                  <label className="form-label">Address Line 2</label>
-                  <input onChange={this.handleChange} name="address_line_two" placeholder="Address" required="" type="text" className="form-control" value={this.state.address_line_two}></input>
-                </div>
-                <div className="form-group">
-                  <label className="form-label">Postal Code</label>
-                  <input onChange={this.handleChange} name="pincode" placeholder="Postal Code" required="" type="text" className="form-control" value={this.state.pincode}></input>
-                </div>
-                <div className="form-group">
-                  <label className="form-label">City</label>
-                  <input onChange={this.handleChange} name="city" placeholder="City" required="" type="text" className="form-control" value={this.state.city}></input>
-                </div>
-                <div className="form-group">
-                  <label className="form-label">State</label>
-                  <input onChange={this.handleChange} name="state" placeholder="State" required="" type="text" className="form-control" value={this.state.state}></input>
-                </div>
-                <div className="form-group">
-                  <label className="form-label">Country</label>
-                  <input onChange={this.handleChange} name="country" placeholder="Country" required="" type="text" className="form-control" value={this.state.country}></input>
-                </div>
-                <button onClick={this.handleSubmit} type="button" className="" style={{backgroundColor: "rgb(230, 35, 70)"}}>Add</button>
-              </form>
+        <Formik
+          initialValues={{
+            addressLineOne: "",
+            addressLineTwo: "",
+            state: "",
+            city: "",
+            country: "",
+            pincode: ""
+          }}
+          onSubmit={(values, formikBag) => {
+            this.handleSubmit(values);
+            formikBag.resetForm();
+          }}
+          validationSchema={this.getSchema()}
+        >
+        {({errors, touched, values}) => (
+          <main className={this.props.show + " popup-main"}>
+            <div className="popup-div">
+              <a onClick={this.popupClose} className="close-btn"> <span></span> </a>
+              <div className="repair-form">
+                <Form>
+                  <div className="form-group">
+                    <label className="form-label">Address Line 1</label>
+                    <Field name="addressLineOne" placeholder="Address Line One"/>
+                    <ErrorMessage name="addressLineOne" render={msg => <div className="color-red">{msg}</div>}/>
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Address Line 2</label>
+                    <Field name="addressLineTwo" placeholder="Address Line Two"/>
+                    <ErrorMessage name="addressLineTwo" render={msg => <div className="color-red">{msg}</div>}/>
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Pincode</label>
+                    <Field name="pincode" placeholder="Pincode"/>
+                    <ErrorMessage name="pincode" render={msg => <div className="color-red">{msg}</div>}/>
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">City</label>
+                    <Field name="city" placeholder="City"/>
+                    <ErrorMessage name="city" render={msg => <div className="color-red">{msg}</div>}/>
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">State</label>
+                    <Field name="state" placeholder="State"/>
+                    <ErrorMessage name="state" render={msg => <div className="color-red">{msg}</div>}/>
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Country</label>
+                    <Field name="country" placeholder="Country"/>
+                    <ErrorMessage name="country" render={msg => <div className="color-red">{msg}</div>}/>
+                  </div>
+                  <button type="submit" className="" style={{backgroundColor: "rgb(230, 35, 70)"}}>Add</button>
+                </Form>
+              </div>
             </div>
-          </div>
-        </main>
+          </main>
+        )}
+        </Formik>
       </React.Fragment>
     );
   }
