@@ -6,6 +6,7 @@ import Product2 from 'images/product2.jpg'
 import Product3 from 'images/product3.jpg'
 import NoImage from 'images/no-image.jpeg'
 import parse from 'html-react-parser';
+import Lightbox from "react-modal-image";
 
 class ProductShow extends React.Component {
   state = {
@@ -14,7 +15,9 @@ class ProductShow extends React.Component {
     colors: [],
     msg: '',
     cart: 0,
-    images: []
+    images: [],
+    open: true,
+    currentImg: ''
   };
 
   constructor(props) {
@@ -24,11 +27,14 @@ class ProductShow extends React.Component {
     this.showThisImg = this.showThisImg.bind(this);
     this.handleColorChange = this.handleColorChange.bind(this);
     this.addToCart = this.addToCart.bind(this);
+    this.openLightbox = this.openLightbox.bind(this);
+    this.closeLightbox = this.closeLightbox.bind(this);
   }
 
   componentDidMount() {
     this.getProductDetails();
     this.setCsrfToken();
+    document.getElementsByClassName("light-box")[0].parentElement.classList.add('one-img')
   }
 
   setCsrfToken() {
@@ -46,6 +52,7 @@ class ProductShow extends React.Component {
             this.setState({ color: res.data.product.colors[0] })
             this.setState({ cart: res.data.product.cart })
             this.setState({ images: res.data.product.images })
+            this.setState({currentImg: this.state.images[0] ? this.state.images[0] : NoImage})
           }
         )
        .catch(err => {
@@ -69,11 +76,20 @@ class ProductShow extends React.Component {
 
   showThisImg(e){
     var img = e.target.src;
+    this.setState({currentImg: img})
     var par = e.target.parentElement.parentElement.parentElement.querySelector(".one-img").style.background="url("+img+")";
   }
 
   handleColorChange(event) {
     this.setState({color: event.target.value});
+  }
+
+  closeLightbox(){
+    this.setState({ open: false })
+  }
+
+  openLightbox(){
+    this.setState({ open: true })
   }
 
   render () {
@@ -106,8 +122,16 @@ class ProductShow extends React.Component {
                     <img src={this.state.images[2] ? this.state.images[2] : NoImage} alt="product"></img>
                   </div>
                 </div>
-                <div className="one-img" style={{backgroundImage: `url(${this.state.images[0] ? this.state.images[0] : NoImage})`}}>
-                </div>
+                {
+                  this.state.open &&
+                    <Lightbox
+                      small={this.state.currentImg}
+                      large={this.state.currentImg}
+                      onClose={this.closeLightbox}
+                      className="light-box"
+                      hideDownload={true}
+                    />
+                }
               </div>
             </div>
             <div className="info-side">
