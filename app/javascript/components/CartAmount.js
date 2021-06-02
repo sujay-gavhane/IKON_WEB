@@ -106,6 +106,9 @@ class CartAmount extends React.Component {
             <h1>Tax:</h1>
             <h2>${this.props.tax}</h2>
 
+            <h1>Shipping Cost:</h1>
+            <h2>${this.props.shippingCost}</h2>
+
             <h1>Net Payment:</h1>
             <h2>${this.props.netPayable}</h2>
             <hr></hr>

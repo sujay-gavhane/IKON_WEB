@@ -1,3 +1,5 @@
+require 'net/http'
+require 'uri'
 class CartsController < ApplicationController
   before_action :authenticate_user!, only: [:checkout]
   before_action :authorize_user
@@ -82,6 +84,38 @@ class CartsController < ApplicationController
     end
     respond_to do |format|
       format.html
+    end
+  end
+
+  def get_shipping_cost
+    users_cart_products = @cart.user_carts.includes(:color, product: [:category]).where('order_id IS NULL')
+    pieces = users_cart_products.map{|c| {weight: c.product.weight, length: c.product.length, width: c.product.width, height: c.product.height, insuranceAmount: nil, declaredValue: nil}}
+    req_json = {
+      carrierCode: "ups",
+      serviceCode: "ups_ground",
+      packageTypeCode: "ups_custom_package",
+      sender: {
+        zip: "27306",
+        country: "US"
+      },
+      receiver: {
+        zip: params[:zip],
+        country: params[:country]
+      },
+      residential: true,
+      weightUnit: "lb",
+      dimUnit: "in",
+      currency: "USD",
+      customsCurrency: "USD",
+      pieces: pieces
+    }.to_json
+    uri = URI("https://xpsshipper.com/restapi/v1/customers/#{ENV['XPS_CUSTOMER_ID']}/quote")
+    res = Net::HTTP.post(uri, req_json,
+     "Content-Type" => "application/json", Authorization: "RSIS #{ENV['XPS_AUTHORIZATION_KEY']}")
+    respond_to do |format|
+      format.json do
+        render json: { shipping_cost: JSON.parse(res)['totalAmount'] }
+      end
     end
   end
 

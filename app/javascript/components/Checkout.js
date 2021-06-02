@@ -25,7 +25,8 @@ class Checkout extends React.Component {
     cardYear: '',
     cvv: '',
     tax: 0,
-    amountSet: false
+    amountSet: false,
+    shippingCost: 0
   }
 
   constructor(props) {
@@ -75,6 +76,8 @@ class Checkout extends React.Component {
         .then(res => {
           this.setState({ selectedAddress: res.data.address })
           this.closeAddressPopup()
+          this.getShippingCost()
+          alert('Shipping Cost and Net Payment is updated. Please review once again.')
         })
        .catch(err => {
            console.log(err);
@@ -88,7 +91,8 @@ class Checkout extends React.Component {
       address_id: this.state.selectedAddress.id,
       total_amount: this.state.totalAmount,
       net_amount: this.state.netPayable,
-      taxes: this.state.tax
+      taxes: this.state.tax,
+      shipping: this.state.shippingCost
       },
       card_number: this.state.cardNumber,
       first_name: this.state.firstName,
@@ -112,6 +116,19 @@ class Checkout extends React.Component {
      }
   }
 
+  getShippingCost(){
+    axios
+      .get("/carts/" + document.getElementById('cart-id').textContent + "/get_shipping_cost.json?country=" + this.state.selectedAddress.country + "&zip=" + this.state.selectedAddress.pincode)
+        .then(res => {
+          this.setState({shippingCost: parseFloat(res.data.shipping_cost)})
+          this.setState({netPayable: this.state.netPayable + this.state.shippingCost})
+        })
+       .catch(err => {
+           console.log(err);
+           return null;
+       });
+  }
+
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value })
   }
@@ -126,7 +143,6 @@ class Checkout extends React.Component {
   }
 
   render () {
-    debugger
     return (
       <React.Fragment>
         <main className="cart-m">
@@ -142,7 +158,7 @@ class Checkout extends React.Component {
               <hr></hr>
               <div className="checkout-side">
                 { this.state.amountSet &&
-                <CartAmount tax={this.state.tax} updateTotalAmmount={this.updateState} totalAmount={this.state.totalAmount} netPayable={this.state.netPayable} checkout={this.state.amountSet}/>
+                <CartAmount shippingCost={this.state.shippingCost} tax={this.state.tax} updateTotalAmmount={this.updateState} totalAmount={this.state.totalAmount} netPayable={this.state.netPayable} checkout={this.state.amountSet}/>
                 }
               </div>
             </div>

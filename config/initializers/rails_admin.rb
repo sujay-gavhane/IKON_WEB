@@ -137,6 +137,18 @@ RailsAdmin.config do |config|
       field :name
       field :description
       field :price
+      field :weight do
+        label 'Weight in lb'
+      end
+      field :height do
+        label 'Height in Inches'
+      end
+      field :length do
+        label 'Length in Inches'
+      end
+      field :width do
+        label 'Width in Inches'
+      end
       field :category_id, :enum do
         enum do
           Category.all.collect {|u| [u.name, u.id]}

@@ -20,4 +20,8 @@ class Product < ApplicationRecord
   validates :collection_type_id, presence: true
   validates :colors, presence: true
   validates :images, content_type: ['image/png', 'image/jpg', 'image/jpeg']
+  validates :weight, presence: true
+  validates :height, presence: true
+  validates :length, presence: true
+  validates :width, presence: true
 end

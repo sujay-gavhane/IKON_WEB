@@ -83,7 +83,7 @@ class OrderSummary extends React.Component {
                 {orderItems}
               </div>
               <hr></hr>
-              <OrderAmount tax={this.state.order.taxes} updateAddress={this.updateState} status={this.state.status} address={this.state.address} discount={this.state.discount} order={this.state.order} />
+              <OrderAmount updateAddress={this.updateState} status={this.state.status} address={this.state.address} discount={this.state.discount} order={this.state.order} />
             </div>
           </div>
         </main>

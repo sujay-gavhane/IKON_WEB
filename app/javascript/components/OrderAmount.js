@@ -59,8 +59,10 @@ class OrderAmount extends React.Component {
             <h1>Discount:</h1>
             <h2>${this.props.discount || 0}</h2>
             <h1>Tax:</h1>
-            <h2>${this.props.tax || 0}</h2>
-            <h1>Grand Total:</h1>
+            <h2>${this.props.order.taxes || 0}</h2>
+            <h1>Shipping Cost:</h1>
+            <h2>${this.props.order.shipping || 0}</h2>
+            <h1>Net Payment:</h1>
             <h2>${this.props.order.net_amount}</h2>
             <h1>Status:</h1>
             <h2>{this.props.status}</h2>

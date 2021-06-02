@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       put 'update_quantity'
       put 'apply_coupon'
       get 'checkout'
+      get 'get_shipping_cost'
     end
   end
   resources :orders, only: [:create, :show, :index, :destroy] do

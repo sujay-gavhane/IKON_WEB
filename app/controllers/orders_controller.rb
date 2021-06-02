@@ -91,7 +91,7 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:user_id, :address_id, :coupon_id, :total_amount, :net_amount, :taxes)
+    params.require(:order).permit(:user_id, :address_id, :coupon_id, :total_amount, :net_amount, :taxes, :shipping)
   end
 
   def card_params
