@@ -3,7 +3,6 @@ class Address < ApplicationRecord
   has_many :orders
 
   validates :address_line_one, presence: true
-  validates :address_line_two, presence: true
   validates :city, presence: true
   validates :state, presence: true
   validates :country, presence: true

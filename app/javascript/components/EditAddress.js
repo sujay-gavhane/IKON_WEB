@@ -32,7 +32,6 @@ class EditAddress extends React.Component {
   getSchema(){
     return yup.object().shape({
       address_line_one: yup.string().required('Address Line 1 is Required'),
-      address_line_two: yup.string().required('Address Line 2 is Required'),
       city: yup.string().required('City is Required'),
       state: yup.string().required('State is Required'),
       country: yup.string().required('Country is Required'),
