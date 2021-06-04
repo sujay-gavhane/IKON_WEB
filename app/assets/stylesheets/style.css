@@ -1124,13 +1124,49 @@ color: black;
   transform: translate(-50%,-50%);
   background: white;
 }
-.close-btn{
+.address-id:hover{
+ cursor: pointer;
+}
+.sel-add-close-btn{
   margin-left: 10px;
 }
+.close-btn{
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
 .close-btn span{
+  display: block;
+  width: 30px;
+  height: 30px;
+  position: relative;
+}
+.sel-add-close-btn span{
   width: 30px;
   height: 45px;
   position: relative;
+}
+.sel-add-close-btn span::before{
+  content: "";
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: black;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%) rotate(45deg);
+}
+.sel-add-close-btn span::after{
+content: "";
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: black;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%) rotate(-45deg);
 }
 .close-btn span::before{
   content: "";
@@ -1494,10 +1530,10 @@ background: #d6d6d6;
 }
 
 
-.choose-address .my-address a .address-item{
+.choose-address .my-address div .address-item{
   margin-bottom: 15px;
 }
-.choose-address .my-address a:nth-last-of-type(1) .address-item{
+.choose-address .my-address div:nth-last-of-type(1) .address-item{
   margin-bottom: 0;
 }
 .card-date {
@@ -1631,10 +1667,10 @@ background: #d6d6d6;
 }
 
 
-.choose-address .my-address a .address-item{
+.choose-address .my-address div .address-item{
   margin-bottom: 15px;
 }
-.choose-address .my-address a:nth-last-of-type(1) .address-item{
+.choose-address .my-address div:nth-last-of-type(1) .address-item{
   margin-bottom: 0;
 }
 

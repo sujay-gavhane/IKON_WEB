@@ -89,7 +89,7 @@ class CartsController < ApplicationController
 
   def get_shipping_cost
     users_cart_products = @cart.user_carts.includes(:color, product: [:category]).where('order_id IS NULL')
-    pieces = users_cart_products.map{|c| {weight: c.product.weight, length: c.product.length, width: c.product.width, height: c.product.height, insuranceAmount: nil, declaredValue: nil}}
+    pieces = users_cart_products.map{|c| {weight: c.product.weight.to_s, length: c.product.length.to_s, width: c.product.width.to_s, height: c.product.height.to_s, insuranceAmount: nil, declaredValue: nil}}
     req_json = {
       carrierCode: "ups",
       serviceCode: "ups_ground",
@@ -102,6 +102,7 @@ class CartsController < ApplicationController
         zip: params[:zip],
         country: params[:country]
       },
+      signatureOptionCode: nil,
       residential: true,
       weightUnit: "lb",
       dimUnit: "in",
@@ -112,9 +113,10 @@ class CartsController < ApplicationController
     uri = URI("https://xpsshipper.com/restapi/v1/customers/#{ENV['XPS_CUSTOMER_ID']}/quote")
     res = Net::HTTP.post(uri, req_json,
      "Content-Type" => "application/json", Authorization: "RSIS #{ENV['XPS_AUTHORIZATION_KEY']}")
+    byebug
     respond_to do |format|
       format.json do
-        render json: { shipping_cost: JSON.parse(res)['totalAmount'] }
+        render json: { shipping_cost: JSON.parse(res.body)['totalAmount'] }
       end
     end
   end
