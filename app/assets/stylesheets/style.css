@@ -1125,14 +1125,11 @@ color: black;
   background: white;
 }
 .close-btn{
-  position: absolute;
-  top: 5px;
-  right: 5px;
+  margin-left: 10px;
 }
 .close-btn span{
-  display: block;
   width: 30px;
-  height: 30px;
+  height: 45px;
   position: relative;
 }
 .close-btn span::before{
@@ -1162,6 +1159,25 @@ content: "";
   opacity: 1;
 }
 
+.select-address {
+  display: inline;
+  padding: 10px;
+}
+.select-address button{
+  font-weight: 600;
+  padding: 5px 10px;
+  border: 1px solid #e62346;
+  outline: none;
+  color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 4px 2px -2px rgb(0, 0, 0 / 20%);
+  transition: .3s ease;
+  background-color: rgb(230, 35, 70);
+  font-size: 16px;
+  display: inline-block;
+  margin: 10px 10px;
+  margin-left: 639px;
+}
 
 
 /* cart page */
@@ -1239,10 +1255,9 @@ margin: 0 0 10px 0;
   width: 70px;
   height: 60px;
   position: relative;
-  overflow: hidden;
 }
 .cart-item  .img img{
-  width: 130%;
+  width: 100%;
   position: absolute;
   left: 50%;
   top: 50%;
@@ -2115,6 +2130,25 @@ margin: 20px auto;
 }
 .form-group .s-input>span {
     width: calc(66.67% - 25px);
+  }
+
+  .select-address {
+    display: inline;
+  }
+  .select-address button{
+    font-weight: 600;
+    padding: 5px 10px;
+    border: 1px solid #e62346;
+    outline: none;
+    color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 4px 2px -2px rgb(0, 0, 0 / 20%);
+    transition: .3s ease;
+    background-color: rgb(230, 35, 70);
+    font-size: 16px;
+    display: inline-block;
+    margin: 10px 10px;
+    margin-left: 110px;
   }
 }
 @media (min-width:767px) {
