@@ -92,7 +92,7 @@ class CartItems extends React.Component {
   render () {
     const cartItems = this.state.cart_items.map((item) =>
       <div key={item.id} className="cart-item">
-        { !this.props.checkout &&
+        { this.props.checkout &&
           <div className="remove">
             <a className={item.id} onClick={this.destroy}><FontAwesomeIcon icon={faTimes} /></a>
           </div>
@@ -106,9 +106,12 @@ class CartItems extends React.Component {
           <h3>{item.category_name}</h3>
           <span>{item.color.name}</span>
         </div>
-        { this.props.checkout
+        { !this.props.checkout
           ? <React.Fragment><div className="quantity">
               <h5>Quantity: {item.quantity}</h5>
+            </div>
+            <div className="unit-price">
+              <h4>${item.product.price}</h4>
             </div>
             <div className="total-price">
               <h4>${item.product.price * item.quantity}</h4>

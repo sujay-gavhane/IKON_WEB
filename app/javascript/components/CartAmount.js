@@ -81,12 +81,12 @@ class CartAmount extends React.Component {
             <button onClick={this.appplyCoupon} type="button" name="button">Apply</button>
           </div>
           <h1>Coupan Discount:</h1>
-          <h2>${this.state.discount}</h2>
+          <h2>${this.state.discount < 0 ? 0 : this.state.discount}</h2>
           {couponMsg}
 
           <hr></hr>
 
-          <h1>Amount Payable with Discount:</h1>
+          <h1>Total:</h1>
           <h2>${this.props.netPayable}</h2>
           { this.props.cartItemsCount && <button data-checkout='true' onClick={this.redirectToCheckout} className="checkout-btn" type="button" name="button">Checkout</button>}
         </div>
@@ -96,7 +96,7 @@ class CartAmount extends React.Component {
             <h2>${this.props.totalAmount}</h2>
 
             <h1>Coupon Discount:</h1>
-            <h2>${this.state.discount}</h2>
+            <h2>${this.state.discount < 0 ? 0 : this.state.discount}</h2>
 
             <h1>Total:</h1>
             <h2>${this.props.totalAmount - this.state.discount}</h2>

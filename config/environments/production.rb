@@ -130,7 +130,7 @@ Rails.application.configure do
   #   password:ENV["GMAIL_PASSWORD"]
   # }
 
-  config.action_mailer.default_url_options = { :host => 'prod.eba-hzrkrh26.us-east-2.elasticbeanstalk.com' }
+  config.action_mailer.default_url_options = { :host => 'shop-ikonweapons.com' }
 
   # config.action_mailer.default_url_options = { :host => 'staging-ikon.herokuapp.com' }
 
