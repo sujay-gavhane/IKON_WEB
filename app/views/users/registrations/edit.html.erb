@@ -21,19 +21,19 @@
           <em style="color: white"><%= @minimum_password_length %> characters minimum</em>
         <% end %>
 
-        <%= f.password_field :password, autocomplete: "new-password", placeholder: 'Password' %>
+        <%= f.password_field :password, autocomplete: "new-password", placeholder: 'New Password' %>
 
-        <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: 'Confirm Password' %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: 'Confirm New Password' %>
 
 
         <button type="submit" class="form-button btn btn-primary">Update</button>
     <% end %>
 
-    <h3 style="color: white">Cancel my account</h3>
+    <h3 style="color: white">Delete my account</h3>
 
     <p style="color: white">Unhappy? 
       <%= link_to registration_path(resource_name), method: :delete do %>
-        <button type="submit" class="form-button btn btn-primary">Cancel my account</button>
+        <button type="submit" class="form-button btn btn-primary">Delete my account</button>
       <% end %>
     </p>
     

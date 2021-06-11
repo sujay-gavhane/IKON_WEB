@@ -727,7 +727,15 @@ margin-bottom: 3rem;
     font-weight: 500;
     font-size: 28px;
     line-height: 1.2;
-    color: #212529;
+    color: #fff;
+}
+#error_explanation li{
+  color: red;
+}
+#error_explanation ul {
+  padding-left: 15px;
+  list-style-type: decimal;
+  text-align: left;
 }
 .form-wrapper.register-form>div{
   width: calc(41.667% - 30px);

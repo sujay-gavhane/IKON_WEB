@@ -1,0 +1,26 @@
+<main class="form-wrapper register-form">
+  <div class="">
+    <h1>Change your password</h1>
+
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+      <%= f.hidden_field :reset_password_token %>
+      <div class="form-inputs">
+        <div class="field">
+          <% if @minimum_password_length %>
+            <em>(<%= @minimum_password_length %> characters minimum)</em><br />
+          <% end %>
+          <%= f.password_field :password, placeholder: 'New password', autofocus: true, autocomplete: "new-password" %>
+        </div>
+
+        <div class="field">
+          <%= f.password_field :password_confirmation, placeholder: 'Confirm new password', autocomplete: "new-password" %>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="form-button btn btn-primary">Change my password</button>
+      </div>
+    <% end %>
+  </div>
+</main>
+<%#= render "devise/shared/links" %>
