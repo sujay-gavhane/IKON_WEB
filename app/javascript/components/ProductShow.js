@@ -77,7 +77,6 @@ class ProductShow extends React.Component {
   showThisImg(e){
     var img = e.target.src;
     this.setState({currentImg: img})
-    var par = e.target.parentElement.parentElement.parentElement.querySelector(".one-img").style.background="url("+img+")";
   }
 
   handleColorChange(event) {
