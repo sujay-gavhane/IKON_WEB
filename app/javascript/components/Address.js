@@ -10,7 +10,8 @@ class Address extends React.Component {
   state = {
     show: '',
     properties: {},
-    addresses: []
+    addresses: [],
+    countries: {}
   };
 
   constructor(props) {
@@ -38,7 +39,7 @@ class Address extends React.Component {
     axios
       .get("/addresses.json?")
         .then(res => {
-          this.setState({ addresses: res.data.addresses })
+          this.setState({ addresses: res.data.addresses, countries: res.data.countries })
         })
        .catch(err => {
            console.log(err);
@@ -63,7 +64,7 @@ class Address extends React.Component {
             <NewAddress updateAddressList={this.getAddresses} setPopupProps={this.updateStates} show={this.state.show} />
             <EditAddress onEditChange={this.handleChange} updateAddressList={this.getAddresses} setPopupProps={this.updateStates} showEditForm={this.state.showEditForm} properties={this.state.properties} />
           </div>
-          <AddressesList updateAddressList={this.getAddresses} setPopupProps={this.updateStates} addresses={this.state.addresses}/>
+          <AddressesList countries={this.state.countries} updateAddressList={this.getAddresses} setPopupProps={this.updateStates} addresses={this.state.addresses}/>
         </div>
       </main>
       </React.Fragment>

@@ -7,7 +7,8 @@ import NewAddress from "./NewAddress"
 
 class SelectAddress extends React.Component {
   state = {
-    addresses: []
+    addresses: [],
+    countries: {}
   }
   constructor(props) {
     super(props);
@@ -30,7 +31,7 @@ class SelectAddress extends React.Component {
     axios
       .get("/addresses.json?")
         .then(res => {
-          this.setState({ addresses: res.data.addresses })
+          this.setState({ addresses: res.data.addresses, countries: res.data.countries })
         })
        .catch(err => {
            console.log(err);
@@ -53,7 +54,7 @@ class SelectAddress extends React.Component {
           <h6>Address {i + 1}</h6>
           <h1>{address.address_line_one}, {address.address_line_two}</h1>
           <h3> <span>{address.pincode}</span> {address.city}, {address.state}</h3>
-          <h4>{address.country}</h4>
+          <h4>{this.state.countries[address.country]}</h4>
         </div>
       </div>
     );

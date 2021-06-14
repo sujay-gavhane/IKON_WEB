@@ -50,7 +50,7 @@ class AddressesList extends React.Component {
         <a onClick={this.open} className={address.id}><FontAwesomeIcon icon={faPencilAlt} /></a>
         <h1>{address.address_line_one}, {address.address_line_two}</h1>
         <h3> <span>{address.pincode},</span> {address.city}, {address.state}</h3>
-        <h4>{address.country}</h4>
+        <h4>{this.props.countries[address.country]}</h4>
       </div>
     );
     return (

@@ -3,7 +3,7 @@ class AddressesController < ApplicationController
 
   def index
     respond_to do |format|
-      format.json  { render json: { addresses: current_user.addresses.order('id desc') } }
+      format.json  { render json: { addresses: current_user.addresses.order('id desc'), countries: COUNTRIES } }
       format.html
     end
   end
