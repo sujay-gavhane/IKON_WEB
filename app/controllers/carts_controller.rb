@@ -113,7 +113,6 @@ class CartsController < ApplicationController
     uri = URI("https://xpsshipper.com/restapi/v1/customers/#{ENV['XPS_CUSTOMER_ID']}/quote")
     res = Net::HTTP.post(uri, req_json,
      "Content-Type" => "application/json", Authorization: "RSIS #{ENV['XPS_AUTHORIZATION_KEY']}")
-    byebug
     respond_to do |format|
       format.json do
         render json: { shipping_cost: JSON.parse(res.body)['totalAmount'] }
