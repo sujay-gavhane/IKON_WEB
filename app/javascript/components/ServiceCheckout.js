@@ -135,7 +135,7 @@ class ServiceCheckout extends React.Component {
             </div>
             <div className="main-cart">
               <div className="item-side">
-                <ServiceCartItems updateState={this.updateState} checkout={this.state.checkout}/>
+                <ServiceCartItems updateState={this.updateState} checkout={this.state.amountSet}/>
               </div>
               <hr></hr>
               <div className="checkout-side">

@@ -153,7 +153,7 @@ class Checkout extends React.Component {
             </div>
             <div className="main-cart">
               <div className="item-side">
-                <CartItems updateTotalAmmount={this.updateState} checkout={this.state.checkout}/>
+                <CartItems updateTotalAmmount={this.updateState} checkout={this.state.amountSet}/>
               </div>
               <hr></hr>
               <div className="checkout-side">

@@ -69,7 +69,7 @@ class ServiceCartItems extends React.Component {
   render () {
     const serviceCartItems = this.state.service_cart_items.map((item) =>
       <div className="cart-item" key={item.id}>
-        { this.props.checkout &&
+        { !this.props.checkout &&
           <div className="remove">
             <a className={item.id} onClick={this.destroy}><FontAwesomeIcon icon={faTimes} /></a>
           </div>

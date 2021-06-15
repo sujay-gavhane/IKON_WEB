@@ -108,7 +108,7 @@ class MyServiceRequest extends React.Component {
             <h5>Placed on: <span>{new Date(order.created_at).toLocaleString()} </span> </h5>
           </div>
           <div className="total-price" title="Totla Price">
-            <h4>${order.net_amount.toFixed(2)}}</h4>
+            <h4>${order.net_amount.toFixed(2)}</h4>
           </div>
           <div className="status" title="Status">
             <h5>{order.status}</h5>
