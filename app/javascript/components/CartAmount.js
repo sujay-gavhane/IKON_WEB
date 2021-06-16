@@ -39,12 +39,15 @@ class CartAmount extends React.Component {
             couponId: res.data.coupon_id })
             this.props.updateTotalAmmount(this.state.discount, 'discount', 0)
             this.props.updateTotalAmmount(this.state.couponId, 'couponId', 0)
-            if (this.props.checkout) {
+            var tm = this.props.totalAmount > 0 ? this.props.totalAmount : 0
+            this.props.updateTotalAmmount(tm, 'totalAmount', 0)
+            if (this.props.checkout && this.props.totalAmount > 0) {
               var tax = ((this.props.totalAmount - (this.state.discount)) * 7) / 100 || 0
               this.props.updateTotalAmmount(tax, 'tax', 0)
               this.props.updateTotalAmmount(this.props.totalAmount + tax, 'netPayable', this.state.discount)
             } else {
               this.props.updateTotalAmmount(this.props.totalAmount, 'netPayable', this.state.discount)
+              this.props.updateTotalAmmount(0, 'tax', 0)
             }
           }
         )
@@ -81,7 +84,7 @@ class CartAmount extends React.Component {
             <button onClick={this.appplyCoupon} type="button" name="button">Apply</button>
           </div>
           <h1>Coupan Discount:</h1>
-          <h2>${this.state.discount < 0 ? 0 : this.state.discount}</h2>
+          <h2>${this.state.discount}</h2>
           {couponMsg}
 
           <hr></hr>
@@ -96,7 +99,7 @@ class CartAmount extends React.Component {
             <h2>${this.props.totalAmount}</h2>
 
             <h1>Coupon Discount:</h1>
-            <h2>${this.state.discount < 0 ? 0 : this.state.discount}</h2>
+            <h2>${this.state.discount}</h2>
 
             <h1>Total:</h1>
             <h2>${this.props.totalAmount - this.state.discount}</h2>
@@ -110,7 +113,7 @@ class CartAmount extends React.Component {
             <h2>${this.props.shippingCost}</h2>
 
             <h1>Net Payment:</h1>
-            <h2>${this.props.netPayable}</h2>
+            <h2>${this.props.netPayable.toFixed(2)}</h2>
             <hr></hr>
             
             <div className="payment-method">

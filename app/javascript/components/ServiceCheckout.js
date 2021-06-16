@@ -56,6 +56,7 @@ class ServiceCheckout extends React.Component {
   updateState(value, name, discount) {
     if(name == 'netPayable' && this.state.discount > 0){
       value = value - this.state.discount
+      value = value > 0 ? value : 0
     }
     this.setState({[name]: value})
   }
@@ -118,8 +119,8 @@ class ServiceCheckout extends React.Component {
 
   updateChange(values) {
     this.setState({ cardNumber: values.cardNumber })
-    this.setState({ firstName: values.cardHolder.split(' ')[0] })
-    this.setState({ lastName: values.cardHolder.split(' ')[1] })
+    this.setState({ firstName: values.cardHolder.split(' ')[0] || ''})
+    this.setState({ lastName: values.cardHolder.split(' ')[1] || ''})
     this.setState({ cardMonth: values.cardMonth })
     this.setState({ cardYear: values.cardYear })
   }
@@ -146,7 +147,8 @@ class ServiceCheckout extends React.Component {
                     totalEstimatedCostLabor={this.state.totalEstimatedCostLabor}
                     totalEstimatedCostPart={this.state.totalEstimatedCostPart}
                     totalEstimatedTime={this.state.totalEstimatedTime}
-                    netPayable={this.state.netPayable} checkout={this.state.amountSet}/>
+                    netPayable={this.state.netPayable} checkout={this.state.amountSet}
+                    totalAmount={this.state.totalAmount}/>
                 }
               </div>
             </div>

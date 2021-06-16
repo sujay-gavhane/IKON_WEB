@@ -58,6 +58,7 @@ class Checkout extends React.Component {
   updateState(value, name, discount) {
     if(name == 'netPayable' && this.state.discount > 0){
       value = value - this.state.discount
+      value = value > 0 ? value : 0
     }
     this.setState({[name]: value})
   }
@@ -135,8 +136,8 @@ class Checkout extends React.Component {
 
   updateChange(values) {
     this.setState({ cardNumber: values.cardNumber })
-    this.setState({ firstName: values.cardHolder.split(' ')[0] })
-    this.setState({ lastName: values.cardHolder.split(' ')[1] })
+    this.setState({ firstName: values.cardHolder.split(' ')[0] || '' })
+    this.setState({ lastName: values.cardHolder.split(' ')[1] || '' })
     this.setState({ cardMonth: values.cardMonth })
     this.setState({ cardYear: values.cardYear })
     this.setState({ cvv: values.cvv })

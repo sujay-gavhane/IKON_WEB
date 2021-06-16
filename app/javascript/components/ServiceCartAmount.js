@@ -38,14 +38,16 @@ class ServiceCartAmount extends React.Component {
             this.setState({ couponMsg: res.data.msg, discount: res.data.discount,
             couponId: res.data.coupon_id })
             this.props.updateState(this.state.discount, 'discount', 0)
-            this.props.updateState(this.props.totalEstimatedCostLabor + this.props.totalEstimatedCostPart, 'netPayable', this.state.discount)
             this.props.updateState(res.data.coupon_id, 'couponId', 0)
-            if (this.props.checkout) {
+            var tm = (this.props.totalEstimatedCostLabor + this.props.totalEstimatedCostPart - res.data.discount) > 0 ? this.props.totalEstimatedCostLabor + this.props.totalEstimatedCostPart - res.data.discount : 0
+            this.props.updateState(tm, 'totalAmount', res.data.discount)
+            if (this.props.checkout && this.props.totalAmount > 0) {
               var tax = ((this.props.totalEstimatedCostLabor + this.props.totalEstimatedCostPart - (this.state.discount)) * 7) / 100 || 0
               this.props.updateState(tax, 'tax', 0)
               this.props.updateState(this.props.totalEstimatedCostLabor + this.props.totalEstimatedCostPart + tax, 'netPayable', this.state.discount)
             } else {
               this.props.updateState(this.props.totalEstimatedCostLabor + this.props.totalEstimatedCostPart, 'netPayable', this.state.discount)
+              this.props.updateState(0, 'tax', 0)
             }
           }
         )
@@ -89,8 +91,8 @@ class ServiceCartAmount extends React.Component {
             <h2>${this.state.discount}</h2>
             {couponMsg}
             <hr></hr>
-            <h1>Net Payment:</h1>
-            <h2>${this.props.netPayable.toFixed(2)}</h2>
+            <h1>Total:</h1>
+            <h2>${this.props.totalAmount.toFixed(2)}</h2>
             {this.props.cartItemsCount > 0 && <button onClick={this.redirectToCheckout} className="checkout-btn" type="button" name="button">Checkout</button>}
           </div>
           :
@@ -104,7 +106,7 @@ class ServiceCartAmount extends React.Component {
             <h1>Coupan Discount:</h1>
             <h2>${this.state.discount}</h2>
             <h1>Total:</h1>
-            <h2>{(parseFloat(this.props.totalEstimatedCostLabor) + parseFloat(this.props.totalEstimatedCostPart) - parseInt(this.state.discount)).toFixed(2)} </h2>
+            <h2>{this.props.totalAmount.toFixed(2)} </h2>
             <hr></hr>
             <h1>Tax:</h1>
             <h2>${this.props.tax.toFixed(2)}</h2>
@@ -127,7 +129,8 @@ ServiceCartAmount.defaultProps = {
   totalEstimatedCostLabor: 0,
   totalEstimatedCostPart: 0,
   totalEstimatedTime: 0,
-  netPayable: 0
+  netPayable: 0,
+  totalAmount: 0
 }
 
 

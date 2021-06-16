@@ -41,6 +41,7 @@ class Cart extends React.Component {
   updateState(value, name, discount) {
     if(name == 'netPayable' && this.state.discount > 0){
       value = value - this.state.discount
+      value = value > 0 ? value : 0
     }
     this.setState({[name]: value})
   }

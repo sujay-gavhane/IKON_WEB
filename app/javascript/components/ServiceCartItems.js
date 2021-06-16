@@ -39,7 +39,7 @@ class ServiceCartItems extends React.Component {
           this.props.updateState(totalEstimatedCostLabor, 'totalEstimatedCostLabor', 0)
           this.props.updateState(totalEstimatedCostPart, 'totalEstimatedCostPart', 0)
           this.props.updateState(totalEstimatedTime, 'totalEstimatedTime', 0)
-          this.props.updateState(totalEstimatedCostPart + totalEstimatedCostLabor, 'netPayable', 0)
+          this.props.updateState(totalEstimatedCostPart + totalEstimatedCostLabor, 'totalAmount', 0)
           this.props.updateState(res.data.service_cart_items.length, 'cartItemsCount', 0)
           this.props.updateState(true, 'amountSet', 0)
         }

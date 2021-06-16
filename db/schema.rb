@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_02_133610) do
+ActiveRecord::Schema.define(version: 2021_06_16_153637) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -148,9 +148,9 @@ ActiveRecord::Schema.define(version: 2021_06_02_133610) do
     t.bigint "user_id", null: false
     t.bigint "address_id", null: false
     t.bigint "coupon_id"
-    t.float "total_amount", null: false
-    t.float "net_amount", null: false
-    t.float "taxes", null: false
+    t.decimal "total_amount", precision: 20, scale: 2, default: "0.0", null: false
+    t.decimal "net_amount", precision: 20, scale: 2, default: "0.0", null: false
+    t.decimal "taxes", precision: 20, scale: 2, default: "0.0", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "status_id"
@@ -221,12 +221,13 @@ ActiveRecord::Schema.define(version: 2021_06_02_133610) do
     t.bigint "address_id", null: false
     t.bigint "coupon_id"
     t.bigint "status_id"
-    t.float "total_amount", null: false
-    t.float "net_amount", null: false
-    t.float "taxes", null: false
+    t.decimal "total_amount", precision: 20, scale: 2, default: "0.0", null: false
+    t.decimal "net_amount", precision: 20, scale: 2, default: "0.0", null: false
+    t.decimal "taxes", precision: 20, scale: 2, default: "0.0", null: false
     t.integer "total_estimated_time"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.decimal "shipping", precision: 20, scale: 2, default: "0.0", null: false
     t.index ["address_id"], name: "index_service_requests_on_address_id"
     t.index ["coupon_id"], name: "index_service_requests_on_coupon_id"
     t.index ["status_id"], name: "index_service_requests_on_status_id"

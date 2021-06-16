@@ -42,6 +42,7 @@ class ServiceCart extends React.Component {
   updateState(value, name, discount) {
     if(name == 'netPayable' && this.state.discount > 0){
       value = value - this.state.discount
+      value = value > 0 ? value : 0
     }
     this.setState({[name]: value})
   }
@@ -67,7 +68,8 @@ class ServiceCart extends React.Component {
                   totalEstimatedCostLabor={this.state.totalEstimatedCostLabor}
                   totalEstimatedCostPart={this.state.totalEstimatedCostPart}
                   totalEstimatedTime={this.state.totalEstimatedTime}
-                  netPayable={this.state.netPayable} checkout={this.state.checkout}/>
+                  netPayable={this.state.netPayable} checkout={this.state.checkout}
+                  totalAmount={this.state.totalAmount}/>
               </div>
             </div>
           </div>

@@ -57,9 +57,9 @@ class ServiceRequestAmount extends React.Component {
             <h1>Total Amount:</h1>
             <h2>${this.props.order.total_amount}</h2>
             <h1>Discount:</h1>
-            <h2>${this.props.discount || 0}</h2>
+            <h2>${this.props.discount}</h2>
             <h1>Tax:</h1>
-            <h2>${this.props.tax.toFixed(2) || 0}</h2>
+            <h2>${this.props.tax}</h2>
             <h1>Grand Total:</h1>
             <h2>${this.props.order.net_amount}</h2>
             <h1>Estimated Time:</h1>
