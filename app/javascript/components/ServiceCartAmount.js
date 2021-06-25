@@ -110,6 +110,8 @@ class ServiceCartAmount extends React.Component {
             <hr></hr>
             <h1>Tax:</h1>
             <h2>${this.props.tax.toFixed(2)}</h2>
+            <h1>Shipping Cost:</h1>
+            <h2>${this.props.shippingCost}</h2>
             <h1>Net Payment:</h1>
             <h2>${this.props.netPayable.toFixed(2)}</h2>
             <hr></hr>

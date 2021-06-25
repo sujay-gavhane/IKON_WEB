@@ -42,7 +42,8 @@ class ServiceRequestsController < ApplicationController
          service_request_items: @service_request_items,
          service_request: @service_request,
          address: @service_request.address,
-         discount: @service_request.coupon.try(:discount) }
+         discount: @service_request.coupon.try(:discount),
+         dimention: @service_request.product_dimention }
       end
       format.html
     end
@@ -97,7 +98,7 @@ class ServiceRequestsController < ApplicationController
   private
 
   def order_params
-    params.require(:service_request).permit(:product_dimention_id, :user_id, :address_id, :coupon_id, :total_amount, :net_amount, :taxes, :total_estimated_time)
+    params.require(:service_request).permit(:product_dimention_id, :user_id, :address_id, :coupon_id, :total_amount, :net_amount, :taxes, :total_estimated_time, :shipping)
   end
 
   def card_params

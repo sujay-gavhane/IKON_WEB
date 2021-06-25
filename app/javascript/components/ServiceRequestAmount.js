@@ -60,12 +60,25 @@ class ServiceRequestAmount extends React.Component {
             <h2>${this.props.discount}</h2>
             <h1>Tax:</h1>
             <h2>${this.props.tax}</h2>
+            <h1>Shipping Cost:</h1>
+            <h2>${this.props.shipping}</h2>
             <h1>Grand Total:</h1>
             <h2>${this.props.order.net_amount}</h2>
             <h1>Estimated Time:</h1>
             <h2>{this.props.order.total_estimated_time && this.props.order.total_estimated_time + " Minutes"}</h2>
             <h1>Status:</h1>
             <h2>{this.props.status}</h2>
+            <hr></hr>
+            <div className="my-address">
+              <div className="address-item">
+                <h6>Dimension </h6>
+                <h1>Name: {this.props.dimention.name}</h1>
+                <h1>Weight: {this.props.dimention.weight}</h1>
+                <h1>Width: {this.props.dimention.width}</h1>
+                <h1>Length: {this.props.dimention.length}</h1>
+                <h1>Height: {this.props.dimention.height}</h1>
+              </div>
+            </div>
             <hr></hr>
             <div className="my-address">
               <div className="address-item">
@@ -79,6 +92,7 @@ class ServiceRequestAmount extends React.Component {
           </div>
         </div>
         <SelectAddress selectedAddress={this.updateAddress} closePopup={this.closeAddressPopup} toggleAddressPopup={this.state.toggleAddressPopup}/>
+         
       </React.Fragment>
     );
   }

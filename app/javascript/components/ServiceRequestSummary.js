@@ -6,7 +6,8 @@ class ServiceRequestSummary extends React.Component {
   state = {
     serviceRequestItems: [],
     serviceRequest: {},
-    address: {}
+    address: {},
+    dimention: {}
   }
 
   constructor(props) {
@@ -30,7 +31,8 @@ class ServiceRequestSummary extends React.Component {
             serviceRequest: res.data.service_request,
             address: res.data.address,
             discount: res.data.discount,
-            status: res.data.status
+            status: res.data.status,
+            dimention: res.data.dimention
           })
         }
       )
@@ -84,7 +86,7 @@ class ServiceRequestSummary extends React.Component {
                 {serviceRequestItems}
               </div>
               <hr></hr>
-              <ServiceRequestAmount tax={this.state.serviceRequest.taxes} updateAddress={this.updateState} status={this.state.status} address={this.state.address} discount={this.state.discount} order={this.state.serviceRequest} />
+              <ServiceRequestAmount dimention={this.state.dimention} shipping={this.state.serviceRequest.shipping} tax={this.state.serviceRequest.taxes} updateAddress={this.updateState} status={this.state.status} address={this.state.address} discount={this.state.discount} order={this.state.serviceRequest} />
             </div>
           </div>
         </main>

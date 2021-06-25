@@ -1,3 +1,5 @@
+require 'net/http'
+require 'uri'
 class ServiceCartsController < ApplicationController
   before_action :authenticate_user!, only: [:checkout]
   before_action :authorize_user
@@ -13,41 +15,13 @@ class ServiceCartsController < ApplicationController
             params[:service][:firearm_types][:service_types][k].keys.each do |j|
               service_work = ServiceWork.find_by(key: j, firearm_type_id: firearm_type_id, service_type_id: service_type_id)
               work_items = params[:service][:firearm_types][:service_types][k][j]
-              @user_cart = ServiceCartItem.create(
-                service_cart_id: cart_id,
-                service_work_id: service_work.try(:id),
-                service_type_id: service_type_id,
-                firearm_type_id: firearm_type_id,
-                service_work_name: service_work.key,
-                frame_work_style_of_crown: work_items[:swivel_installation_style],
-                frame_work_hardware: work_items[:frame_work_hardware],
-                barrel_work_style_of_crown: work_items[:style_of_crown],
-                barrel_work_lengthof_barrel: work_items[:final_lenght_of_barrel],
-                barrel_work_barrel_threads: work_items[:barrel_threads],
-                action_work_model_name: work_items[:select_model],
-                stock_work_hardware_type: work_items[:recoil_hardware_pistol] || work_items[:recoil_hardware_rifle],
-                stock_work_hardware: work_items[:rifle_pad] || work_items[:field_pad] || work_items[:skeet_pad] || work_items[:trap_pad]
-              )
+              ServiceCartItem.create_cart_item(cart_id, service_work, service_type_id, firearm_type_id, work_items)
             end
           else
             keys = params[:service][:firearm_types][:service_types][k].keys
             service_work = ServiceWork.find_by(key: keys.first, firearm_type_id: firearm_type_id, service_type_id: service_type_id)
             work_items = params[:service][:firearm_types][:service_types][k][keys.first]
-            @user_cart = ServiceCartItem.create(
-              service_cart_id: cart_id,
-              service_work_id: service_work.try(:id),
-              service_type_id: service_type_id,
-              firearm_type_id: firearm_type_id,
-              service_work_name: service_work.key,
-              frame_work_style_of_crown: work_items[:swivel_installation_style],
-              frame_work_hardware: work_items[:frame_work_hardware],
-              barrel_work_style_of_crown: work_items[:style_of_crown],
-              barrel_work_lengthof_barrel: work_items[:final_lenght_of_barrel],
-              barrel_work_barrel_threads: work_items[:barrel_threads],
-              action_work_model_name: work_items[:select_model],
-              stock_work_hardware_type: work_items[:recoil_hardware_pistol] || work_items[:recoil_hardware_rifle],
-              stock_work_hardware: work_items[:rifle_pad] || work_items[:field_pad] || work_items[:skeet_pad] || work_items[:trap_pad]
-            )
+            ServiceCartItem.create_cart_item(cart_id, service_work, service_type_id, firearm_type_id, work_items)
           end
         end
       else
@@ -58,41 +32,13 @@ class ServiceCartsController < ApplicationController
 
             service_work = ServiceWork.find_by(key: k, firearm_type_id: firearm_type_id, service_type_id: service_type_id)
             work_items = params[:service][:firearm_types][:service_types][service_type]
-            @user_cart = ServiceCartItem.create(
-              service_cart_id: cart_id,
-              service_work_id: service_work.try(:id),
-              service_type_id: service_type_id,
-              firearm_type_id: firearm_type_id,
-              service_work_name: service_work.key,
-              frame_work_style_of_crown: work_items[:swivel_installation_style],
-              frame_work_hardware: work_items[:frame_work_hardware],
-              barrel_work_style_of_crown: work_items[:style_of_crown],
-              barrel_work_lengthof_barrel: work_items[:final_lenght_of_barrel],
-              barrel_work_barrel_threads: work_items[:barrel_threads],
-              action_work_model_name: work_items[:select_model],
-              stock_work_hardware_type: work_items[:recoil_hardware_pistol] || work_items[:recoil_hardware_rifle],
-              stock_work_hardware: work_items[:rifle_pad] || work_items[:field_pad] || work_items[:skeet_pad] || work_items[:trap_pad]
-            )
+            ServiceCartItem.create_cart_item(cart_id, service_work, service_type_id, firearm_type_id, work_items)
           end
         else
           keys = params[:service][:firearm_types][:service_types][service_type].keys
           service_work = ServiceWork.find_by(key: params[:service][:firearm_types][:service_types][service_type].keys.first, firearm_type_id: firearm_type_id, service_type_id: service_type_id)
           work_items = params[:service][:firearm_types][:service_types][service_type][keys.first]
-          @user_cart = ServiceCartItem.create(
-            service_cart_id: cart_id,
-            service_work_id: service_work.try(:id),
-            service_type_id: service_type_id,
-            firearm_type_id: firearm_type_id,
-            service_work_name: service_work.key,
-            frame_work_style_of_crown: work_items[:swivel_installation_style],
-            frame_work_hardware: work_items[:frame_work_hardware],
-            barrel_work_style_of_crown: work_items[:style_of_crown],
-            barrel_work_lengthof_barrel: work_items[:final_lenght_of_barrel],
-            barrel_work_barrel_threads: work_items[:barrel_threads],
-            action_work_model_name: work_items[:select_model],
-            stock_work_hardware_type: work_items[:recoil_hardware_pistol] || work_items[:recoil_hardware_rifle],
-            stock_work_hardware: work_items[:rifle_pad] || work_items[:field_pad] || work_items[:skeet_pad] || work_items[:trap_pad]
-          )
+          ServiceCartItem.create_cart_item(cart_id, service_work, service_type_id, firearm_type_id, work_items)
         end
       end
       url = quote_path(id: cart_id)
@@ -157,6 +103,48 @@ class ServiceCartsController < ApplicationController
     end
     respond_to do |format|
       format.html
+    end
+  end
+
+  def get_shipping_cost
+    if params[:zip].present? && params[:country].present? && params[:dimention_id].present? 
+      dimention = ProductDimention.find_by(id: params[:dimention_id])
+      service_cart_items = @service_cart.service_cart_items.where('service_request_id IS NULL')
+      pieces = [{weight: dimention.weight.to_s, length: dimention.length.to_s, width: dimention.width.to_s, height: dimention.height.to_s, insuranceAmount: nil, declaredValue: nil}]
+      req_json = {
+        carrierCode: "ups",
+        serviceCode: "ups_ground",
+        packageTypeCode: "ups_custom_package",
+        sender: {
+          zip: "27306",
+          country: "US"
+        },
+        receiver: {
+          zip: params[:zip],
+          country: params[:country]
+        },
+        signatureOptionCode: nil,
+        residential: true,
+        weightUnit: "lb",
+        dimUnit: "in",
+        currency: "USD",
+        customsCurrency: "USD",
+        pieces: pieces
+      }.to_json
+      uri = URI("https://xpsshipper.com/restapi/v1/customers/#{ENV['XPS_CUSTOMER_ID']}/quote")
+      res = Net::HTTP.post(uri, req_json,
+       "Content-Type" => "application/json", Authorization: "RSIS #{ENV['XPS_AUTHORIZATION_KEY']}")
+      respond_to do |format|
+        format.json do
+          render json: { shipping_cost: JSON.parse(res.body)['totalAmount'].to_i * 2 }
+        end
+      end
+    else
+      respond_to do |format|
+        format.json do
+          render json: { shipping_cost: 0, error: 'Please Select all mandatory fields' }
+        end
+      end
     end
   end
 

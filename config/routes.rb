@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     member do
       put 'apply_coupon'
       get 'checkout'
+      get 'get_shipping_cost'
     end
   end
   resources :service_requests, only: [:create, :show, :index, :destroy] do

@@ -27,7 +27,8 @@ class ServiceCheckout extends React.Component {
     cardYear: '',
     cvv: '',
     tax: 0,
-    amountSet: false
+    amountSet: false,
+    shippingCost: 0
   }
 
   constructor(props) {
@@ -44,6 +45,7 @@ class ServiceCheckout extends React.Component {
     this.updateChange = this.updateChange.bind(this);
     this.openDimentionsPopup = this.openDimentionsPopup.bind(this);
     this.closeDimentionsPopup = this.closeDimentionsPopup.bind(this);
+    this.getShippingCost = this.getShippingCost.bind(this);
   }
 
   setCsrfToken() {
@@ -84,16 +86,22 @@ class ServiceCheckout extends React.Component {
   }
 
   selectedAddress(addressId){
-    axios
-      .get("/addresses/ " + addressId + ".json?")
-        .then(res => {
-          this.setState({ selectedAddress: res.data.address })
-          this.closeAddressPopup()
-        })
-       .catch(err => {
-           console.log(err);
-           return null;
-       });
+    if (this.state.selectedDimention.id != undefined){
+      axios
+        .get("/addresses/ " + addressId + ".json?")
+          .then(res => {
+            this.setState({ selectedAddress: res.data.address })
+            this.closeAddressPopup()
+            this.getShippingCost()
+            alert('Shipping Cost and Net Payment is updated. Please review once again.')
+          })
+         .catch(err => {
+             console.log(err);
+             return null;
+         });
+       } else {
+          alert('Please select product dimentions first.')
+       }
   }
 
   selectedDimention(dimentionId){
@@ -118,7 +126,8 @@ class ServiceCheckout extends React.Component {
       total_amount: this.state.totalEstimatedCostLabor + this.state.totalEstimatedCostPart,
       total_estimated_time: this.state.totalEstimatedTime,
       net_amount: this.state.netPayable,
-      taxes: this.state.tax
+      taxes: this.state.tax,
+      shipping: this.state.shippingCost
       },
       card_number: this.state.cardNumber,
       first_name: this.state.firstName,
@@ -142,6 +151,19 @@ class ServiceCheckout extends React.Component {
      } else if (this.state.selectedDimention.id == undefined){
       alert('Please Select Product Dimensions to be repaired.')
      }
+  }
+
+  getShippingCost(){
+    axios
+      .get("/service_carts/" + document.getElementById('cart-id').textContent + "/get_shipping_cost.json?country=" + this.state.selectedAddress.country + "&zip=" + this.state.selectedAddress.pincode + "&dimention_id=" + this.state.selectedDimention.id)
+        .then(res => {
+          this.setState({shippingCost: parseFloat(res.data.shipping_cost)})
+          this.setState({netPayable: this.state.netPayable + this.state.shippingCost})
+        })
+       .catch(err => {
+           console.log(err);
+           return null;
+       });
   }
 
   handleChange = (event) => {
@@ -173,6 +195,7 @@ class ServiceCheckout extends React.Component {
               <div className="checkout-side">
                 { this.state.amountSet &&
                   <ServiceCartAmount
+                    shippingCost={this.state.shippingCost}
                     tax={this.state.tax}
                     updateState={this.updateState}
                     totalEstimatedCostLabor={this.state.totalEstimatedCostLabor}
