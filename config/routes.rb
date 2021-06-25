@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get '/contact_us', to: 'home#contact_us'
 
   resources :products
+  resources :product_dimentions
   resources :addresses
   resources :carts, only: [:update, :show, :destroy] do
     member do

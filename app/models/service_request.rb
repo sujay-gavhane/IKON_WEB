@@ -4,6 +4,7 @@ class ServiceRequest < ApplicationRecord
   belongs_to :coupon, optional: true
   belongs_to :status, optional: true
   has_many :service_cart_items, dependent: :destroy
+  belongs_to :product_dimention
 
   validates :user, presence: true
   validates :address, presence: true

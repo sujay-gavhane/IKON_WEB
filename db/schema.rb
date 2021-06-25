@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_16_153637) do
+ActiveRecord::Schema.define(version: 2021_06_25_074511) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -160,6 +160,18 @@ ActiveRecord::Schema.define(version: 2021_06_16_153637) do
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
+  create_table "product_dimentions", force: :cascade do |t|
+    t.string "name", null: false
+    t.decimal "width", precision: 10, scale: 2, default: "0.0", null: false
+    t.decimal "height", precision: 10, scale: 2, default: "0.0", null: false
+    t.decimal "length", precision: 10, scale: 2, default: "0.0", null: false
+    t.decimal "weight", precision: 10, scale: 2, default: "0.0", null: false
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_product_dimentions_on_user_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "name", null: false
     t.text "description"
@@ -228,6 +240,7 @@ ActiveRecord::Schema.define(version: 2021_06_16_153637) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.decimal "shipping", precision: 20, scale: 2, default: "0.0", null: false
+    t.integer "product_dimention_id"
     t.index ["address_id"], name: "index_service_requests_on_address_id"
     t.index ["coupon_id"], name: "index_service_requests_on_coupon_id"
     t.index ["status_id"], name: "index_service_requests_on_status_id"
@@ -239,6 +252,7 @@ ActiveRecord::Schema.define(version: 2021_06_16_153637) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "key"
+    t.string "info"
   end
 
   create_table "service_works", force: :cascade do |t|
@@ -252,6 +266,8 @@ ActiveRecord::Schema.define(version: 2021_06_16_153637) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "key"
+    t.string "info"
+    t.string "input_type"
   end
 
   create_table "static_pages", force: :cascade do |t|
@@ -288,5 +304,6 @@ ActiveRecord::Schema.define(version: 2021_06_16_153637) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "addresses", "users"
+  add_foreign_key "product_dimentions", "users"
   add_foreign_key "products", "categories"
 end

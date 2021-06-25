@@ -4,6 +4,7 @@ import ServiceCartItems from "./ServiceCartItems"
 import SelectAddress from "./SelectAddress"
 import ServiceCartAmount from "./ServiceCartAmount"
 import CreditCard from "./CreditCard"
+import ProductDimentions from "./ProductDimentions"
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
@@ -16,7 +17,9 @@ class ServiceCheckout extends React.Component {
     discount: 0,
     checkout: false,
     toggleAddressPopup: '',
+    toggleDimentionsPopup: '',
     selectedAddress: {},
+    selectedDimention: {},
     couponId: 0,
     cardNumber: '',
     cardHolder: '',
@@ -34,10 +37,13 @@ class ServiceCheckout extends React.Component {
     this.openAddressPopup = this.openAddressPopup.bind(this);
     this.closeAddressPopup = this.closeAddressPopup.bind(this);
     this.selectedAddress = this.selectedAddress.bind(this);
+    this.selectedDimention = this.selectedDimention.bind(this);
     this.updateState = this.updateState.bind(this);
     this.placeOrder = this.placeOrder.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.updateChange = this.updateChange.bind(this);
+    this.openDimentionsPopup = this.openDimentionsPopup.bind(this);
+    this.closeDimentionsPopup = this.closeDimentionsPopup.bind(this);
   }
 
   setCsrfToken() {
@@ -69,6 +75,14 @@ class ServiceCheckout extends React.Component {
     this.setState({toggleAddressPopup: ''})
   }
 
+  openDimentionsPopup(){
+    this.setState({toggleDimentionsPopup: 'open'})
+  }
+
+  closeDimentionsPopup() {
+    this.setState({toggleDimentionsPopup: ''})
+  }
+
   selectedAddress(addressId){
     axios
       .get("/addresses/ " + addressId + ".json?")
@@ -82,10 +96,25 @@ class ServiceCheckout extends React.Component {
        });
   }
 
+  selectedDimention(dimentionId){
+    event.stopPropagation();
+    axios
+      .get("/product_dimentions/ " + dimentionId + ".json?")
+        .then(res => {
+          this.setState({ selectedDimention: res.data.dimention })
+          this.closeDimentionsPopup()
+        })
+       .catch(err => {
+           console.log(err);
+           return null;
+       });
+  }
+
   placeOrder(){
     var service_request_params = { service_request: {
       coupon_id: this.state.couponId,
       address_id: this.state.selectedAddress.id,
+      product_dimention_id: this.state.selectedDimention.id,
       total_amount: this.state.totalEstimatedCostLabor + this.state.totalEstimatedCostPart,
       total_estimated_time: this.state.totalEstimatedTime,
       net_amount: this.state.netPayable,
@@ -98,7 +127,7 @@ class ServiceCheckout extends React.Component {
       card_year: this.state.cardYear,
       cvv: this.state.cvv
     }
-    if (this.state.selectedAddress.id) {
+    if (this.state.selectedAddress.id && this.state.selectedDimention.id) {
       axios
         .post("/service_requests.json", service_request_params)
           .then(res => {
@@ -108,8 +137,10 @@ class ServiceCheckout extends React.Component {
              console.log(err);
              return null;
          });
-     } else {
+     } else if (this.state.selectedAddress.id == undefined){
       alert('Please Select Delivery Address')
+     } else if (this.state.selectedDimention.id == undefined){
+      alert('Please Select Product Dimensions to be repaired.')
      }
   }
 
@@ -162,6 +193,29 @@ class ServiceCheckout extends React.Component {
                 <hr></hr>
                 <div className="checkout-side">
                   <div className="">
+                    { this.state.selectedDimention.id != undefined
+                      ?
+                      <div className="my-address">
+                        <div className="address-item">
+                          <a onClick={this.openDimentionsPopup}><FontAwesomeIcon icon={faPencilAlt} /></a>
+                          <h6>Dimension </h6>
+                          <h1>Name: {this.state.selectedDimention.name}</h1>
+                          <h1>Weight: {this.state.selectedDimention.weight}</h1>
+                          <h1>Width: {this.state.selectedDimention.width}</h1>
+                          <h1>Length: {this.state.selectedDimention.length}</h1>
+                          <h1>Height: {this.state.selectedDimention.height}</h1>
+                        </div>
+                      </div> 
+                     :
+                      <div className="my-address">
+                        <div className="address-item">
+                          <a onClick={this.openDimentionsPopup}><FontAwesomeIcon icon={faPlus} /></a>
+                          <h6>Dimensions</h6>
+                          <p style={{textAlign: 'center'}}>Enter Dimensions</p>
+                        </div>
+                      </div>
+                    } 
+                    <hr></hr>
                     { this.state.selectedAddress.id != undefined
                     ?
                     <div className="my-address">
@@ -188,6 +242,7 @@ class ServiceCheckout extends React.Component {
           </div>
         </main>
         <SelectAddress selectedAddress={this.selectedAddress} closePopup={this.closeAddressPopup} toggleAddressPopup={this.state.toggleAddressPopup}/>
+        <ProductDimentions updateState={this.updateState} selectedDimention={this.selectedDimention} closePopup={this.closeDimentionsPopup} toggleAddressPopup={this.state.toggleDimentionsPopup}/>
       </React.Fragment>
     );
   }

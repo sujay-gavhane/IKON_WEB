@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_one :cart, dependent: :destroy
   has_one :service_cart, dependent: :destroy
   has_many :service_requests, dependent: :destroy
+  has_many :product_dimentions, dependent: :destroy
 
   def full_name
     "#{self.try(:first_name)} #{self.try(:last_name)}"
